@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  VectorOperations
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for CoreObjects library package "VectorOperations".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) CoreObjects Library
+
+@node     VectorOperations Package
+@section  The "VectorOperations" Package
+@cindex   package, VectorOperations
+@cindex   VectorOperations package
+@cindex   vop namespace
+@cindex   namespaces, vop
+
+@table @strong
+@item Package name
+@code{VectorOperations}
+
+@item Namespace name
+@code{vop}
+
+@item Header files
+@file{VectorOperations.hh}, @file{VectorOperationsType.hh}
+@end table
+
+
+@include VectorOperations/Overview.texi
+
+@include VectorOperations/Classes.texi

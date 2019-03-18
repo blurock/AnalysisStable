@@ -1,0 +1,460 @@
+/*  FILE     StartPairs.icc
+**  PACKAGE  StartPairs
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    Inline functions for the "StartPairs" package.
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C)  REACTION Project, Edward S. Blurock
+*/
+ 
+#ifndef REACTIONSRC_STARTPAIRS_ICC
+#define REACTIONSRC_STARTPAIRS_ICC
+ 
+//#pragma interface
+//#define START_PAIRS_DEBUG 1
+
+/*S Constructors
+*/
+
+/*F EquivalentJWork() . . . . . . . . . . . . . . . . . . . empty constructor
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+template <class T1,class T2>
+GroupEquivalentJWork<T1,T2>::GroupEquivalentJWork()
+     {
+     }
+ 
+/*F GroupEquivalentJWork(work)  . . . . . . . . . . . . . .  copy constructor
+**
+**  DESCRIPTION
+**    work: to be copied
+**  REMARKS
+**
+*/
+template <class T1,class T2>
+GroupEquivalentJWork<T1,T2>::GroupEquivalentJWork(GroupEquivalentJWork<T1,T2>& work)
+	  : Pairs(work.Pairs)
+	  {
+	  }
+ 
+/*F GroupEquivalentJWork(pairs) . . . . . . . . . . . . . . . . from PairList
+**
+**  DESCRIPTION
+**    pairs: The pair list to extract 
+**
+**  REMARKS
+**
+*/     
+template <class T1,class T2>
+GroupEquivalentJWork<T1,T2>::GroupEquivalentJWork(PairList<T1,T2> pairs)
+	  : Pairs(pairs)
+	  {
+	  }
+ 
+/*F GraphPairInfo() . . . . . . . . . . . . . . . . . . . . empty constructor
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+template <class KeyType,class T>
+GraphPairInfo<KeyType,T>::GraphPairInfo()
+{
+}
+
+/*F GraphPairInfo(info) . . . . . . . . . . . . . . . . . .  copy constructor
+**
+**  DESCRIPTION
+**    info: to be copied
+**
+**  REMARKS
+**
+*/
+template <class KeyType,class T>
+GraphPairInfo<KeyType,T>::GraphPairInfo(const GraphPairInfo& inf1)
+  : Graph1(inf1.Graph1),
+    NodeList(inf1.NodeList),
+    ValueList(inf1.ValueList),
+    GraphPairs(inf1.GraphPairs)
+{
+}
+ 
+/*F GraphPairInfo(graph)  . . . . . . . . . . . . . . . . . . . .  from graph
+**
+**  DESCRIPTION
+**     graph: the graph to set up
+**
+**     All the nodes of the graph are used and Setup() is
+**     used to set up the class
+**
+**  REMARKS
+**
+*/
+template <class KeyType,class T>
+GraphPairInfo<KeyType,T>::GraphPairInfo(const Graph<KeyType,T>& gr1)
+  : Graph1(gr1)
+{
+#ifdef START_PAIRS_DEBUG
+  cout << "Start Graph\n";
+  cout << Graph1;
+  cout << "\n";
+#endif
+  NodeList = Graph1.GetSetOfGraphKeys();
+  SetUp();
+}
+
+ 
+/*F GraphPairInfo(graph,nodelist) . . . . . . . . . . . . . . . with nodelist
+**
+**  DESCRIPTION
+**    graph: The graph to set up
+**    nodelist: The 'restricted' set of nodes
+**
+**    Instead of all nodes being used, only the node given are considered.
+**    No check as to whether the nodes are valid is done.
+**
+**  REMARKS
+**
+*/
+template <class KeyType,class T>
+GraphPairInfo<KeyType,T>::GraphPairInfo(const Graph<KeyType,T>& gr1, 
+					const ObjectList< KeyType >& nlist1)
+  : Graph1(gr1), 
+    NodeList(nlist1)
+{
+  SetUp();
+}
+ 
+/*F EquivalentPairClass() . . . . . . . . . . . . . . . . . empty constructor
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+template <class T1,class T2>
+EquivalentPairClass<T1,T2>::EquivalentPairClass()
+	  {
+	  }
+ 
+/*F EquivalentPairClass(equiv)  . . . . . . . . . . . . . .  copy constructor
+**
+**  DESCRIPTION
+**    equiv: to be copied
+**
+**  REMARKS
+**
+*/
+template <class T1,class T2>
+EquivalentPairClass<T1,T2>::EquivalentPairClass(const EquivalentPairClass<T1,T2>& equiv)
+	  : ClassValue(equiv.ClassValue),
+	  SizeScore(equiv.SizeScore),
+	  Elements1(equiv.Elements1),
+	  Elements2(equiv.Elements2)
+	  {
+	  }
+ 
+/*F EquivalentPairClass(element1,element2)  . . . . . . . . .  from pairlists
+**
+**  DESCRIPTION
+**    element1,element2: The pair lists to be grouped
+**
+**  REMARKS
+**
+*/
+template <class T1,class T2>
+EquivalentPairClass<T1,T2>::EquivalentPairClass(PairList<T1,T2> element1,
+						PairList<T1,T2> element2)
+	  {
+	  Elements1 = element1.VectorOfFirsts(Elements1);
+	  Elements2 = element2.VectorOfFirsts(Elements2);
+	  ClassValue = element1.front().J;
+	  SizeScore = Elements1.size() * Elements2.size();
+	  }
+ 
+/*F FindStartPairs()  . . . . . . . . . . . . . . . . . . . empty constructor
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+template <class KeyType,class T>
+FindStartPairs<KeyType,T>::FindStartPairs()
+	  {
+	  }
+/*F FindStartPairs(findstart) . . . . . . . . . . . . . . .  copy constructor
+**
+**  DESCRIPTION
+**    findstart: To be copied
+**
+**  REMARKS
+**
+*/
+template <class KeyType,class T>
+FindStartPairs<KeyType,T>::FindStartPairs(const FindStartPairs& findstart)
+	  : Info1(findstart.Info1),Info2(findstart.Info2),
+	  EquivalentElements(findstart.EquivalentElements)
+	  {
+	  }
+ 
+/*F FindStartPairs(graph1,graph2) . . . . . . . . . . . . . . . . from graphs
+**
+**  DESCRIPTION
+**    graph1,graph2: The graphs to be compared
+**
+**    The start pairs are found with all nodes of the graph
+**
+**    The GraphPairInfo structures are initialized with just the graph
+**    and Setup() is used to initialize this class
+**
+**  REMARKS
+**
+*/
+template <class KeyType,class T>
+FindStartPairs<KeyType,T>::FindStartPairs(const Graph<KeyType,T>& graph1,
+		    const Graph<KeyType,T>& graph2)
+	  : Info1(graph1), Info2(graph2)
+	  {
+#ifdef START_PAIRS_DEBUG
+	  cout << "============================================\n";
+	  cout << "FindStartPairs\n";
+	  cout << Info1.Graph;
+	  cout << "-------------\n";
+	  
+	  cout << graph1;
+	  cout << "============================================\n";
+#endif	  
+	  SetUp();
+	  }
+ 
+/*F FindStartPairs(graph1,nodelist1,graph2,nodelist2) . . . . graph and nodes
+**
+**  DESCRIPTION
+**    graph1,graph2: The graphs
+**    nodelist1,nodelist2: The set of nodes
+**
+**    Here a restricted set of nodes within the graph is considered
+**    (no check on the validity of the nodes is made)
+**
+**  REMARKS
+**
+*/
+template <class KeyType,class T>
+FindStartPairs<KeyType,T>::FindStartPairs(const Graph<KeyType,T>& graph1,
+		    const ObjectList< KeyType > nodelist1,
+		    const Graph<KeyType,T>& graph2,
+		    const ObjectList< KeyType > nodelist2)
+	  : Info1(graph1,nodelist1), Info2(graph2,nodelist2)
+	  {
+	  SetUp();
+	  }
+ 
+
+/*S Utility
+*/
+
+/*F pairlist = operator()(j)  . . . . . . . . . . . . . . . . .  pairs with j
+**
+**  DESCRIPTION
+**    j: j value
+**    pairlist: The resulting pairlist
+**
+**    Just those pairs with the given j value are returned
+**
+**  REMARKS
+**
+*/     
+template <class T1,class T2>
+PairList<T1,T2> GroupEquivalentJWork<T1,T2>::operator()(T1& j)
+	  {
+	  PairList<T1,T2> newpair = Pairs;
+	  newpair.OnlyWithJ(j);
+	  return newpair;
+	  }
+
+ 
+/*F sets = GroupEquivalentJ(jays,pairset) . . . . . . . . . .  group J values
+**
+**  DESCRIPTION
+**    jays: a list of j values
+**    pairlist: The pairs to be grouped
+**    sets: The groups of pairs with the same j value
+**
+**    For each J value the pairs from the 
+**    original pairlist that have that value are isolated (GroupEquivalentJWork).
+**    These are collected in a list of lists (sets).
+**
+**  REMARKS
+**
+*/
+template <class T1,class T2>
+SetOfPairSets<T1,T2> GroupEquivalentJ(ObjectList< T2 >& jays,
+				      PairList<T1,T2>& pairset)
+     {
+     SetOfPairSets<T1,T2> equivs(jays.size());
+     GroupEquivalentJWork <T1,T2> work(pairset);
+     
+     transform(jays.begin(),
+	       jays.end(),
+	       equivs.begin(),
+	       work);
+     return equivs;
+     }
+
+ 
+/*F SetUp() . . . . . . . . . . . . . . . . . . . . . .  set up GraphPairInfo
+**
+**  DESCRIPTION
+**    From the Graph and the NodeList of GraphPairInfo, the set of 
+**    unique values (GetSetOfUniqueGraphValues) and the list of 
+**    node value pairs is set up
+**
+**  REMARKS
+**
+*/
+template <class KeyType,class T>
+void GraphPairInfo<KeyType,T>::SetUp()
+	  {
+#ifdef START_PAIRS_DEBUG
+	  cout << "StartNodes\n";
+	  cout << NodeList;
+#endif
+	  ValueList = Graph1.GetSetOfUniqueGraphValues(NodeList);
+	  GraphPairs = Graph1.GraphToPairList(NodeList);
+	  }
+
+ 
+/*F pairclass = operator()(element1,element2) . . . . . . EquivalentPairClass
+**
+**  DESCRIPTION
+**    element1,element2: PairLists with common J
+**    pairclass: The EquivalentPairClass derived from the PairLists
+**    
+**  REMARKS
+**
+*/
+template <class T1,class T2>
+EquivalentPairClass<T1,T2> 
+CreateEquivalentPairClass<T1,T2>::operator()(const PairList<T1,T2> element1,
+					     const PairList<T1,T2> element2)
+	  {
+	  EquivalentPairClass<T1,T2> epairclass(element1,element2);
+	  return epairclass;
+	  } 
+/*F SetUp() . . . . . . . . . . . . . . . . . . . . . . . . .  FindStartPairs
+**
+**  DESCRIPTION
+**    This sets up and computes the start pairs.  The values
+**    of the graph nodes are paired with the indexes of the 
+**    respective graphs (GraphPairInfo), these pairlists are
+**    grouped according to the node values (EquivalentPairClass)
+**    and then sorted.  The group that will produce the least
+**    number of pairs is considered the best.
+**    
+**  REMARKS
+**
+*/
+template <class KeyType,class T>
+void FindStartPairs<KeyType,T>::SetUp()
+	  {
+#ifdef START_PAIRS_DEBUG
+	  cout << "FindStartPairs: Graph1\n";
+	  cout << Info1.NodeList;
+	  cout << "\n";
+	  cout << Info1.ValueList;
+	  cout << "\n";
+	  cout << "FindStartPairs: Graph2\n";
+	  cout << Info2.NodeList;
+	  cout << "\n";
+	  cout << Info2.ValueList;
+	  cout << "\n";
+#endif	  
+	  ObjectList< T > values = Info1.ValueList;
+	  values.AddOnlyUniqueObjects(Info2.ValueList);
+
+	  SetOfPairSets<KeyType,T> equivs1 = GroupEquivalentJ(values,Info1.GraphPairs);
+	  SetOfPairSets<KeyType,T> equivs2 = GroupEquivalentJ(values,Info2.GraphPairs);
+	  
+	  equivs1.ChangeDelimitor("\n");
+	  equivs2.ChangeDelimitor("\n");
+	  
+#ifdef START_PAIRS_DEBUG
+	  cout << "Equivalents - 1 -" << equivs1.size() <<  "\n";
+	  cout << equivs1;
+	  cout << "\nEquivalents - 2 -" << equivs2.size() <<  "\n";
+	  cout << equivs2;
+#endif	  
+
+	  transform(equivs1.begin(),
+		    equivs1.end(),
+		    equivs2.begin(),
+		    back_insert_iterator< ObjectList< EquivalentPairClass<KeyType,T> > >(EquivalentElements),
+		    CreateEquivalentPairClass<KeyType,T>());
+	  
+	  
+#ifdef START_PAIRS_DEBUG
+	  cout << "UnSorted Elements\n";
+	  cout << EquivalentElements;
+	  cout << "\n=====================\n";
+#endif	  
+	  EquivalentElements.Sort();
+#ifdef START_PAIRS_DEBUG
+	  cout << "Sorted Elements\n";
+	  cout << EquivalentElements;
+	  cout << "\n=====================\n";
+#endif	  
+	  }     
+ 
+/*F GetStartPairList()  . . . . . . . . . . . . . . . . . . .  FindStartPairs
+**
+**  DESCRIPTION
+**    The best sets of nodes are paired and returned as the 
+**    best list of starting nodes
+**
+**  REMARKS
+**
+*/
+template <class KeyType,class T>
+SymmetricPairList<KeyType> FindStartPairs<KeyType,T>::GetStartPairList()
+     {
+     KeyType node1 = EquivalentElements.front().Elements1.front();
+     ObjectList<KeyType> nodelist;
+     nodelist.AddObject(node1);
+     
+     SymmetricSetOfPairSets<KeyType> pairs(nodelist,
+					   EquivalentElements.front().Elements2);
+     SymmetricPairList<KeyType> pairlist;
+     for(typename SymmetricSetOfPairSets<KeyType>::iterator pair=pairs.begin();
+	 pair != pairs.end();
+	 pair++)
+	  {
+	  pairlist.AddObject((*pair).front());
+	  }
+     return pairlist;
+     }
+/*F GetStartPairListFull()  . . . . . . . . . . . . . . . . .  FindStartPairs
+**
+**  DESCRIPTION
+**    The best sets of nodes are paired and returned as the 
+**    best list of starting nodes
+**
+**  REMARKS
+**
+*/
+template <class KeyType,class T>
+SymmetricSetOfPairSets<KeyType> FindStartPairs<KeyType,T>::GetStartPairListFull()
+	  {
+	  return SymmetricSetOfPairSets<KeyType>(EquivalentElements.front().Elements1,
+						 EquivalentElements.front().Elements2);
+	  }
+
+#endif

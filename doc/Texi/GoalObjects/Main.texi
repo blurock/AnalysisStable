@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  GoalObjects
+@c AUTHOR   Edward s. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for CoreObjects library package "GoalObjects".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) CoreObjects Library
+
+@node     GoalObjects Package
+@section  The "GoalObjects" Package
+@cindex   package, GoalObjects
+@cindex   GoalObjects package
+@cindex   goal namespace
+@cindex   namespaces, goal
+
+@table @strong
+@item Package name
+@code{GoalObjects}
+
+@item Namespace name
+@code{goal}
+
+@item Header files
+@file{GoalObjects.hh}, @file{GoalObjectsType.hh}
+@end table
+
+
+@include GoalObjects/Overview.texi
+
+@include GoalObjects/Classes.texi

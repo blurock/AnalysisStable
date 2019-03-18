@@ -1,0 +1,39 @@
+% **********************************************************
+% The Set up of the Attribute Class Information
+% **********************************************************
+%
+% ----------------------------------------------------------
+%  The Type Definition of the Attributes
+%  (no new types specified)
+% ----------------------------------------------------------
+ObjectClasses:
+END
+ClassNamePairs:
+RunIDInitial          Integer
+InstanceReadFiles     KeyWords
+Test                  Real
+InstanceNameList      KeyWords
+AttributeSpecs        KeyWords
+TestPercentage        Real
+DecisionTree          GoalSpec
+MatrixSetUp           GoalSpec
+AttributeSetUp        GoalSpec
+END
+% **********************************************************
+% The Set up of the Instances Class Information
+% **********************************************************
+%
+% ----------------------------------------------------------
+%  The Type Definition of the Instances
+%  (no new types specified)
+% ----------------------------------------------------------
+ObjectClasses:
+END
+%
+% ----------------------------------------------------------
+%  The instance parameter specifications
+%  Five Parameters are to be read in
+%
+% ----------------------------------------------------------
+ClassNamePairs:
+END

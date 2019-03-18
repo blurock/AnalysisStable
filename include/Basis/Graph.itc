@@ -1,0 +1,160 @@
+/*  FILE     
+**  PACKAGE     REACTION    
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1995  REACTION Project / Edward S. Blurock 
+*/
+
+/*S IO
+*/
+/*S Boolean
+*/
+/*F ans = operator==(node1,node2) . . . . . . . . . . . . . . . . . GraphNode
+**
+**  DESCRIPTION
+**    node1,node2: Nodes to be compared
+**    ans: true if equal nodes have the same value
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+bool operator==(GraphNode<KeyType,T>& node1, 
+		GraphNode<KeyType,T>& node2)
+{
+  return node1.getValue() == node2.getValue();
+}
+ 
+/*F ans = operator==(node,value)  . . . . . . . . . . . . GraphNode and value
+**
+**  DESCRIPTION
+**    node: The node to be compared with
+**    value: A value to be used
+**    ans: true if the node has the value
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+bool operator==(GraphNode<KeyType,T>& node, 
+		T& value)
+{
+  return node.getValue() == value;
+}
+
+ 
+/*F ans = operator<(node1,node2)  . . . . . . . . . . . . . . . . . GraphNode
+**
+**  DESCRIPTION
+**    node1,node2: The nodes to be compared
+**    ans: true if the value of node1 is less than node2
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+bool operator<(GraphNode<KeyType,T>& node1, 
+	       GraphNode<KeyType,T>& node2)
+{
+  return node1.getValue() < node2.getValue();
+}
+/*F newout = operator<<(out,node) . . . . . . . . . . . . . . . . . GraphNode
+**
+**  DESCRIPTION
+**    out: The stream
+**    node: The node to be printed
+**    out: The stream
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+ostream& operator<<(ostream& out, const GraphNode<KeyType,T>& node)
+{
+  return node.print(out);
+}
+/*F newout = operator<<(out,graph)  . . . . . . . . . . . . . . . . . . Graph
+**
+**  DESCRIPTION
+**    out: The output stream
+**    graph: The graph
+**    newout: The output stream
+**
+**    The nodes and the bonds of the graph are set to the output stream
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T> 
+ostream& operator<<(ostream& out, const Graph<KeyType,T>& graph)
+{
+  return graph.print(out);
+}
+/*F ans = Encode(buffer,graph)  . . . . . . . . . . . . . . . . . . GraphNode
+**
+**  DESCRIPTION
+**    buffer: The buffer
+**    graph: The graph node
+**    ans: true if successful
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+bool Encode(CommBuffer& buffer, GraphNode<KeyType,T>& graph)
+{
+  return graph.EncodeThis(buffer);
+}
+/*F ans = Decode(buffer,graph)  . . . . . . . . . . . . . . . . . . GraphNode
+**
+**  DESCRIPTION
+**    buffer: The buffer
+**    graph: The graph node
+**    ans: true if successful
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+bool Decode(CommBuffer& buffer, GraphNode<KeyType,T>& graph)
+{
+  return graph.DecodeThis(buffer);
+}
+
+
+/*F ans = Encode(buffer,graph)  . . . . . . . . . . . . . . . . . . . . Graph
+**
+**  DESCRIPTION
+**    buffer: The buffer
+**    graph: The graph node
+**    ans: true if successful
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+bool Encode(CommBuffer& buffer, Graph<KeyType,T>& graph)
+{
+  return graph.EncodeThis(buffer);
+}
+/*F ans = Decode(buffer,graph)  . . . . . . . . . . . . . . . . . . . . Graph
+**
+**  DESCRIPTION
+**    buffer: The buffer
+**    graph: The graph node
+**    ans: true if successful
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+bool Decode(CommBuffer& buffer, Graph<KeyType,T>& graph)
+{
+  return graph.DecodeThis(buffer);
+}
+

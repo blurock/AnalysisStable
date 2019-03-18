@@ -1,0 +1,100 @@
+FILE
+  Preprocessor
+
+DESCRIPTION
+  Gives a list of preprocessor variables used in the STURM library.
+
+AUTHORS
+  Volker Stahl, Andreas Neubacher
+
+======================================================================
+
+
+
+----------------------------------------------------------------------
+Debug Variables
+----------------------------------------------------------------------
+
+STURM_Assert
+	If this is defined the compiler will generate code for "Assert()"
+	statements.  If it is not defined, no code will be generated.
+
+STURM_SIClass
+	If this is defined the compiler will use a proper class for
+	"SI_SInt".  If it is not defined, "SI_SInt" will be a typedef to a
+	C++ integer type.
+
+STURM_SFClass
+	If this is defined the compiler will use a proper class for
+	"SF_SFlt".  If it is not defined, "SF_SFlt" will be a typedef to a
+	C++ floating point type.
+
+STURM_DFClass
+	If this is defined the compiler will use a proper class for
+	"DF_DFlt".  If it is not defined, "DF_DFlt" will be a typedef to a
+	C++ floating point type.
+
+STURM_PROFILING
+	If this is defined the compiler will generate code for profiling
+	statements.  If it is not defined, no code will be generated.
+
+
+----------------------------------------------------------------------
+Avoid Multiple Header File Inclusion
+----------------------------------------------------------------------
+
+STURM_<HEADERFILE>_HH
+	At the beginning of a header file it is checked whether the
+	variable is defined.  If it is defined, then the header file is
+	skipped.  Otherwise the variable is defined and the header file is
+	scanned.
+
+
+----------------------------------------------------------------------
+Template Modifier Variables
+----------------------------------------------------------------------
+
+STURM_Type
+	The ground type of a template instantiation.  Used only in .irq
+	files, defined in the files where templates are compiled.
+
+
+Properties of Ground Domain
+----------------------------------------------------------------------
+
+STURM_TemplNoConstructor
+	Ground domain needs no constructor when allocated.
+
+STURM_TemplNoDestructor
+	Ground domain needs no destructor when deallocated.
+
+STURM_TemplZeroDivisor
+	Ground domain has zero divisors. Note that the floating point
+	numbers have zero divisors.
+
+Availabiltiy of Functions on Ground Domain
+----------------------------------------------------------------------
+STURM_TemplNoExpression
+	Ground domain has no standard conversion functions from and to
+	Expression.
+
+STURM_TemplRandom
+	Ground domain has a standard random function "Random(T &)".
+
+STURM_TemplSetZero
+	Ground domain has a standard function "SetZero(T &)".
+
+STURM_TemplSetOne
+	Ground domain has a standard function "SetOne(T &)".
+
+
+Instantiation Request for Template Functions
+----------------------------------------------------------------------
+
+STURM_TemplQuoRem
+	Generate the quotient and remainder functions. 
+	This is used in the polynomial packages.
+
+STURM_TemplGCD
+	Generate the GCD functions.
+	This is used in the polynomial packages.

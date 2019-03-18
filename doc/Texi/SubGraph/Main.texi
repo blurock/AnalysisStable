@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  SubGraph
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for Basis library package "SubGraph".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) Basis Library
+
+@node     SubGraph Package
+@section  The "SubGraph" Package
+@cindex   package, SubGraph
+@cindex   SubGraph package
+@cindex   sub namespace
+@cindex   namespaces, sub
+
+@table @strong
+@item Package name
+@code{SubGraph}
+
+@item Namespace name
+@code{sub}
+
+@item Header files
+@file{SubGraph.hh}, @file{SubGraphType.hh}
+@end table
+
+
+@include SubGraph/Overview.texi
+
+@include SubGraph/Classes.texi

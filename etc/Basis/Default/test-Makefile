@@ -1,0 +1,28 @@
+# FILE     Makefile
+# PACKAGE  =Package=
+# AUTHOR   =Author=
+#
+# CONTENT
+#   Makefile for test programs of the "=Package=" package.
+#
+# COPYRIGHT (C) 1997 =Environment= Library
+
+#V PackageRoot . . . . . . . . . . . . . . The root directory of this package.
+PackageRoot:=$(shell cd ..; pwd)
+
+
+#I
+include ../etc/=Environment=/MakeDef
+
+
+#V
+ALL=
+
+
+#F Targets.
+
+all: $(ALL)
+
+
+cleaner::
+	$(RM) $(ALL)

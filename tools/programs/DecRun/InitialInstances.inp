@@ -1,0 +1,26 @@
+% **********************************************************
+% The Attributes and Instances to be read in
+% **********************************************************
+%
+The Set Of Read In Instances
+%
+% ----------------------------------------------------------
+%  The set of attributes (as specified by the class)
+% ----------------------------------------------------------
+Attributes:
+1000                                         % RunID
+InstanceClass.inp Instances.inp    END       %InstanceReadFile
+1.0                                          %Param
+%%FirstObject SecondObject 
+%%ThirdObject FourthObject 
+END                 % InstanceNameList
+  END                                        
+70.0                                         % TestPercentage
+END
+END
+END
+% ----------------------------------------------------------
+%  The set of attributes (as specified by the class)
+%  None given
+% ----------------------------------------------------------
+END

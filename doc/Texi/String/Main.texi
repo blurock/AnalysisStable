@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  String
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for Basis library package "String".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) Basis Library
+
+@node     String Package
+@section  The "String" Package
+@cindex   package, String
+@cindex   String package
+@cindex   str namespace
+@cindex   namespaces, str
+
+@table @strong
+@item Package name
+@code{String}
+
+@item Namespace name
+@code{str}
+
+@item Header files
+@file{String.hh}, @file{StringType.hh}
+@end table
+
+
+@include String/Overview.texi
+
+@include String/Classes.texi

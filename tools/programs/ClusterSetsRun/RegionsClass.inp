@@ -1,0 +1,18 @@
+%%% RegionsClass.inp ======================= Calculation of Regions ======================= 
+ObjectClasses:
+END
+ClassNamePairs:
+%% -----------------------------------------------------
+RootName String
+ClusterObject String
+MinimumNumberOfElements Integer
+MaximumGap Integer
+SortParameter String
+END
+%% ----------------------------------------------------
+ObjectClasses:
+END
+%% ----------------------------------------------------
+ClassNamePairs:
+END
+%% ----------------------------------------------------

@@ -1,0 +1,86 @@
+CobwebClustering.inp ======================= Calculation of Cobweb Cluster ======================= 
+Attributes:
+%%% --------------------------------------------------
+%%%   MaxLevel  Integer
+%%% --------------------------------------------------
+5
+%%% --------------------------------------------------
+%%%   z_physical0.0 FuzzyParameterPredicate
+%%% --------------------------------------------------
+Predicate: z_physical Continuous
+ODReal -Infinity T +Infinity T PyramidODReal 1.0 1.0 0.0  0.0 0.0 0.1
+
+%%% --------------------------------------------------
+%%%   z_physical0.1 FuzzyParameterPredicate
+%%% --------------------------------------------------
+Predicate: z_physical Continuous
+ODReal -Infinity T +Infinity T PyramidODReal 0.0 1.0 0.0  0.0 0.1 0.2
+
+%%% --------------------------------------------------
+%%%   z_physical0.2 FuzzyParameterPredicate
+%%% --------------------------------------------------
+Predicate: z_physical Continuous
+ODReal -Infinity T +Infinity T PyramidODReal 0.0 1.0 0.0  0.1 0.2 0.30000000000000004
+
+%%% --------------------------------------------------
+%%%   z_physical0.30000000000000004 FuzzyParameterPredicate
+%%% --------------------------------------------------
+Predicate: z_physical Continuous
+ODReal -Infinity T +Infinity T PyramidODReal 0.0 1.0 0.0  0.20000000000000004 0.30000000000000004 0.4
+
+%%% --------------------------------------------------
+%%%   z_physical0.4 FuzzyParameterPredicate
+%%% --------------------------------------------------
+Predicate: z_physical Continuous
+ODReal -Infinity T +Infinity T PyramidODReal 0.0 1.0 0.0  0.30000000000000004 0.4 0.5
+
+%%% --------------------------------------------------
+%%%   z_physical0.5 FuzzyParameterPredicate
+%%% --------------------------------------------------
+Predicate: z_physical Continuous
+ODReal -Infinity T +Infinity T PyramidODReal 0.0 1.0 0.0  0.4 0.5 0.6
+
+%%% --------------------------------------------------
+%%%   z_physical0.6000000000000001 FuzzyParameterPredicate
+%%% --------------------------------------------------
+Predicate: z_physical Continuous
+ODReal -Infinity T +Infinity T PyramidODReal 0.0 1.0 0.0  0.5000000000000001 0.6000000000000001 0.7000000000000001
+
+%%% --------------------------------------------------
+%%%   z_physical0.7000000000000001 FuzzyParameterPredicate
+%%% --------------------------------------------------
+Predicate: z_physical Continuous
+ODReal -Infinity T +Infinity T PyramidODReal 0.0 1.0 0.0  0.6000000000000001 0.7000000000000001 0.8
+
+%%% --------------------------------------------------
+%%%   z_physical0.8 FuzzyParameterPredicate
+%%% --------------------------------------------------
+Predicate: z_physical Continuous
+ODReal -Infinity T +Infinity T PyramidODReal 0.0 1.0 0.0  0.7000000000000001 0.8 0.9
+
+%%% --------------------------------------------------
+%%%   z_physical0.9 FuzzyParameterPredicate
+%%% --------------------------------------------------
+Predicate: z_physical Continuous
+ODReal -Infinity T +Infinity T PyramidODReal 0.0 1.0 1.0  0.8 0.9 0.9
+
+%%% --------------------------------------------------
+%%%   GoalNameList  KeyWords
+%%% --------------------------------------------------
+z_physical0.0
+z_physical0.1
+z_physical0.2
+z_physical0.30000000000000004
+z_physical0.4
+z_physical0.5
+z_physical0.6000000000000001
+z_physical0.7000000000000001
+z_physical0.8
+z_physical0.9
+END
+%%% --------------------------------------------------
+%%%   LogicType  KeyWords
+%%% --------------------------------------------------
+Continuous
+END
+END

@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  DecisionTreeAlgorithms
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for CoreObjects library package "DecisionTreeAlgorithms".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) CoreObjects Library
+
+@node     DecisionTreeAlgorithms Package
+@section  The "DecisionTreeAlgorithms" Package
+@cindex   package, DecisionTreeAlgorithms
+@cindex   DecisionTreeAlgorithms package
+@cindex   dta namespace
+@cindex   namespaces, dta
+
+@table @strong
+@item Package name
+@code{DecisionTreeAlgorithms}
+
+@item Namespace name
+@code{dta}
+
+@item Header files
+@file{DecisionTreeAlgorithms.hh}, @file{DecisionTreeAlgorithmsType.hh}
+@end table
+
+
+@include DecisionTreeAlgorithms/Overview.texi
+
+@include DecisionTreeAlgorithms/Classes.texi

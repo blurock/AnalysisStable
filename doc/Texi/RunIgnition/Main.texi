@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  RunIgnition
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for Cantera library package "RunIgnition".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) Cantera Library
+
+@node     RunIgnition Package
+@section  The "RunIgnition" Package
+@cindex   package, RunIgnition
+@cindex   RunIgnition package
+@cindex   ign namespace
+@cindex   namespaces, ign
+
+@table @strong
+@item Package name
+@code{RunIgnition}
+
+@item Namespace name
+@code{ign}
+
+@item Header files
+@file{RunIgnition.hh}, @file{RunIgnitionType.hh}
+@end table
+
+
+@include RunIgnition/Overview.texi
+
+@include RunIgnition/Classes.texi

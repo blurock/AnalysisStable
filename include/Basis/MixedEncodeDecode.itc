@@ -1,0 +1,168 @@
+/*  FILE     MixedEncodeDecode.itc
+**  PACKAGE     REACTION    
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1995  REACTION Project / Edward S. Blurock 
+*/
+ 
+ 
+/*F ans = Encode(buffer,pntr) . . . . . . . . . . . . . . . . .  PropertyType
+**
+**  DESCRIPTION
+**    buffer: the buffer
+**    pntr: the property
+**    ans: true if successful
+**    
+**  REMARKS
+**
+*/
+template <class T>
+bool Encode(CommBuffer& buffer, PropertyType<T>& prop)
+{
+  return prop.EncodeThis(buffer);
+}
+ 
+/*F ans = Decode(buffer,pntr) . . . . . . . . . . . . . . . . .  PropertyType
+**
+**  DESCRIPTION
+**    buffer: the buffer
+**    pntr: the property
+**    ans: true if successful
+**
+**  REMARKS
+**
+*/
+template <class T>
+bool Decode(CommBuffer& buffer, PropertyType<T>& prop)
+{
+  return prop.DecodeThis(buffer);
+}
+
+ 
+
+/*F ans = Encode(buffer,pntr) . . . . . . . . . . . . . . .  PropertyTypeByID
+**
+**  DESCRIPTION
+**    buffer: the buffer
+**    pntr: the property
+**    ans: true if successful
+** 
+**  REMARKS
+**
+*/
+template <class T>
+bool Encode(CommBuffer& buffer, PropertyTypeByID<T>& byid)
+{
+  //     cout << "Encode PropertyTypeByID\n";
+  bool result = Encode(buffer,(Identify&) byid);
+  result = result && Encode(buffer,byid.Object);
+  return result;
+}
+ 
+/*F ans = Decode(buffer,pntr) . . . . . . . . . . . . . . .  PropertyTypeByID
+**
+**  DESCRIPTION
+**    buffer: the buffer
+**    pntr: the property
+**    ans: true if successful
+**    
+**  REMARKS
+**
+*/
+template <class T>
+bool Decode(CommBuffer& buffer, PropertyTypeByID<T>& byid)
+{
+  //     cout << "Decode PropertyTypeByID\n";
+  bool result = Decode(buffer,(Identify&) byid);
+  result = result && Decode(buffer,byid.Object);
+  return result;
+}
+/*F ans = Encode(buffer,pntr) . . . . . . . . . . . . . .  PropertyTypeByName
+**
+**  DESCRIPTION
+**    buffer: the buffer
+**    pntr: the property*
+**
+**    true if successful
+**
+**  REMARKS
+**
+*/
+template <class T>
+bool Encode(CommBuffer& buffer, PropertyTypeByName<T>& byname)
+{
+  return byname.EncodeThis(buffer);
+}
+/*F ans = Decode(buffer,pntr) . . . . . . . . . . . . . .  PropertyTypeByName
+**
+**  DESCRIPTION
+**    buffer: the buffer
+**    pntr: the property*
+**    ans: true if successful
+**
+**  REMARKS
+**
+*/
+template <class T>
+bool Decode(CommBuffer& buffer, PropertyTypeByName<T>& byname)
+{
+  return byname.DecodeThis(buffer);
+}
+ 
+/*F ans = TopDecode(buffer,id)  . . . . . . . . . . . . . . . .  PropertyType
+**
+**  DESCRIPTION
+**    buffer: the buffer
+**    id: the property*
+**
+**    true if successful
+**    
+**  REMARKS
+**
+*/
+template <class T>
+bool TopDecode(CommBuffer& buffer, PropertyType<T>*& id)
+{
+  id = new PropertyType<T>;
+  return id->DecodeThis(buffer);
+}
+/*F ans = TopDecode(buffer,byid)  . . . . . . . . . . . . .  PropertyTypeByID
+**
+**  DESCRIPTION
+**    buffer: the buffer
+**    byid: the property*
+**
+**    true if successful
+**    
+**  REMARKS
+**
+*/
+template <class T>
+bool TopDecode(CommBuffer& buffer, PropertyTypeByID<T>*& byid)
+{
+  byid = new PropertyTypeByID<T>;
+  return byid->DecodeThis(buffer);
+}
+/*F ans = TopDecode(buffer,byname)  . . . . . . . . . . .  PropertyTypeByName
+**
+**  DESCRIPTION
+**    buffer: the buffer
+**    byname: the property*
+**    ans: true if successful
+**    
+**  REMARKS
+**
+*/
+template <class T>
+bool 
+TopDecode(CommBuffer& buffer, PropertyTypeByName<T>*& byname)
+{
+  byname = new PropertyTypeByName<T>;
+  return byname->DecodeThis(buffer);
+}
+

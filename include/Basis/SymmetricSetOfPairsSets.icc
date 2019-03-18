@@ -1,0 +1,122 @@
+/*  FILE     
+**  PACKAGE     REACTION    
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1995  REACTION Project / Edward S. Blurock 
+*/
+ 
+/*S Constructors
+*/
+ 
+/*F SymmetricSetOfPairSets()  . . . . . . . . . . . . . . . empty constructor
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+template <class T>
+SymmetricSetOfPairSets<T>::SymmetricSetOfPairSets()
+{
+}
+
+ 
+/*F SymmetricSetOfPairSets(n) . . . . . . . . . . . . . . . .  with dimension
+**
+**  DESCRIPTION
+**    n: The number of sets
+**
+**  REMARKS
+**
+*/
+template <class T>
+SymmetricSetOfPairSets<T>::SymmetricSetOfPairSets(int n)
+  : SetOfPairSets<T,T>(n)
+{
+}
+
+ 
+/*F SymmetricSetOfPairSets(title,delim) . . . . . .  with title and delimitor
+**
+**  DESCRIPTION
+**    title: The title of the set of pair lists
+**    delim: The delimitor between each list
+**
+**  REMARKS
+**
+*/
+template <class T>
+SymmetricSetOfPairSets<T>::SymmetricSetOfPairSets(const char *title, const char *delim)
+  : SetOfPairSets<T,T>(title,delim)
+{
+}
+
+ 
+/*F SymmetricSetOfPairSets(sets)  . . . . . . . . . . . . .  copy constructor
+**
+**  DESCRIPTION
+**    sets: to be copied
+**
+**  REMARKS
+**
+*/
+template <class T>
+SymmetricSetOfPairSets<T>::SymmetricSetOfPairSets(const SymmetricSetOfPairSets& sets)
+  : SetOfPairSets<T,T>(sets)
+{
+}
+          
+ 
+/*F SymmetricSetOfPairSets(set1,set2) . . . . . . . . . . .  all permutations
+**
+**  DESCRIPTION
+**    set1,set2: list of values
+**
+**  REMARKS
+**
+*/
+template <class T>
+SymmetricSetOfPairSets<T>::SymmetricSetOfPairSets(const ObjectList<T>& set1,
+                                                         const ObjectList<T>& set2)
+  : SetOfPairSets<T,T>(set1,set2)
+{
+  //     cout << "SymmetricSetOfPairSets(two lists)\n";
+}
+
+/*F ans = operator==(s1,s2) . . . . . . . . . . . . .  SymmetricSetOfPairSets
+**
+**  DESCRIPTION
+**    s1,s2: the sets
+**    ans: true of equal
+**
+**  REMARKS
+**
+*/
+template <class T>
+bool operator==(const SymmetricSetOfPairSets<T>& s1,
+                const SymmetricSetOfPairSets<T>& s2)
+{
+  return (ObjectList< PairList<T,T> >) s1 ==
+    (ObjectList< PairList<T,T> >) s2;
+}
+/*F ans = operator==(s1,s2) . . . . . . . . . . . . . . . . . . SetOfPairSets
+**
+**  DESCRIPTION
+**    s1,s2: the sets
+**    ans: true of equal
+**
+**  REMARKS
+**
+*/
+template <class T>
+bool operator<(const SymmetricSetOfPairSets<T>& s1,
+               const SymmetricSetOfPairSets<T>& s2)
+{
+  return (ObjectList< PairList<T,T> >) s1 <
+    (ObjectList< PairList<T,T> >) s2;
+}

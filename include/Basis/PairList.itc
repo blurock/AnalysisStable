@@ -1,0 +1,72 @@
+/*  FILE     PairList.itc
+**  PACKAGE     REACTION    
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1995  REACTION Project / Edward S. Blurock 
+*/
+ 
+/*S IO
+*/
+/*F in = operator>>(in,p) . . . . . . . . . . . . . . . . . . . . .  PairList
+**
+**  DESCRIPTION
+**    in: The input stream
+**    p:  The PairList to input.
+**
+**  REMARKS
+**     For now this routine is empty
+**
+*/
+template <class T1, class T2>
+istream& operator>>(istream& in, const PairList<T1,T2>& p)
+{
+  return in;
+}
+ 
+/*F out = operator<<(out,p) . . . . . . . . . . . . . . . . . . . .  PairList
+**
+**  DESCRIPTION
+**    out: The output stream
+**    p: The PairList to output.
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+ostream& operator<<(ostream& out, const PairList<T1,T2>& p)
+{
+  return p.print(out);
+}
+/*F ans = operator==(l1,l2) . . . . . . . . . . . . . . . . PairList equality
+**
+**  DESCRIPTION
+**    l1,l2: The PairLists to compare
+**    ans: True if equal
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+bool operator==(const PairList<T1,T2>& l1, const PairList<T1,T2>& l2)
+{
+  return ( (const ObjectList< BasicPair<T1,T2> >& ) l1) == ( (const ObjectList< BasicPair<T1,T2> >&) l2);
+}
+/*F ans = operator<(l1,l2)  . . . . . . . . . . . . . . . . . . . .  PairList
+**
+**  DESCRIPTION
+**    l1,l2: The PairLists to compare
+**    ans: True if l1 < l2
+**    
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+bool operator<(const PairList<T1,T2>& l1, const PairList<T1,T2>& l2)
+{
+  return ( (const ObjectList< BasicPair<T1,T2> >& ) l1) < ( (const ObjectList< BasicPair<T1,T2> >&) l2);
+}

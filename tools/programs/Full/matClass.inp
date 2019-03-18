@@ -1,0 +1,115 @@
+ObjectClasses:
+DataType: GoalRun  A sample goal run class
+TestGoalRun
+% **********************************************************
+% The Definition of the GoalRunClass
+% **********************************************************
+%
+% ----------------------------------------------------------
+InstanceAlgs Initial
+             Algorithms Initial#InstanceAlgs
+                        InstanceReadASCIIAlg Initial#InstanceAlgs#Algorithms Read
+                        InstanceInstancesAlg Initial#InstanceAlgs#Algorithms Instances
+                        InstanceAttributesAlg Initial#InstanceAlgs#Algorithms Attributes
+                        InstanceMatrixAlg Initial#InstanceAlgs#Algorithms Matrix
+END
+% ----------------------------------------------------------
+% Set of GoalSummary Definitions
+%
+SetOfGoalDefs: MyDefinitions          % NameTag
+% ----------------------------------------------------------
+GoalSummary: ReadInstances
+       Initial InstanceAlgs END    % Algorithm Category
+       END                                    % Algorithm KeyWords
+       Read END                               % Algorithm Specification
+                                              % Algorithm Input Parameters
+       InstanceReadFiles KeyWords             % (Name-Class Pairs)
+       END
+                                              % Algorithm Result Parameters
+       END
+    % The Goal Parameters (Name-Class Pairs)
+    InstanceReadFile Param
+    END
+    % ----- List of Prerequisites (GoalSpecs)
+    END
+GoalSummary: InstanceSetUp
+       Initial InstanceAlgs END    % Algorithm Category
+       END                                    % Algorithm KeyWords
+       Instances END                          % Algorithm Specification
+                                              % Algorithm Input Parameters
+       InstanceNameList KeyWords              % (Name-Class Pairs)
+       TestPercentage   Real
+       END
+                                              % Algorithm Result Parameters
+       TotalInstanceNameList %%KeyWords              % (Name-Class Pairs)
+       TestInstanceNameList  %%KeyWords
+       TrainInstanceNameList %%KeyWords
+       END
+    % The Goal Parameters (Name-Class Pairs)
+    END
+    % ----- List of Prerequisites (GoalSpecs)
+       ReadInstances
+       InstanceReadFile KeyWords              % (Name-Class Pairs)
+       END
+    % ----- End of List of Prerequisites
+    END
+% ---------------------- Goal Summary Definition
+GoalSummary: AttributeSetUp
+       Initial InstanceAlgs END    % Algorithm Category
+       Parameter END                          % Algorithm KeyWords
+       Attributes END                         % Algorithm Specification
+                                              % Algorithm Input Parameters
+%       AttributeNameList     KeyWords        % (Name-Class Pairs)
+        AttributeSpecs        KeyWords
+        TotalInstanceNameList KeyWords
+        END
+                                              % Algorithm Result Parameters
+       AttributeNames
+       END
+    % The Goal Parameters (Name-Class Pairs)
+       InstanceNameList KeyWords
+    END
+    % ----- List of Prerequisites (GoalSpecs)
+       InstanceSetUp
+       END
+    % ----- End of List of Prerequisites
+    END
+% ---------------------- Goal Summary Definition
+% ---------------------- Goal Summary Definition
+GoalSummary: MatrixSetUp
+       Initial InstanceAlgs END               % Algorithm Category
+       END                                    % Algorithm KeyWords
+       Matrix END                             % Algorithm Specification
+                                              % Algorithm Input Parameters
+       TotalInstanceNameList KeyWords
+       AttributeNames KeyWords
+       END
+                                              % Algorithm Result Parameters
+       MatrixObject                           % (Name-Class Pairs)
+       END
+    % The Goal Parameters (Name-Class Pairs)
+    END
+    % ----- List of Prerequisites (GoalSpecs)
+       AttributeSetUp
+       END
+    % ----- End of List of Prerequisites
+    END
+
+% End of List of GoalSummary Definitions
+END
+% --------------------------------------------------------------------------------
+END
+ClassNamePairs:
+ReadInstances                          GoalSpec
+InstanceSetUp                          GoalSpec
+AttributeSetUp                         GoalSpec
+MatrixSetUp                            GoalSpec
+ReadInstancesAlg                       AlgorithmSummary
+InstanceSetUpAlg                       AlgorithmSummary
+AttributeSetUpAlg                      AlgorithmSummary
+MatrixSetUpAlg                         AlgorithmSummary
+END
+ObjectClasses:
+END
+ClassNamePairs:
+END

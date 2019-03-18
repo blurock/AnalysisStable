@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  NonStandard
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for CoreObjects library package "NonStandard".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) CoreObjects Library
+
+@node     NonStandard Package
+@section  The "NonStandard" Package
+@cindex   package, NonStandard
+@cindex   NonStandard package
+@cindex   non namespace
+@cindex   namespaces, non
+
+@table @strong
+@item Package name
+@code{NonStandard}
+
+@item Namespace name
+@code{non}
+
+@item Header files
+@file{NonStandard.hh}, @file{NonStandardType.hh}
+@end table
+
+
+@include NonStandard/Overview.texi
+
+@include NonStandard/Classes.texi

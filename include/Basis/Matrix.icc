@@ -1,0 +1,279 @@
+/*  FILE     Matrix.itc
+**  PACKAGE  Matrix
+**  AUTHOR   Yuri Tsybukh, Edward S. Blurock
+**
+**  CONTENT
+**    Inline functions for the "Matrix" package.
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C)  REACTION Project, Edward S. Blurock
+*/
+ 
+#ifndef REACTIONSRC_MATRIX_ITC
+#define REACTIONSRC_MATRIX_ITC
+
+
+extern int Zero(int& x);
+extern float Zero(float& x);
+extern double Zero(double& x);
+
+
+extern int Unit(int& x);
+extern float Unit(float& x);
+extern double Unit(double& x);
+
+
+
+/*S Constructors
+*/
+
+ 
+/*F Matrix()  . . . . . . . . . . . . . . . . .  Matrix<T> empty constructor.
+**
+**  DESCRIPTION
+**    Matrix<T> empty constuctor.
+**    
+**  REMARKS
+**    
+*/
+template<class T> inline Matrix<T>::Matrix()
+     {
+     }
+/*F Matrix(dim1, dim2)  . . . . . . . . . . . . . . . Matrix<T>  constructor.
+**
+**  DESCRIPTION
+**    dim1,dim2: The dimensions
+**
+**    Class Matrix<T> constructor, which
+**    takes two arguments - dimensions of 
+**    constructed matrix.
+**     
+**  REMARKS
+**    Parameter dim1 is passed to the constructor
+**    of the inherited class vector<T>.
+**    Function SetSize provides constructor
+**    facilities for each row ( vector<T> )
+**    of matrix.
+*/
+template<class T> inline Matrix<T>::Matrix(int dim1=0, int dim2=0 ) : vector< vector<T> > (dim1)
+     {
+//     cout << " Superclass Matrix is being constructed\n";
+     
+     if (dim1>0)
+	  {
+	  for( int i=0; i<dim1; i++)
+	       {
+	       (*this).SetSize( dim2, i );
+	       }; 
+	  
+	  };
+     }
+/*F SetSize(newDim,i) . . . . . . . . . . . . . . . . . .  Setting row size. 
+**
+**  DESCRIPTION
+**    newDim, i: param.
+**
+**    Provides constructor facilities 
+**    for matrix row, denoted by index;
+**    allows to resize (DimNew>DimOld)
+**    object of type vector<T>.
+**
+**  REMARKS
+**
+*/
+template<class T> inline void Matrix<T>::SetSize(int newDim, int i)
+     {
+     
+     T x;
+     vector<T> Temp(newDim, Zero(x)) ;
+     
+     int thissize = (*this)[i].size();
+     if ( thissize < newDim)
+	  { 
+	  if ((*this)[i].size() != 0) 
+	       {
+	       
+	       copy ((*this)[i].begin(),(*this)[i].end(), Temp.begin());                 
+	       //                 erase((*this)[i].begin(), (*this)[i].end());
+	       
+	       };
+	  (*this)[i]=Temp;
+	  }
+     else
+	  {
+	  cout << " new dimension is less than old one " <<  " \n ";
+	  }   
+     
+     }
+
+/*F Matrix(Mat) . . . . . . . . . . . . . . . . . Matrix<T> copy constructor.
+**
+**  DESCRIPTION
+**    Mat: to be copied
+** 
+**    Matrix<T> copy constructor.
+**    It is invoked when existing object 
+**    of type Matrix<T> is assigned to 
+**    new ( previously  undeclared ) object 
+**    of type Matrix<T>. 
+**    Declaration of new object should
+**    not contain any constructor parameters.
+**    The Proper dimensions of new object are set 
+**    automatically. Syntax: Matrix<T> Mat2 = Mat1.
+**
+**  REMARKS 
+**    This kind of assignment should be used
+**    when construction of object of type
+**    Matrix<T> with explicitly passed dimensions
+**    is not desirable.
+**  
+*/
+template<class T> inline Matrix<T>::Matrix(const Matrix<T>& Mat)
+{
+  unsigned int i;
+  unsigned int matsize = Mat.size();
+  for( i=0; i<(*this).size(); i++)
+    {
+      (*this)[i].erase((*this)[i].begin(),(*this)[i].end());
+    }
+  
+  (*this).erase((*this).begin(),(*this).end());
+  for( i=0; i<matsize; i++)
+    {
+      push_back(Mat[i]);
+    }
+ }
+
+
+/*F operator=(Mat)  . . . . . . . . . . . . .  Matrix<T> assignment operator.
+**
+**  DESCRIPTION
+**    Mat: param.    
+**
+**    Matrix<T> assignment operator
+**    is invoked when the object of 
+**    type Matrix<T> is assigned to 
+**    the other (previously declared)
+**    object of same type.
+**    Syntax: Matrix<T> Mat1(dim1, dim2);
+**    Matrix<T> Mat2(dim1, dim2);
+**    Mat2 = Mat1.
+**    
+**  REMARKS
+**
+*/
+template<class T> inline Matrix<T>& Matrix<T>::operator=(const Matrix<T>& Mat)
+{
+  Matrix<T> *matcpy = new Matrix;
+  for(unsigned int i=0; i<Mat.size(); i++)
+    {
+      matcpy->push_back(Mat[i]);
+    }
+  return *matcpy;
+}
+/*S  Some basic matrix operations
+*/ 
+
+/*F GetMatrixColumn(i)  . . . . . . . . . . . . . . .  Returns matrix column.
+**
+**  DESCRIPTION
+**    i: the column index
+**   
+**    Matrix column is returned in the form of vector<T>.
+**    
+**  REMARKS
+**
+*/
+template<class T>  inline vector<T>  Matrix<T>::GetMatrixColumn(int i)
+     {
+T x;
+vector<T> temp(size(), Zero(x));
+transform(begin(),end(), temp.begin(), bind2nd(GetVectorElement<T>(), i));
+return temp;
+};
+
+/*F GetMatrixRow(i) . . . . . . . . . . . . . . . . . . . Returns matrix row.
+**
+**  DESCRIPTION
+**    i:  the row index
+**
+**    Matrix row is returned in the form of vector<T>.
+**    
+**  REMARKS
+**
+*/
+template<class T> inline  vector<T>  GetMatrixRow( int i)
+     {
+T x;
+vector<T> temp((*this)[0].size(), Zero(x));
+copy((*this)[i].begin(), (*this)[i].end(), temp.begin());
+return temp;
+};
+/*F mat = transpose() . . . . . . . . . . . . . . . . . Matrix transposition.
+**
+**  DESCRIPTION
+**    mat: The transpose of the matrix
+**
+**    Matrix is transposed; transposed matrix is returned.
+**    
+**  REMARKS
+**
+*/
+template<class T>  inline Matrix<T> Matrix<T>::transpose()
+{
+  Matrix<T> Temp((*this)[0].size(),size());
+  int vecsize = (*this)[0].size();
+  for(int i=0; i< vecsize; i++)
+    Temp[i]=GetMatrixColumn(i);
+  return Temp;
+};
+
+
+template<class T>
+struct GetVectorElement : binary_function<  vector<T>, int , T >
+     {     
+     T operator()(const vector<T>& vec, const int& index1)
+	  const
+	       { 
+               return vec[index1];
+	       }
+     };
+
+
+template<class T>     
+struct dot_product : binary_function< vector<T> , vector<T>, T>
+
+     {
+     T  operator()(const vector<T>& Vec1, const vector<T>& Vec2)
+	  const
+	       {
+	       
+	       T x;
+	       if (Vec1.size()==Vec2.size())
+		    {
+                    vector<T> Temp(Vec1.size(), Zero(x));
+                    transform(Vec1.begin(), Vec1.end(), Vec2.begin(), Temp.begin(), times<T>());
+                    T Temp_scalar = accumulate(Temp.begin(), Temp.end(), Zero(x));
+		    
+	            return Temp_scalar;
+		    };
+	       
+               return Zero(x);
+	       //  	       cout << " Sorry vectors have different sizes\n";
+	       
+	       }
+     
+     };
+
+
+#endif
+
+
+
+
+
+
+
+
+

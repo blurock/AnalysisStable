@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  CoreDataObjects
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for CoreObjects library package "CoreDataObjects".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) CoreObjects Library
+
+@node     CoreDataObjects Package
+@section  The "CoreDataObjects" Package
+@cindex   package, CoreDataObjects
+@cindex   CoreDataObjects package
+@cindex   cdo namespace
+@cindex   namespaces, cdo
+
+@table @strong
+@item Package name
+@code{CoreDataObjects}
+
+@item Namespace name
+@code{cdo}
+
+@item Header files
+@file{CoreDataObjects.hh}, @file{CoreDataObjectsType.hh}
+@end table
+
+
+@include CoreDataObjects/Overview.texi
+
+@include CoreDataObjects/Classes.texi

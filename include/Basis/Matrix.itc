@@ -1,0 +1,1016 @@
+/*  FILE     Matrix.tcc
+**  PACKAGE  Matrix
+**  AUTHOR   Yuri Tsybukh
+**
+**  CONTENT
+**    Exported functions for the "Matrix" package.
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) REACTION Project, Edward S. Blurock
+*/
+
+#define ROTATE(a,i,j,k,l) g = a[i][j]; h = a[k][l];\
+a[i][j] = g-s*(h+g*tau); a[k][l] = h+s*(g-h*tau);
+
+
+
+extern int Zero(int& x);
+extern float Zero(float& x);
+extern double Zero(double& x);
+
+
+extern int Unit(int& x);
+extern float Unit(float& x);
+extern double Unit(double& x);
+
+
+/*S  Some basic vector operations
+*/
+
+ 
+/*F vec = operator+(Vec1, Vec2) . . . . . . . . . . . . . .  Vector addition.
+**
+**  DESCRIPTION
+**    Vec1: param.
+**    Vec2: param.
+**    vec: Vec1 plus Vec2
+**
+**    Adds two vectors. Returns result as vector.   
+**
+**  REMARKS
+**
+*/
+template <class T>   
+vector<T> operator+(vector<T> Vec1, vector<T> Vec2)
+     {
+     T x;
+//     cout << " overloaded operator + \n ";
+     if (Vec1.size()==Vec2.size())
+	  {
+	  vector<T> Temp(Vec1.size(), Zero(x));
+	  transform(Vec1.begin(), Vec1.end(), Vec2.begin(), Temp.begin(), plus<T>());
+	  return Temp;
+	  };
+     cout << " Sorry vectors have different sizes\n";
+     
+
+	 // whchange
+
+	 return Vec1;
+     };
+
+ 
+/*F vec = operator-(Vec1, Vec2) . . . . . . . . . . . . . Vector subtraction.
+**
+**  DESCRIPTION
+**    Vec1: param.
+**    Vec2: param.
+**    vec: Vec1 - Vec2
+**
+**    Subtracts two vectors. Returns result as vector.   
+**
+**  REMARKS
+**
+*/
+template<class T>  vector<T> operator-(vector<T> Vec1, vector<T> Vec2)
+     {
+     T x;
+     if (Vec1.size()==Vec2.size())
+	  {
+	  vector<T> Temp(Vec1.size(), Zero(x));
+	  transform(Vec1.begin(), Vec1.end(), Vec2.begin(), Temp.begin(), minus<T>()); 
+	  return Temp;
+	  }
+     
+     cout << " Sorry vectors have different sizes\n";
+
+	 // whchange
+
+	 return Vec1;
+     };
+
+
+     
+/*F vec = operator/(Vec, C) . . . . . . . . . . Division vector by an integer
+**
+**  DESCRIPTION
+**    Vec1: The vector
+**    C: an integer constant
+**    vec: Vec1/C
+**
+**    Divides vector by a constant. Returns result as vector.   
+**
+**  REMARKS
+**
+*/     
+template<class T>  
+vector<T> operator/(vector<T> Vec, int C)       
+     {
+     T x;
+     vector<T> Temp(Vec.size(), Zero(x));
+     
+     for(unsigned int i=0; i<=Vec.size()-1; i++)
+	  Temp[i]=Vec[i]/C;
+     
+     return Temp;
+     
+     };
+
+/*F vec = operator/(Vec, C) . . . . . . . . .  Division vector by a constant.
+**
+**  DESCRIPTION
+**    Vec: param.
+**    C: a constant
+**    vec: Vec/C
+**
+**    Divides vector by a constant. Returns result as vector.   
+**
+**  REMARKS
+**
+*/    
+/* 
+template<class T>
+vector<T> operator/(vector<T> Vec, T C)       
+     {
+     T x;
+     vector<T> Temp(Vec.size(), Zero(x));
+     
+     for(int i=0; i<=Vec.size()-1; i++)
+	  Temp[i]=Vec[i]/C;
+     
+     return Temp;
+     
+     };
+
+*/
+ 
+/*F out = operator<<(out,node)  . . . . . . . . . . . . . . . PathsSearchNode
+**
+**  DESCRIPTION
+**    out: The output stream
+**    node: the search node
+**
+**  REMARKS
+**
+*/
+template <class KeyType>
+ostream& operator<<(ostream& out, const vector<KeyType>& vec)
+     {
+     ostream_iterator< KeyType > os(out," ");
+     copy(vec.begin(),vec.end(),os);
+     return out;
+     }
+
+/*F newin = operator>>(in, Vec) . . . . . . . . . . .  Vector input operator.
+**
+**  DESCRIPTION
+**    in: The input stream
+**    Vec: The vector
+**    newin: The input stream
+**
+**    Reads vector from standard input.   
+**
+**  REMARKS
+**
+*/
+template<class T>
+istream& operator>>(istream& in, vector<T>& Vec)
+     {
+     istream_iterator<T, ptrdiff_t> start(in);
+     istream_iterator<T, ptrdiff_t> end;
+     back_insert_iterator< vector<T> > dest(Vec);
+     copy(start, end, dest);
+     return in;
+     
+     };
+
+
+
+/*S Some basic matrix operations 
+*/
+ 
+/*F mat = operator+(Mat1, Mat2) . . . . . . . . . . . . . .  Matrix addition.
+**
+**  DESCRIPTION
+**    Mat1: param.
+**    Mat2: param.
+**    mat: Mat1 plus Mat2
+**
+**    Adds two matrices. Returns result as matrix.   
+**
+**  REMARKS
+**
+*/
+template<class T>  Matrix<T> operator+(Matrix<T> Mat1, Matrix<T> Mat2 )
+     {
+     
+     if ( Mat1.size()==Mat2.size()&&Mat1[0].size()==Mat2[0].size())
+	  {  
+	  Matrix<T> Temp(Mat1.size(), Mat1[0].size());
+	  transform(Mat1.begin(), Mat1.end(), Mat2.begin(), Temp.begin(), plus< vector<T> >());
+	  return Temp;
+	  };
+     cout << " Dimensions of Superclass Matrices are improper \n";
+
+
+	 // whchange
+
+	 return Mat1; 
+     };
+
+ 
+/*F mat = operator-(Mat1, Mat2) . . . . . . . . . . . . . Matrix subtraction.
+**
+**  DESCRIPTION
+**    Mat1: param.
+**    Mat2: param.
+**    matL: Mat1 minus Mat2
+**
+**    Subtracts two matrices. Returns result as matrix.   
+**
+**  REMARKS
+**
+*/
+template<class T> 
+Matrix<T> operator-(Matrix<T> Mat1, Matrix<T> Mat2 )
+     {
+     
+     if ( Mat1.size()==Mat2.size()&&Mat1[0].size()==Mat2[0].size())
+	  {  
+	  Matrix<T> Temp(Mat1.size(), Mat1[0].size());
+	  transform(Mat1.begin(), Mat1.end(), Mat2.begin(), Temp.begin(), minus< vector<T> >());
+	  return Temp;
+	  };
+     cout << " Dimensions of Superclass Matrices are improper \n";
+    
+
+	 // whchange
+
+	 return Mat1;
+     };
+
+ 
+/*F mat = operator*(Mat1, Mat2) . . . . . . . . . . .  Matrix multiplication.
+**
+**  DESCRIPTION
+**    Mat1: param
+**    Mat2: param.
+**    mat: Mat1 times Mat2
+**
+**    Multiplies two matrices. Returns result as matrix.   
+**
+**  REMARKS
+**
+*/
+
+template<class T>  
+Matrix<T> operator*(Matrix<T> Mat1, Matrix<T> Mat2)
+         {
+	  
+	  if (Mat1[0].size()==Mat2.size())
+              {
+
+	       Matrix<T> Temp(Mat1.size(), Mat2[0].size());
+//               Matrix<T> Mat2Transpose(Mat2[0].size(), Mat2.size());	
+               Matrix<T> Mat2Transpose = Mat2.transpose();
+                              
+               for(unsigned int i=0; i<Mat1.size(); i++)		    
+                    transform(Mat2Transpose.begin(), Mat2Transpose.end(), Temp[i].begin(), bind2nd(dot_product<T>(), Mat1[i]));
+               return Temp;
+	       
+  	       };
+          cout << " Dimensions of Superclass Matrices are improper \n";
+		// whchange
+		return Mat1;
+
+	  };
+
+
+/*F newin = operator>>(in, Mat) . . . . . . . . . . .  Matrix input operator.
+**
+**  DESCRIPTION
+**    in: The input stream
+**    Mat: The matrix
+**    newin: The input stream
+**
+**    Reads matrix from standard input.   
+**
+**  REMARKS
+**
+*/
+template<class T>  
+istream& operator>>(istream& in, Matrix<T>& Mat)
+     {	  
+     
+     for (int i=0; i<Mat.size(); i++)
+	  for (int j=0; j<Mat[0].size(); j++)
+	       {
+	       cout << "input Mat[" << i << "]" << "[" << j << "]" <<  " ";
+	       in >> Mat[i][j];
+	       cout << "  Input Value: " << Mat[i][j];
+	       cout << "\n";
+	       };
+     
+     return in;
+     
+     };
+
+
+/*F newout = operator<<(out, Mat) . . . . . . . . . . Matrix output operator.
+**
+**  DESCRIPTION
+**    out: The output stream
+**    Mat: The matrix
+**    newout: The output stream
+**    
+**    Outputs matrix to standard output.   
+**
+**  REMARKS
+**
+*/
+template<class T>
+ostream& operator<<(ostream& out, Matrix<T> Mat)
+     {	  
+     cout << "\n";
+     
+     for (unsigned int i=0; i<Mat.size(); i++)
+	  {		    
+	  for (unsigned int j=0; j<Mat[0].size(); j++)
+	       out << Mat[i][j] << " ";
+	  cout << "\n";
+	  };
+     
+
+     return out;
+     
+     }; 
+/*S Package routines for solving systems of OLE
+*/
+ 
+/*F order_rows(A, Order, Scale, z)  . . . . . . . . . . . . . vector ordering
+**
+**  DESCRIPTION
+**    A: param.
+**    Order: param.
+**    Scale: param.
+**    z: param.
+**
+**    order_rows(A, Order, Scale, z) is basic routine, used by the 
+**    subsequent ones. Creats ordering vector,
+**    which then allows to keep track of the
+**    correct ordering of matrix rows.
+**    Creates also scaling vector, which is used
+**    to determine, whether pivoting is necessary.
+**    
+**  REMARKS
+**
+*/
+template<class T> 
+void Matrix<T>::order_rows(Matrix<T>& A, vector<int>& Order, vector<T>& Scale, int z)
+     {
+       int i;
+        T x;
+
+        vector<T> Temp(z+1, Zero(x)); 
+
+        for(i=0; i<=z; i++)
+           {
+             Order[i] = i;
+             transform(A[i].begin(), A[i].end(), Temp.begin(), fabs);
+             Scale[i]=*max_element(Temp.begin(), Temp.end());
+	    };
+	
+	};
+/*F Matrix<T>::pivot(A, Order, Scale, z, k) . . . . . . . . . . . . . . Pivot
+**
+**  DESCRIPTION
+**    A: The matrix
+**    Order: param
+**    Scale: param.
+**    z: param.
+**    k: param.
+**  
+**    Routine pivot(A, Order, Scale, z, k) provides partial
+**    pivoting of system of linear equations,
+**    i.e. row interchanging.
+**    Alters the content of ordering vector,
+**    while the rows are not actually interchanged.
+**     
+**  REMARKS
+**
+*/
+template<class T>  
+void Matrix<T>::pivot(Matrix<T>& A, vector<int>& Order, vector<T>& Scale, int z, int k )
+    {
+          
+        int i;
+        int last = z; 
+        int pivot, index_dummy;
+        T big, dummy;
+ 
+        pivot = k;
+        big = fabs(A[Order[k]][k]/Scale[Order[k]]);
+        for ( i = k+1; i<= last; i++)
+           {
+             dummy =  fabs(A[Order[i]][k]/Scale[Order[i]]);
+             if (dummy > big)
+                 {
+                   big = dummy;
+                   pivot = i;
+                 };
+           };
+        index_dummy = Order[pivot];
+        Order[pivot] = Order[k];
+        Order[k] = index_dummy;
+             
+    }
+
+
+/*F eliminate(A, C, Order, Scale, z)  . . . . . . .  Gauss-Jordan Elimination
+**
+**  DESCRIPTION
+**    A: param.
+**    C: param.
+**    Order: param.
+**    Scale: param.
+**    z: param.
+**
+**    Routine eliminate(A, C, Order, Scale, z) implements
+**    Gauss-Jordan elimination with partial pivoting
+**    for solving system of linear equations.
+**    Changed right-hand-side vector represents solution.
+**     
+**  REMARKS
+**
+*/
+template<class T>  
+void Matrix<T>::eliminate(Matrix<T>& A, vector<T>& C, vector<int>& Order, vector<T>& Scale, int z)
+    {
+ 
+        int i,k;
+        T factor, dummy_factor;
+        T x;
+        vector<T> Temp(z+1, Zero(x));
+        vector<T> Temp_Copy_C(z+1, Zero(x));
+        Matrix<T> Temp_Copy_A(z+1, z+1);
+
+        for(k=0; k<=z; k++)
+          {
+           pivot(A,Order,Scale,z,k);
+           dummy_factor = 1.0/A[Order[k]][k];
+
+           transform(A[Order[k]].begin(), A[Order[k]].end(), A[Order[k]].begin(), bind2nd(times<T>(), dummy_factor));
+
+           C[Order[k]] = C[Order[k]]*dummy_factor; 
+
+           
+           for(i=0; i<=z; i++)
+             {
+              if (i!=k)
+                {
+                  factor = A[Order[i]][k];
+                   
+//                  for(j=0; j<=z; j++)
+//                        A[Order[i]][j] = A[Order[i]][j]-factor*A[Order[k]][j];
+
+                  transform(A[Order[k]].begin(), A[Order[k]].end(), Temp.begin(), bind2nd(times<T>(), factor));
+                  transform(A[Order[i]].begin(), A[Order[i]].end(), Temp.begin(), A[Order[i]].begin(), minus<T>());
+                  fill_n(Temp.begin(), Temp.size(), Zero(x)); 
+
+                  C[Order[i]] = C[Order[i]] - factor*C[Order[k]];
+                }
+             };
+
+          };
+
+// Restores the correct order of solutions for output
+ 
+          for(i=0; i<=z; i++) 
+             Temp_Copy_C[i] = C[Order[i]];
+          for(i=0; i<=z; i++) 
+             C[i] = Temp_Copy_C[i];
+
+          for(i=0; i<=z; i++)           
+             copy(A[Order[i]].begin(), A[Order[i]].end(), Temp_Copy_A[i].begin());            
+          for(i=0; i<=z; i++)           
+             copy(Temp_Copy_A[i].begin(), Temp_Copy_A[i].end(), A[i].begin());
+          
+
+   }
+
+ 
+/*F eliminate_invert(A, INVERT, C, Order, Scale, z) . . . . . . square matrix
+**
+**  DESCRIPTION
+**    A: param.
+**    INVERT: param.
+**    C: param.
+**    Order: param.
+**    Scale: param.
+**    z: param.
+**    
+**    Routine eliminate_invert(A, INVERT, C, Order, Scale, z) is a modification
+**    of routine eliminate. It allows to get the inverse
+**    of square matrix, using the same Gauss-Jordan
+**    elimination scheme.
+**  
+**  REMARKS
+**
+*/
+template<class T>  
+void Matrix<T>::eliminate_invert(Matrix<T>& A,
+				 Matrix<T>& INVERT, 
+				 vector<T>& C, 
+				 vector<int>& Order, 
+				 vector<T>& Scale, 
+				 int z)
+     {
+
+        int i,k;
+        T factor, dummy_factor;
+        T x;
+        vector<T> Temp(z+1, Zero(x));
+        vector<T> Temp_Copy_C(z+1, Zero(x));
+        Matrix<T> Temp_Copy_A(z+1, z+1);
+        Matrix<T> Temp_Copy_INVERT(z+1,z+1);
+ 
+        for(k=0; k<=z; k++)
+          {
+           pivot(A,Order,Scale,z,k);
+           dummy_factor = 1.0/A[Order[k]][k];
+
+           transform(A[Order[k]].begin(), A[Order[k]].end(), A[Order[k]].begin(), bind2nd(times<T>(), dummy_factor));
+           transform(INVERT[Order[k]].begin(), INVERT[Order[k]].end(), INVERT[Order[k]].begin(), bind2nd(times<T>(), dummy_factor));
+
+           C[Order[k]] = C[Order[k]]*dummy_factor; 
+
+           
+           for(i=0; i<=z; i++)
+             {
+              if (i!=k)
+                {
+                  factor = A[Order[i]][k];
+                    
+                  transform(A[Order[k]].begin(), A[Order[k]].end(), Temp.begin(), bind2nd(times<T>(), factor));
+                  transform(A[Order[i]].begin(), A[Order[i]].end(), Temp.begin(), A[Order[i]].begin(), minus<T>());
+                  fill_n(Temp.begin(), Temp.size(), Zero(x)); 
+                  transform(INVERT[Order[k]].begin(), INVERT[Order[k]].end(), Temp.begin(), bind2nd(times<T>(), factor));
+                  transform(INVERT[Order[i]].begin(), INVERT[Order[i]].end(), Temp.begin(), INVERT[Order[i]].begin(), minus<T>());
+                  fill_n(Temp.begin(), Temp.size(), Zero(x)); 
+
+                  C[Order[i]] = C[Order[i]] - factor*C[Order[k]];
+                }
+             };
+
+          };
+
+
+          for(i=0; i<=z; i++) 
+             Temp_Copy_C[i] = C[Order[i]];
+          for(i=0; i<=z; i++) 
+             C[i] = Temp_Copy_C[i];
+         
+
+         for(i=0; i<=z; i++)           
+             copy(A[Order[i]].begin(), A[Order[i]].end(), Temp_Copy_A[i].begin());            
+         for(i=0; i<=z; i++)           
+             copy(Temp_Copy_A[i].begin(), Temp_Copy_A[i].end(), A[i].begin());
+        
+         for(i=0; i<=z; i++)           
+             copy(INVERT[Order[i]].begin(), INVERT[Order[i]].end(), Temp_Copy_INVERT[i].begin());            
+         for(i=0; i<=z; i++)           
+             copy(Temp_Copy_INVERT[i].begin(), Temp_Copy_INVERT[i].end(), INVERT[i].begin());
+
+
+   }
+
+ 
+ 
+/*F pivot_and_count(A, Order, Scale, z, k, count1)  . .  keep track of pivots
+**
+**  DESCRIPTION
+**    A: param.
+**    Order: param.
+**    Scale: param.
+**    z: param.
+**    k: param.
+**    count1: param.
+**  
+**    Routine pivot_and_count(A, Order, Scale, z, k, count1) provides partial
+**    pivoting and keeps track of the number of 
+**    rows interchangings. Is used for calculating 
+**    matrix determinant by Gauss elimination scheme.
+**
+**  
+**  REMARKS
+**
+*/
+template<class T>   
+void Matrix<T>::pivot_and_count(Matrix<T>& A, 
+				vector<int>& Order, 
+				vector<T>& Scale, 
+				int z, 
+				int k, 
+				int& count1)
+     {
+     
+     int i;
+     int last = z; 
+     int pivot, index_dummy;
+     T big, dummy;
+     
+
+        pivot = k;
+        big = fabs(A[Order[k]][k]/Scale[Order[k]]);
+        for ( i = k+1; i<= last; i++)
+           {
+             dummy =  fabs(A[Order[i]][k]/Scale[Order[i]]);
+             if (dummy > big)
+                 {
+                   big = dummy;
+                   pivot = i;
+                 };
+           };
+
+        if (pivot!=k)
+           count1=count1*(-1);
+        index_dummy = Order[pivot];
+        Order[pivot] = Order[k];
+        Order[k] = index_dummy;
+                  
+    }
+/*F eliminate_gauss(A, C, Order, Scale, z, count1)  . . . .  partial pivoting
+**
+**  DESCRIPTION
+**    A: param.
+**    C: param.
+**    Order: param.
+**    Scale: param.
+**    z: param.
+**    count1: param.
+**  
+**    Routine eliminate_gauss(A, C, Order, Scale, z, count1) implements
+**    Gauss elimination with partial pivoting
+**    for solving system of linear equations.
+**    Algorithm provides possibility to calculate
+**    the determinant of matrix.
+**       
+**  REMARKS
+**
+**    Subsequent back substitution routine is 
+**    needed for retrieving the vector of solutions
+**
+*/
+template<class T>
+void Matrix<T>::eliminate_gauss(Matrix<T>& A, 
+				vector<T>& C, 
+				vector<int>& Order, 
+				vector<T>& Scale, 
+				int z, 
+				int& count1)
+     {
+     int i,k;
+     T factor;
+        T x;
+        vector<T> Temp(z+1, Zero(x));
+        Matrix<T> Temp_Copy_A(z+1, z+1);
+                
+        for(k=0; k<=z-1; k++)
+          {
+           pivot_and_count(A,Order,Scale,z,k,count1);
+           for(i=k+1; i<=z; i++)
+             {
+             factor = A[Order[i]][k]/A[Order[k]][k];
+             
+             transform(A[Order[k]].begin()+k, A[Order[k]].end(), Temp.begin(), bind2nd(times<T>(), factor));
+             transform(A[Order[i]].begin()+k, A[Order[i]].end(), Temp.begin(), A[Order[i]].begin(), minus<T>());
+//             for(j=k+1; j<=z; j++)
+//                   A[Order[i]][j] = A[Order[i]][j]-factor*A[Order[k]][j];
+             C[Order[i]] = C[Order[i]] - factor*C[Order[k]];
+             };
+
+          };
+
+         for(i=0; i<=z; i++)           
+             copy(A[Order[i]].begin(), A[Order[i]].end(), Temp_Copy_A[i].begin());            
+         for(i=0; i<=z; i++)           
+             copy(Temp_Copy_A[i].begin(), Temp_Copy_A[i].end(), A[i].begin());
+
+    }
+/*F d = determinant(A, C, N)  . . . . . . . . . . . . . . . . The determinant
+**
+**  DESCRIPTION
+**    A: param.
+**    C: param.
+**    N: param.
+**    d: The determinant
+**
+**    Routine determinant(A,C,N) calculates matrix determinant
+**    using Gauss elimination scheme. 
+**  
+**  REMARKS
+**
+*/
+template<class T>  
+T Matrix<T>::determinant(Matrix<T>& A, vector<T>& C, int N)
+     {
+     
+     T x;
+           vector<int> Order(N);
+           vector<T> Scale(N, Zero(x));
+           int z = N - 1;
+           int count1;
+           T determinant_value = Unit(x);
+           T factor;
+                     
+           count1 = 1;   
+           order_rows(A,Order,Scale,z);      
+           eliminate_gauss( A, C, Order, Scale, z, count1);
+           factor = -Unit(x);
+           for (int k=0; k<=z; k++)
+                determinant_value*=A[k][k];
+           cout << " count1 = " << count1 << " \n";
+           determinant_value*=count1;
+           return determinant_value;
+
+    }         
+                   
+/*F gauss_jordan_invert(A, INVERT, C, N)  . . . . . . . . . . . . . . inverse
+**
+**  DESCRIPTION
+**    A: param.
+**    INVERT: param.
+**    C: param.
+**    N: param.
+**
+**    Routine gauss_jordan_invert(A, INVERT, C, N) calculates
+**    inverse matrix. On input the INVERT matrix
+**    have to be initiated to identity matrix.
+**  
+**  REMARKS
+**
+*/
+template<class T> void Matrix<T>::gauss_jordan_invert(Matrix<T>& A, Matrix<T>& INVERT, vector<T>& C, int N)
+     {
+           
+           T x;
+           vector<int> Order(N);
+           vector<T> Scale(N, Zero(x));
+           int z = N - 1;
+                        
+           order_rows(A,Order,Scale,z);      
+           eliminate_invert( A, INVERT, C, Order, Scale, z);
+
+     }
+    
+  
+ 
+/*F gauss_jordan(A, C, N) . . . . . . . . . . . . . .  solve linear equations
+**
+**  DESCRIPTION
+**    A: param.
+**    C: param.
+**    N: param.
+**   
+**    Routine gauss_jordan(A,C,N) solves system
+**    of linear equations.
+**  
+**  REMARKS
+**    The input right-hand-side vector C is changed
+**    by routine, it represents the solution.
+*/
+template<class T> void Matrix<T>::gauss_jordan(Matrix<T>& A, vector<T>& C, int N)
+     {
+           
+           T x;
+           vector<int> Order(N);
+           vector<T> Scale(N, Zero(x));
+           int z = N - 1;
+                        
+           order_rows(A,Order,Scale,z);      
+           eliminate( A, C, Order, Scale, z);
+
+     }
+ 
+/*S Package routines for computing eigenvalues and eigenvectors
+*/
+
+/*F jacobi(a, n, d, v, nrot)  . . . . . . . . . . . . eigenvalues and vectors
+**
+**  DESCRIPTION
+**    a: The matrix of values (it is assumed that it is square and symmetric)
+**    d: The resulting eigenvalues (should be dimensioned beforehand)
+**    v: The resulting set of eigenvectors (should be dimensioned beforehand)
+**    nrot: param.
+**
+**    Routine jacobi(a, n, d, v, nrot)
+**    Computes all eigenvalues and eigenvectors of a real symmetric
+**    matrix. On output, elements of the input matrix above the 
+**    diagonal are destroyed. Matrix v contains eigenvectors as 
+**    columns. nrot gives the number of Jacobi rotations that
+**    were needed. The eigenvalues are not ordered on output.
+**    This is a more or less direct translation of the numerical
+**    recipes algorithm.
+**      
+**  REMARKS
+**
+*/
+template<class T>  
+void jacobi(Matrix<T>& a, vector<T>& d, Matrix<T>& v, int& nrot)
+     {
+     int j,iq,ip,i;
+     int last;
+     T tresh,theta,tau,t,sm,s,h,g,c;
+     T x;
+     int n = a.size();
+     
+     vector<T> b(n, Zero(x));
+     vector<T> z(n, Zero(x));
+     
+     last = n-1; 
+     
+     for (ip=0;ip<=last;ip++) 
+	  {
+	  for (iq=0;iq<=last;iq++) v[ip][iq] = Zero(x);
+	  v[ip][ip] = Unit(x);
+	  }
+     for (ip=0;ip<=last;ip++) 
+	  {
+	  b[ip]=d[ip] = a[ip][ip];
+	  z[ip]=Zero(x);
+	  }
+     nrot=0;
+     for (i=1;i<=110;i++) 
+	  {
+	  sm=Zero(x);
+	  for (ip=0;ip<=last-1;ip++) 
+	       {
+	       for (iq=ip+1;iq<=last;iq++)
+		    sm += fabs(a[ip][iq]);
+	       }
+	  if (sm == Zero(x)) 
+	       {
+	       return;
+	       }
+	  if (i < 4)
+	       tresh=0.2*sm/(n*n);
+	  else
+	       tresh=Zero(x);
+	  for (ip=0;ip<=last-1;ip++) 
+	       {
+	       for (iq=ip+1;iq<=last;iq++) 
+		    {
+		    g=100.0*fabs(a[ip][iq]);
+		    if (i > 4                                      
+			&& fabs(d[ip])+g == fabs(d[ip])  
+			&& fabs(d[iq])+g == fabs(d[iq]))
+			 a[ip][iq]=Zero(x);
+		    else if (fabs(a[ip][iq]) > tresh) 
+			 {
+			 h=d[iq]-d[ip];
+			 if (fabs(h)+g == fabs(h))
+			      t=(a[ip][iq])/h;
+			 else 
+			      {
+			      theta=0.5*h/(a[ip][iq]);
+			      t=1.0/(fabs(theta)+sqrt(1.0+theta*theta));
+			      if (theta < Zero(x)) 
+				   t = -t;
+			      }
+			 c=1.0/sqrt(1+t*t);
+			 s=t*c;
+			 tau=s/(1.0+c);
+			 h=t*a[ip][iq];
+			 z[ip] -= h;
+			 z[iq] += h;
+			 d[ip] -= h;
+			 d[iq] += h;
+			 a[ip][iq] = Zero(x);
+			 for (j=0;j<=ip-1;j++) 
+			      {
+			      ROTATE(a,j,ip,j,iq)
+			      }
+			 for (j=ip+1;j<=iq-1;j++) 
+			      {
+			      ROTATE(a,ip,j,j,iq)
+			      }
+			 for (j=iq+1;j<=last;j++) 
+			      {
+			      ROTATE(a,ip,j,iq,j)
+			      }
+			 for (j=0;j<=last;j++) 
+			      {
+			      ROTATE(v,j,ip,j,iq)
+			      }
+			 ++nrot;
+			 }
+		    }
+	       }
+	  for (ip=0;ip<=last;ip++) 
+	       {
+	       b[ip] += z[ip];
+	       d[ip]=b[ip];
+	       z[ip]=Zero(x);
+	       }
+	  }
+     cout << "Too many iterations in routine JACOBI" << " \n";
+     }
+/*S Some package external auxiliary functions
+*/
+ 
+/*F
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+
+/*F Zero(x) . . . . . . . . . . . . . . . . . . . . . . . . intialize to zero
+**
+**  DESCRIPTION
+**    x: param.
+**    
+**    Initiates to 0 elements of x.
+**    
+**  REMARKS
+**
+*/
+template <class T>          
+vector<T>& Zero (vector<T>& x)
+     {
+     T y;
+     fill_n (x.begin (), x.size (), Zero(y));
+     return x;              
+     };
+/*S EncodeDecode
+*/
+ 
+/*F NormalizeDiagonalElements() . . . . . . . . . . . . . . . . . . .  Matrix
+**
+**  DESCRIPTION
+**    The elements of the square matrix (an error is given if not) are 
+**    divided by the diagonal elements m[ij] = m[ij]/ (m[ii]m[jj]).
+**
+**  REMARKS
+**
+*/
+template <class T>
+void Matrix<T>::NormalizeDiagonalElements()
+     {
+     unsigned int dim1 = size();
+     unsigned int dim2 = (*this)[0].size();
+     if(dim1 == dim2)
+	  {
+	  vector<T> norm(dim1);
+	  double fdim = (double) dim1;
+	  
+	  for(unsigned int i=0;i!=dim1;i++)
+	       norm[i] = sqrt((double) (*this)[i][i]*fdim);
+	  
+	  for(unsigned int i=0;i != dim1;i++)
+	       {
+	       for(unsigned int j=0;j!= dim1;j++)
+		    {
+		    (*this)[i][j] = (*this)[i][j]/(norm[i]*norm[j]);
+		    }
+	       }
+	  }
+     else
+	  {
+	  cout << "Cannot Normalize Non-square matrix\n";
+	  }
+     }
+
+     
+/*F ans = Encode(buffer,mat)  . . . . . . . . . . . . . . . . . . . .  Matrix
+**
+**  DESCRIPTION
+**    buffer: The buffer
+**    mat: The matrix
+**    ans: True if successful
+**
+**  REMARKS
+**
+*/
+template <class T>
+bool Encode(CommBuffer& buffer, Matrix<T>& mat)
+     {
+     return mat.EncodeThis(buffer);
+     }
+/*F ans = Decode(buffer,mat)  . . . . . . . . . . . . . . . . . . . .  Matrix
+**
+**  DESCRIPTION
+**    buffer: The buffer
+**    mat: The matrix
+**    ans: True if successful
+**
+**  REMARKS
+**
+*/
+template <class T>
+bool Decode(CommBuffer& buffer, Matrix<T>& mat)
+     {
+     return mat.DecodeThis(buffer);
+     }

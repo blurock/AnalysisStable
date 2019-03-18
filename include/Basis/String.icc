@@ -1,0 +1,294 @@
+/*  FILE     String.itc
+**  PACKAGE  String    
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    Inlines for the class String
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1995  REACTION Project / Edward S. Blurock 
+*/
+
+
+/*S Constructors
+*/
+ 
+/* String() . . . . . . . . . . . . . . . . . . . . . . .  Empty constructor.
+**
+**  DESCRIPTION
+**    Class String empty constructor.
+**    
+**  REMARKS
+**
+*/
+inline String::String() : string("")
+{
+	push_back('\0');
+}
+
+/* String(string) . . . . . . . . . . . . . . . . . . . . . . .  Constructor.
+**
+**  DESCRIPTION
+**    string: param.
+**    Class String constructor.
+**    
+**  REMARKS
+**
+*/ 
+inline String::String(const int s) : string (s,' ')
+{
+}
+
+/* String(string) . . . . . . . . . . . . . . . . . . . . . Copy constructor.
+**
+**  DESCRIPTION
+**    string: param.
+**    Class String Copy constructor.
+**    
+**  REMARKS
+**
+*/
+inline String::String(const String& str) : string((string)str)
+{
+}
+
+/* String(string) . . . . . . . . . . . . . . . . . . . . . Copy constructor.
+**
+**  DESCRIPTION
+**    string: param.
+**    Class String Copy constructor.
+**    
+**  REMARKS
+**
+*/
+inline String::String(const char * str ) : string(str) {
+	push_back('\0');
+}
+
+  
+/*S Destructor
+*/
+
+/* ~String()  . . . . . . . . . . . . . . . . . . . . . . . . . . Destructor.
+**
+**  DESCRIPTION
+**    string: param.
+**    Class String destructor.
+**    
+**  REMARKS
+**
+*/
+inline String::~String(void)
+{
+  //	 cout << "Destructor\n";
+}
+/*S Strings compare
+*/
+ 
+/*F operator<(string)  . . . . . . . . . . . . . . . . . . . . . . . . . . .  
+**
+**  DESCRIPTION
+**    string: param.
+**    Lexicographical compare.
+**    
+**  REMARKS
+**
+*/
+inline bool String::operator<(const String& string)
+{
+  return (strcmp(c_str(),string.c_str()) < 0);
+};
+/*F operator==(string)  . . . . . . . . . . . . . . . . . . . . . . . . . . .  
+**
+**  DESCRIPTION
+**    string: param.
+**    Lexicographical compare.
+**    
+**  REMARKS
+**
+*/
+inline bool String::operator==(const String& str) const
+{
+  return (strcmp(c_str(),str.c_str()) == 0);
+};
+/*F operator==(string)  . . . . . . . . . . . . . . . . . . . . . . . . . . .  
+**
+**  DESCRIPTION
+**    string: param.
+**    Lexicographical compare.
+**    
+**  REMARKS
+**
+*/
+inline bool String::operator==(const string& str) const
+{
+  return (strcmp(c_str(),str.c_str()) == 0);
+};
+/*F operator==(string)  . . . . . . . . . . . . . . . . . . . . . . . . . . .  
+**
+**  DESCRIPTION
+**    string: param.
+**    Lexicographical compare.
+**    
+**  REMARKS
+**
+*/
+inline bool String::operator==(const char *str) const
+{
+  return (strcmp(c_str(),str) == 0);
+};
+
+/*S  Conversion routines
+*/
+/*F ToInteger() . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  
+**
+**  DESCRIPTION
+**    Routine ToInteger() converts string of numeric symbols to integer value.
+**    If string contains non-numeric symbols - 0 is returned.
+**    
+**  REMARKS
+**
+*/
+inline int String::ToInteger()
+{
+  int num;
+     
+  if(size() > 0)
+    num = atoi(c_str());
+  else
+    num = 0;
+     
+  return(num);
+}
+ 
+/*F ToInteger(left_margin, right_margin)  . . . . . . . . . . . . . . . . .  
+**
+**  DESCRIPTION  
+**    left_margin: param.
+**    right_margin: param.
+**    Routine ToInteger(left_margin, right_margin) isolates part of string within
+**    'left_margin' and 'right_margin'  and then converts it to integer value. 
+**    If string contains non-numeric symbols - 0 is returned.
+**    
+**  REMARKS
+**
+*/
+inline int String::ToInteger(INDEX left_margin, INDEX right_margin)
+{
+  int num;
+  String word;
+     
+  word = Isolate(left_margin,right_margin);
+     
+  if(word.size() > 0)
+    num = atoi(word.c_str());
+  else
+    num = 0;
+     
+  return(num);
+}
+/*F ToFloat() . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  
+**
+**  DESCRIPTION
+**    Routine ToInteger() converts string of numeric symbols to float value.
+**    If string contains non-numeric or floating point formatting symbols - 0 is returned.
+**    
+**  REMARKS
+**
+*/
+inline double String::ToFloat()
+{
+  double num;
+     
+  if(size() > 0 )
+    num = (double) atof(c_str());
+  else
+    num = 0.0;
+     
+  return(num);
+}
+/*F ToFloat(left_margin, right_margin)  . . . . . . . . . . . . . . . . . .  
+**
+**  DESCRIPTION  
+**    left_margin: param.
+**    right_margin: param.
+**    Routine ToFloat(left_margin, right_margin) isolates part of string within
+**    'left_margin' and 'right_margin'  and then converts it to float value. 
+**    If string contains non-numeric or floating point formatting symbols - 0 is returned.
+**    
+**  REMARKS
+**
+*/
+inline double String::ToFloat(INDEX left_margin, INDEX right_margin)
+{
+  double num;
+  String word;
+     
+  word = Isolate(left_margin, right_margin);
+     
+  if(word.size() > 0 )
+    num = (double) atof(word.c_str());
+  else
+    num = 0.0;
+     
+  return(num);
+}
+
+
+/*F ans = IsEmpty()  . . . . .. . . . . . . . . . . . . . . . . . . .  String
+**
+**  DESCRIPTION
+**    ans: True if the string is empty
+**
+**  REMARKS
+**
+*/
+inline bool String::IsEmpty(void)
+{
+      if ((*this).size() == 1)
+	return true;
+      else
+	return false;
+}
+/*F ans = XMLWrite(out)  . . . . .. . . . . . . . . . . . . . . . . . . .  String
+**
+**  DESCRIPTION
+**    ans: True if the string is empty
+**
+**  REMARKS
+**
+*/
+inline bool String::XMLWrite(ostream& out)
+{
+   bool ans = XMLWriteBegin(out,"String");
+   print(out);
+   ans = ans && XMLWriteEnd(out,"String");
+   return ans;
+}
+/*F ans = XMLWrite(out)  . . . . .. . . . . . . . . . . . . . . . . . . .  String
+**
+**  DESCRIPTION
+**    ans: True if the string is empty
+**
+**  REMARKS
+**
+*/
+inline bool String::XMLRead(istream& in)
+{
+   string str("String");
+   //bool ans = XMLReadBegin(in,"String");
+   bool ans = XMLReadBegin(in,(char *) str.c_str());
+   char c;
+   if(ans)
+       {
+        erase(begin(),end());
+	in.get(c);
+        while(c != '\n' && c != ' ' && c != EOF)
+            (*this).insert((*this).end(),c);
+        (*this).insert((*this).end(),'\0');
+        }
+   //ans = ans && XMLReadEnd(in,"String");
+   ans = ans && XMLReadEnd(in,(char *) str.c_str());
+   return ans;
+}

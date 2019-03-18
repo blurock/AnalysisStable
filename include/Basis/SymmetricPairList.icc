@@ -1,0 +1,178 @@
+/*  FILE     SymmetricPairList.icc
+**  PACKAGE     REACTION    
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1995  REACTION Project / Edward S. Blurock 
+*/
+
+/*S Constructors
+*/ 
+ 
+/*F SymmetricPairList() . . . . . . . . . . . . . . . . . . empty constructor
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+template <class T>
+SymmetricPairList<T>::SymmetricPairList(void) 
+{
+}
+/*F SymmetricPairList(n)  . . . . . . . . . . . . . . . . . .  with dimension
+**
+**  DESCRIPTION
+**    n: dimension of list
+**
+**  REMARKS
+**
+*/
+template <class T>
+SymmetricPairList<T>::SymmetricPairList(const int n) 
+  : PairList<T,T>(n)
+{
+}
+/*F SymmetricPairList(pairs)  . . . . . . . . . . . . . . .  copy constructor
+**
+**  DESCRIPTION
+**    pairs: pairs to be copied
+**
+**  REMARKS
+**
+*/
+template <class T>
+SymmetricPairList<T>::SymmetricPairList(const SymmetricPairList& pairs) 
+  : PairList<T,T>(pairs)
+{
+}
+/*F SymmetricPairList(pairs)  . . . . . . . . . . . . . . . . . from PairList
+**
+**  DESCRIPTION
+**    pairs: pairs to be copied
+**
+**  REMARKS
+**
+*/
+template <class T>
+SymmetricPairList<T>::SymmetricPairList(const PairList<T,T>& pairs) 
+  : PairList<T,T>(pairs)
+{
+}
+/*F SymmetricPairList(i,second) . . . . . . . . . . constant i with list of j
+**
+**  DESCRIPTION
+**    i: The i to be in all lists
+**    second: The list of j's to be used
+**
+**    The i is paired with all j's
+**
+**  REMARKS
+**
+*/
+template <class T>
+SymmetricPairList<T>::SymmetricPairList(const T& i, const ObjectList<T> second) 
+  : PairList<T,T>(i,second)
+{
+}
+     
+/*F SymmetricPairList(first,j)  . . . . . . . . . list of i's with constant j
+**
+**  DESCRIPTION
+**    first: The list of i's
+**    j: The j to be in every pair
+**
+**    The j is paired with every element in first
+**
+**  REMARKS
+**
+*/
+template <class T>
+SymmetricPairList<T>::SymmetricPairList(const ObjectList<T> first, const T& j) 
+  : PairList<T,T>(first,j)
+{
+}
+/*F SymmetricPairList(first,second) . . . . . . . . . . . . . .  combinations
+**
+**  DESCRIPTION
+**    first, second: The lists of i and j values
+**
+**  REMARKS
+**
+*/
+template <class T>
+SymmetricPairList<T>::SymmetricPairList(const ObjectList<T> first,
+                                               const ObjectList<T> second)
+  : PairList<T,T>(first,second)
+{
+}
+
+/*S Utility
+*/ 
+/*F l = VectorOfBoth(vec) . . . . . . . . . . list of i and j values combined
+**
+**  DESCRIPTION
+**    vec: The pairs
+**    l: The combined list of i and j values
+**
+**  REMARKS
+**
+*/
+template <class T>
+ObjectList<T>& SymmetricPairList<T>::VectorOfBoth(ObjectList<T>& vec)
+{
+  for(typename ObjectList< BasicPair<T,T> >::iterator i=(*this).begin();i != (*this).end() ; i++)
+    {
+      vec.AddObject((*i).J);
+      vec.AddObject((*i).I);
+    }
+  return vec;
+}
+ 
+/*F RemoveWithI(i)  . . . . . . . . . . . . . . . . remove pairs with i value
+**
+**  DESCRIPTION
+**    i: value to check for
+**
+**  REMARKS
+**
+*/
+template <class T>
+void SymmetricPairList<T>::RemoveWithI(const T& i)
+{
+  PairList<T,T>::RemoveWithI(i);
+}
+     
+ 
+/*F RemoveWithJ(j)  . . . . . . . . . . . . . . . . remove pairs with j value
+**
+**  DESCRIPTION
+**    j: The j value to check
+**
+**  REMARKS
+**
+*/
+template <class T>
+void SymmetricPairList<T>::RemoveWithJ(const T& j)
+{
+  PairList<T,T>::RemoveWithJ(j);
+}
+ 
+/*F RemoveWithIAndJ(ij) . . . . . . . . . . . . .  remove if either in i or j
+**
+**  DESCRIPTION
+**    ij: The value to check against
+**
+**  REMARKS
+**
+*/
+template <class T>
+void SymmetricPairList<T>::RemoveWithIAndJ(const T& ij)
+{
+  PairList<T,T>::RemoveWithI(ij);
+  PairList<T,T>::RemoveWithJ(ij);
+}

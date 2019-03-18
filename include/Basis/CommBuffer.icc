@@ -1,0 +1,193 @@
+/*  FILE     CommBuffer.icc
+**  PACKAGE  CommBuffer
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    Inline functions for the "CommBuffer" package.
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C)  REACTION Project, Edward S. Blurock
+**
+**
+*/
+#include <string.h>
+#ifndef REACTIONSRC_COMMBUFFER_ICC
+#define REACTIONSRC_COMMBUFFER_ICC
+
+/*S Constructors
+*/
+/*F CommBuffer(direction,size,inc)  . . . . . . . . . . . . . . . constructor
+**
+**  DESCRIPTION
+**    direction: COMM_BUFF_ENCODE or COMM_BUFF_DECODE
+**    size: Size of buffer (default COMMBUFF_DEFAULT_BUFFER_SIZE)
+**    inc: Amount of buffer size increment (default COMMBUFF_DEFAULT_BUFFER_SIZE)
+**
+**  REMARKS
+**
+*/
+inline CommBuffer::CommBuffer(const COMM_DIRECTION_TYPE direction, 
+                              int buffersize,
+                              int bufferinc)
+  : Direction(direction),
+    BufferSize(buffersize),
+    BufferIncrement(bufferinc),
+    IncreaseBufferMode(1)
+
+{
+  Xdr = (XDR *) malloc(sizeof(XDR));
+  Buffer = (char *) malloc(BufferSize);
+  if(Direction == COMM_BUFF_ENCODE)
+    {
+      xdrmem_create(Xdr,Buffer,BufferSize,XDR_ENCODE);
+      XDR_Direction = XDR_ENCODE;
+    }
+  else
+    {
+      xdrmem_create(Xdr,Buffer,BufferSize,XDR_DECODE);
+      XDR_Direction = XDR_DECODE;
+    }
+}
+
+/*F CommBuffer(direction,size,inc)  . . . . . . . . . . . . . . . constructor
+**
+**  DESCRIPTION
+**    direction: COMM_BUFF_ENCODE or COMM_BUFF_DECODE
+**    size: Size of buffer (default COMMBUFF_DEFAULT_BUFFER_SIZE)
+**    inc: Amount of buffer size increment (default COMMBUFF_DEFAULT_BUFFER_SIZE)
+**
+**  REMARKS
+**
+*/
+inline CommBuffer::CommBuffer(const COMM_DIRECTION_TYPE direction)
+  : Direction(direction),
+    BufferSize(COMMBUFF_DEFAULT_BUFFER_SIZE),
+    BufferIncrement(COMMBUFF_DEFAULT_BUFFER_SIZE),
+    IncreaseBufferMode(1)
+{
+  Xdr = (XDR *) malloc(sizeof(XDR));
+  Buffer = (char *) malloc(BufferSize);
+  if(Direction == COMM_BUFF_ENCODE)
+    {
+      xdrmem_create(Xdr,Buffer,BufferSize,XDR_ENCODE);
+      XDR_Direction = XDR_ENCODE;
+    }
+  else
+    {
+      xdrmem_create(Xdr,Buffer,BufferSize,XDR_DECODE);
+      XDR_Direction = XDR_DECODE;
+    }
+}
+ 
+/*F CommBuffer(buffer,buffersize) . . . . . . . . . . . . . . . decode buffer
+**
+**  DESCRIPTION
+**    buffer: The buffer to decode
+**    buffersize: The size of the buffer
+**
+**    This is used to translate a read in buffer
+**
+**  REMARKS
+**
+*/
+inline CommBuffer::CommBuffer(char *buffer,
+                              const int buffersize)
+  : Direction(COMM_BUFF_DECODE),
+    BufferSize(buffersize),
+    BufferIncrement(COMMBUFF_DEFAULT_BUFFER_SIZE),
+    IncreaseBufferMode(0)
+{
+  XDR_Direction = XDR_DECODE;
+  Xdr = (XDR *) malloc(sizeof(XDR));
+  Buffer = (char *) malloc(BufferSize+20);
+  memcpy(Buffer,buffer,BufferSize);
+  xdrmem_create(Xdr,Buffer,BufferSize,XDR_DECODE);
+}
+
+ 
+/*S Utility
+*/
+/*F buffer = GetBuffer()  . . . . . . . . . . . . . . . . . . retrieve buffer
+**
+**  DESCRIPTION
+**    buffer: The buffer of the CommBuffer class (not copied)
+**
+**  REMARKS
+**
+*/
+inline char* CommBuffer::GetBuffer()
+{
+  return Buffer;
+}
+ 
+/*F size = GetBufferSize()  . . . . . . . . . . . . .  current size of buffer
+**
+**  DESCRIPTION
+**    size: size of buffer in bytes
+**
+**  REMARKS
+**
+*/
+inline unsigned int CommBuffer::GetBufferSize()
+{
+  if(Direction == XDR_ENCODE)
+#ifndef _noxdr
+    return xdr_getpos(Xdr);
+#else
+  return Xdr->BufferUsed;       
+#endif
+  else 
+    return BufferSize;
+}
+ 
+/*F ~CommBuffer() . . . . . . . . . . . . . . . . . . . . . . . .  destructor
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+inline CommBuffer::~CommBuffer(void)
+{
+#ifndef _noxdr
+  xdr_destroy(Xdr);
+#endif
+  free(Buffer);
+}
+ 
+/*F ans = IsStoring() . . . . . . . . . . . . . . . . . . . . . . .  Encoding
+**
+**  DESCRIPTION
+**    ans: true if encoding
+**
+**  REMARKS
+**
+*/
+inline bool CommBuffer::IsStoring()
+{
+  if(XDR_Direction == XDR_ENCODE)
+    return(true);
+  else
+    return(false);
+}
+ 
+/*F ans = IsReading() . . . . . . . . . . . . . . . . . . . . . . .  Decoding
+**
+**  DESCRIPTION
+**    ans: true if decoding
+**
+**  REMARKS
+**
+*/
+inline bool CommBuffer::IsReading()
+{
+  if(XDR_Direction == XDR_DECODE)
+    return(true);
+  else
+    return(false);
+}
+
+
+#endif
+

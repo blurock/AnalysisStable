@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  Iterator
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for CoreObjects library package "Iterator".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) CoreObjects Library
+
+@node     Iterator Package
+@section  The "Iterator" Package
+@cindex   package, Iterator
+@cindex   Iterator package
+@cindex   itr namespace
+@cindex   namespaces, itr
+
+@table @strong
+@item Package name
+@code{Iterator}
+
+@item Namespace name
+@code{itr}
+
+@item Header files
+@file{Iterator.hh}, @file{IteratorType.hh}
+@end table
+
+
+@include Iterator/Overview.texi
+
+@include Iterator/Classes.texi

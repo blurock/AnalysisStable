@@ -1,0 +1,52 @@
+/*  FILE     BasicPair.icc
+**  PACKAGE     REACTION    
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1995  REACTION Project / Edward S. Blurock 
+*/
+/*S Constructors
+*/ 
+/*F BasicPair() . . . . . . . . . . . . . . . . . . . . . . Empty Constructor
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+BasicPair<T1,T2>::BasicPair()
+{
+}
+ 
+/*F BasicPair(i,j)  . . . . . . . . . . . . . . . Initialize with pair values
+**
+**  DESCRIPTION
+**    i,j: The pair values
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+BasicPair<T1,T2>::BasicPair(const T1& i, const T2& j)
+  : I(i),J(j)
+{
+}
+ 
+/*F BasicPair(p)  . . . . . . . . . . . . . . . . . . . . .  Copy constructor
+**
+**  DESCRIPTION
+**    p: The pair to be copied 
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+BasicPair<T1,T2>::BasicPair(const BasicPair<T1,T2>& p)
+  : I(p.I), J(p.J)
+{
+}

@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  SimulatedAnnealing
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for Basis library package "SimulatedAnnealing".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) Basis Library
+
+@node     SimulatedAnnealing Package
+@section  The "SimulatedAnnealing" Package
+@cindex   package, SimulatedAnnealing
+@cindex   SimulatedAnnealing package
+@cindex   sim namespace
+@cindex   namespaces, sim
+
+@table @strong
+@item Package name
+@code{SimulatedAnnealing}
+
+@item Namespace name
+@code{sim}
+
+@item Header files
+@file{SimulatedAnnealing.hh}, @file{SimulatedAnnealingType.hh}
+@end table
+
+
+@include SimulatedAnnealing/Overview.texi
+
+@include SimulatedAnnealing/Classes.texi

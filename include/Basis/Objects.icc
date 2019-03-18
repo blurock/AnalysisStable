@@ -1,0 +1,321 @@
+/*  FILE     Objects.icc
+**  PACKAGE     REACTION    
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1995  REACTION Project / Edward S. Blurock 
+*/
+#ifndef REACTIONSRC_OBJECTS_ICC
+#define REACTIONSRC_OBJECTS_ICC
+ 
+/*S Constructors
+*/ 
+/*F ObjectList()  . . . . . . . . . . . . . . . . . . . . . Empty Constructor
+**
+**  DESCRIPTION
+**    Simple Empty Constructor
+**    Default Values: 
+**       Title     - Empty String
+**       Delimitor - Space
+**       The list  - Empty list
+**  REMARKS
+**
+*/
+template <class T>
+inline ObjectList<T>::ObjectList()
+  : list<T>(),
+    Title(""),
+    Delimitor(" ")
+{
+}
+
+ 
+/*F ObjectList(title,delim) . . . . . . . . . . . . . . . . . . . Constructor
+**
+**  DESCRIPTION
+**       title:      The title of the whole ObjectList.
+**       delimitor:  The delimitor between the elements of the ObjectList.
+** 
+**    Constructor with title and delimitor
+**
+**  REMARKS
+**
+*/
+template <class T>
+inline ObjectList<T>::ObjectList(const String& title, const String& delim)
+  : list<T>(),
+    Title(title),
+    Delimitor(delim)
+{
+}
+/*F ObjectList(title,delim) . . . . . . . . . . . . . . . . . . . Constructor
+**
+**  DESCRIPTION
+**       title: The title of the whole ObjectList
+**       delimitor: The delimitor between the elements of the ObjectList
+** 
+**    Constructor with title and delimitor
+**
+**  REMARKS
+**
+*/
+template <class T>
+inline ObjectList<T>::ObjectList(const char *title, const char *delim)
+  : list<T>(),
+    Title(title),
+    Delimitor(delim)
+{
+}
+
+ 
+/*F ObjectList(n) . . . . . . . . . . . . . . . . . . . . . . . . Constructor
+**
+**  DESCRIPTION
+**    n: The number of elements (empty) to initialize to
+**
+**    Constructor with title and delimitor
+** 
+**  REMARKS
+**
+*/
+template <class T>
+inline ObjectList<T>::ObjectList(const int n)
+  : list<T>(n),
+    Title(""),
+    Delimitor(" ")
+{
+}
+
+ 
+/*F ObjectList(olist) . . . . . . . . . . . . . . . . . . .Copy Constructor  
+**
+**  DESCRIPTION
+**      olist: The ObjectList to be copied (const dereferenced)
+**
+**    The Copy Constructor
+**      
+**  REMARKS
+**
+*/
+template <class T>
+inline ObjectList<T>::ObjectList(const ObjectList<T>& olist)
+  : list<T>(olist),
+    Title(olist.Title),
+    Delimitor(olist.Delimitor)
+{
+}
+/*S Utility
+*/
+ 
+/*F ChangeTitle(title)  . . . . . . . . . . . . . . . . . . . . .  ObjectList
+**
+**  DESCRIPTION
+**       title: The new title of the list
+**
+**    The default title is changed
+**       
+**  REMARKS
+**
+*/
+template <class T>
+inline void ObjectList<T>::ChangeTitle(const String& title)
+{
+  Title = title;
+}
+/*F ChangeDelimitor(delimitor)  . . . . . . . . . . . . . . . . .  ObjectList
+**
+**  DESCRIPTION
+**       delimitor: The new delimitor of the list
+**
+**    The default title is changed
+**       
+**  REMARKS
+**
+*/
+template <class T>
+inline void ObjectList<T>::ChangeDelimitor(const String& delimitor)
+{
+  Delimitor = delimitor;
+}
+ 
+
+/*S Modifying
+*/ 
+/*F ObjectList<T>::AddObject(newobject) . . . . . . . . . Add a Single Object
+**
+**  DESCRIPTION
+**     newobject: The object to be put on the ObjectList
+**
+**     A new object is 'pushed' on the ObjectList
+**
+**  REMARKS
+**   push_back(newobject) is used
+**
+*/
+template <class T>
+inline void ObjectList<T>::AddObject(const T& newobject)
+{
+  this->push_back(newobject);
+}
+ 
+/*F ObjectList<T>::AddObjectIfNotThere(newobject) . . . . Add a Single Object
+**
+**  DESCRIPTION
+**     newobject: The object to be put on the ObjectList
+**
+**     A new object is 'pushed' on the ObjectList
+**
+**  REMARKS
+**   push_back(newobject) is used
+**
+*/
+template <class T>
+inline void ObjectList<T>::AddObjectIfNotThere(const T& newobject)
+{
+  if(find((*this).begin(),(*this).end(),newobject) == (*this).end())
+    {
+      this->push_back(newobject);
+    }
+}
+ 
+/*F ObjectList<T>::AddOnlyUniqueObjects(olist)Add Object only if not on list 
+**
+**  DESCRIPTION
+**     olist: The list of objects to be put on the ObjectList
+**
+**  REMARKS
+**
+*/
+template <class T>
+inline void ObjectList<T>::AddOnlyUniqueObjects(const ObjectList<T>& olist)
+{
+  typename ObjectList<T>::const_iterator j;
+          
+  for(j = olist.begin(); !(j == olist.end()); j++)
+    {
+      AddObjectIfNotThere(*j);
+    }
+}
+ 
+/*F ObjectList<T>::RemoveObject(oldobject)  . . . . . .  Remove Single Object
+**
+**  DESCRIPTION
+**    oldobject: The object to be removed
+**
+**    The object specified is removed from the ObjectList
+**
+**  REMARKS
+**    remove(oldobject) is used 
+**
+*/
+template <class T>
+inline void ObjectList<T>::RemoveObject(const T& oldobject)
+{
+  (*this).remove(oldobject);
+}
+ 
+/*F ObjectList<T>::Remove(toremove) . . . . . . . . . Remove a set of objects
+**
+**  DESCRIPTION
+**    toremove: The set of objects to remove.
+**
+**  REMARKS
+**
+*/
+template <class T>
+inline void ObjectList<T>::Remove(const ObjectList<T>& toremove)
+{
+  typename list<T>::const_iterator i;
+     
+  for(i=toremove.begin();!(i == toremove.end()); i++)
+    RemoveObject(*i);
+}
+/*F ObjectList<T>::Unique() . . . . . . . . . . .  Only Unique Objects Remain
+**
+**  DESCRIPTION
+**    Remove all but unique objects
+**
+**  REMARKS
+**
+*/
+template <class T>
+inline void ObjectList<T>::Unique(void)
+{
+  (*this).sort();
+  (*this).unique();
+}
+/*F Sort()  . . . . . . . . . . . . . . . . . . . . . . . .  Sort the objects
+**
+**  DESCRIPTION
+**    Sort the objects
+**
+**  REMARKS
+**
+*/
+template <class T>
+inline void ObjectList<T>::Sort(void)
+{
+  (*this).sort();
+}
+
+/*C NotInObjectList . . . . . . . . . . . . . . . . . . . . . . .  work class
+**
+**  DESCRIPTION
+**     A class to determine whether an object is in a list of objects.
+**     The class is instantiated with the list to check against, 
+**     NotInObjectList(olist). The bool operator()(const T& obj) is then used
+**     check whether obj is in the list or not.
+**     
+**  REMARKS
+**    Used by Intersected
+*/
+template <class T>
+class NotInObjectList
+{
+  ObjectList<T> CompList;
+     
+public:
+     
+  NotInObjectList(const ObjectList<T>& comp)
+    : CompList(comp)
+    {
+    }
+  bool operator()(const T& object)
+    {
+      bool b =
+        (find(CompList.begin(),CompList.end(),object) == CompList.end());
+                    
+      return b;
+    }
+};
+ 
+/*F ObjectList<T>::Intersected(intersect) . . . . . .  Intersection with list
+**
+**  DESCRIPTION
+**    intersect: The list with which to intersect
+**
+**    The current list is intersected with the given list, i.e.
+**    if an element of the current list is not in the list,
+**    then it is removed.
+**
+**  REMARKS
+**
+*/
+template <class T>
+inline void ObjectList<T>::Intersected(const ObjectList<T>& intersect)
+{
+  NotInObjectList<T> notinlist(intersect);
+
+  /*
+  ObjectList<T>::iterator itlast = STD_NAMESPACE remove_if(begin(),
+                                                           end(),
+                                                           notinlist);
+  erase(itlast,end());
+  */
+  this->remove_if(notinlist);
+}
+#endif

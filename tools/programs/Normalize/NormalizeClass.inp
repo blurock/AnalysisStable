@@ -1,0 +1,29 @@
+ObjectClasses:
+%% -------------------------------------------------
+DataType: SimpleNormalize  A simple normalization
+Normalize Real Real
+%% -------------------------------------------------
+DataType: SimpleNormalizeOperation  The parameterized normalize function
+ParameterizedNormalize 
+ParameterSet Normalize Real
+%% -------------------------------------------------
+DataType: ExpressionTree  A Numeric Tree
+NormalizeParameters
++    NumOpPlus
+-    NumOpMinus
+*    NumOpMultiply
+/    NumOpDivide
+END
+%% -------------------------------------------------
+END
+ClassNamePairs:
+NormalizeAlg          AlgorithmSummary
+OperationRoot         String
+OperationClass        String
+ExpressionTreeClass   String
+Distributions         KeyWords
+END
+ObjectClasses:
+END
+ClassNamePairs:
+END

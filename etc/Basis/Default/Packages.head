@@ -1,0 +1,17 @@
+@c FILE     Packages.head
+@c PACKAGE  =Package=
+@c AUTHOR   =Author=
+@c 
+@c CONTENT
+@c   STURM package descriptions.
+@c
+@c COPYRIGHT (C)  =Environment= Library
+
+
+@node    Packages
+@chapter Packages
+@cindex  packages, list of
+
+This will contain descriptions of all packages.
+
+

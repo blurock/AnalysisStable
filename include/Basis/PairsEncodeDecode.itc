@@ -1,0 +1,208 @@
+/*  FILE     EncodeDecode.itc
+**  PACKAGE     REACTION    
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1995  REACTION Project / Edward S. Blurock 
+*/
+ 
+ 
+/*F ans = Encode(buffer,p)  . . . . . . . . . . . . . . . . . . . . BasicPair
+**
+**  DESCRIPTION
+**    buffer: The buffer class (input)
+**    p: The pair
+**    ans: true if successful
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+bool Encode(CommBuffer& buffer, BasicPair<T1,T2>& p)
+     {
+     return p.EncodeThis(buffer);
+     }
+/*F ans = Decode(buffer,p)  . . . . . . . . . . . . . . . . . . . . BasicPair
+**
+**  DESCRIPTION
+**    buffer: The buffer class (input)
+**    p: The pair
+**    ans: true if successful
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+bool Decode(CommBuffer& buffer, BasicPair<T1,T2>& p)
+     {
+     return p.DecodeThis(buffer);
+     }
+ 
+/*F ans = Encode(buffer,p)  . . . . . . . . . . . . . . . . . . . .  PairList
+**
+**  DESCRIPTION
+**    buffer: The buffer class (input)
+**    p: The pair
+**    ans: true if successful
+**    
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+bool Encode(CommBuffer& buffer, PairList<T1,T2>& p)
+     {
+     return p.EncodeThis(buffer);
+     }
+/*F ans = Decode(buffer,p)  . . . . . . . . . . . . . . . . . . . .  PairList
+**
+**  DESCRIPTION
+**    buffer: The buffer class (input)
+**    p: The pair
+**    ans: true if successful
+**    
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+bool Decode(CommBuffer& buffer, PairList<T1,T2>& p)
+     {
+     return p.DecodeThis(buffer);
+     }
+
+/*F ans = Encode(buffer,p)  . . . . . . . . . . . . . . . . . . SetOfPairSets
+**
+**  DESCRIPTION
+**    buffer: The buffer class (input)
+**    p: The pair
+**    ans: true if successful
+**    
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+bool Encode(CommBuffer& buffer, SetOfPairSets<T1,T2>& p)
+     {
+     return p.EncodeThis(buffer);
+     }
+/*F ans = Decode(buffer,p)  . . . . . . . . . . . . . . . . . . SetOfPairSets
+**
+**  DESCRIPTION
+**    buffer: The buffer class (input)
+**    p: The pair
+**    ans: true if successful
+**    
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+bool Decode(CommBuffer& buffer, SetOfPairSets<T1,T2>& p)
+     {
+     return p.DecodeThis(buffer);
+     }
+
+/*F ans = Encode(buffer,p)  . . . . . . . . . . . . . . . . . . SymmetricPair
+**
+**  DESCRIPTION
+**    buffer: The buffer class (input)
+**    p: The pair
+**    ans: true if successful
+**    
+**  REMARKS
+**
+*/
+template <class T1>
+bool Encode(CommBuffer& buffer, SymmetricPair<T1>& p)
+     {
+     return p.EncodeThis(buffer);
+     }
+/*F ans = Decode(buffer,p)  . . . . . . . . . . . . . . . . . . SymmetricPair
+**
+**  DESCRIPTION
+**    buffer: The buffer class (input)
+**    p: The pair
+**    ans: true if successful
+**    
+**  REMARKS
+**
+*/
+template <class T1>
+bool Decode(CommBuffer& buffer, SymmetricPair<T1>& p)
+     {
+     return p.DecodeThis(buffer);
+     }
+
+
+/*F ans = Encode(buffer,p)  . . . . . . . . . . . . . . . . SymmetricPairList
+**
+**  DESCRIPTION
+**    buffer: The buffer class (input)
+**    p: The pair
+**    ans: true if successful
+**    
+**  REMARKS
+**
+*/
+template <class T1>
+bool Encode(CommBuffer& buffer, SymmetricPairList<T1>& p)
+     {
+     return p.EncodeThis(buffer);
+     }
+/*F ans = Decode(buffer,p)  . . . . . . . . . . . . . . . . SymmetricPairList
+**
+**  DESCRIPTION
+**    buffer: The buffer class (input)
+**    p: The pair
+**    ans: true if successful
+**    
+**  REMARKS
+**
+*/
+template <class T1>
+bool Decode(CommBuffer& buffer, SymmetricPairList<T1>& p)
+     {
+     return p.DecodeThis(buffer);
+     }
+
+
+/*F ans = Encode(buffer,p)  . . . . . . . . . . . . .  SymmetricSetOfPairSets
+**
+**  DESCRIPTION
+**    buffer: The buffer class (input)
+**    p: The pair
+**    ans: true if successful
+**    
+**  REMARKS
+**
+*/
+template <class T1>
+bool Encode(CommBuffer& buffer, SymmetricSetOfPairSets<T1>& p)
+     {
+     return p.EncodeThis(buffer);
+     }
+/*F ans = Decode(buffer,p)  . . . . . . . . . . . . .  SymmetricSetOfPairSets
+**
+**  DESCRIPTION
+**    buffer: The buffer class (input)
+**    p: The pair
+**    ans: true if successful
+**    
+**  REMARKS
+**
+*/
+template <class T1>
+bool Decode(CommBuffer& buffer, SymmetricSetOfPairSets<T1>& p)
+     {
+     return p.DecodeThis(buffer);
+     }
+
+
+
+
+
+
+
+

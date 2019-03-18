@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  ParameterizedFunction
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for CoreObjects library package "ParameterizedFunction".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) CoreObjects Library
+
+@node     ParameterizedFunction Package
+@section  The "ParameterizedFunction" Package
+@cindex   package, ParameterizedFunction
+@cindex   ParameterizedFunction package
+@cindex   par namespace
+@cindex   namespaces, par
+
+@table @strong
+@item Package name
+@code{ParameterizedFunction}
+
+@item Namespace name
+@code{par}
+
+@item Header files
+@file{ParameterizedFunction.hh}, @file{ParameterizedFunctionType.hh}
+@end table
+
+
+@include ParameterizedFunction/Overview.texi
+
+@include ParameterizedFunction/Classes.texi

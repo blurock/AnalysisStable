@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  GeneralGraph
+@c AUTHOR   Mario Drobics
+@c 
+@c CONTENT
+@c   Texinfo documentation for CoreObjects library package "GeneralGraph".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) CoreObjects Library
+
+@node     GeneralGraph Package
+@section  The "GeneralGraph" Package
+@cindex   package, GeneralGraph
+@cindex   GeneralGraph package
+@cindex   MDD namespace
+@cindex   namespaces, MDD
+
+@table @strong
+@item Package name
+@code{GeneralGraph}
+
+@item Namespace name
+@code{MDD}
+
+@item Header files
+@file{GeneralGraph.hh}, @file{GeneralGraphType.hh}
+@end table
+
+
+@include GeneralGraph/Overview.texi
+
+@include GeneralGraph/Classes.texi

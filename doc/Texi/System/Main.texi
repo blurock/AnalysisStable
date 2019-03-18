@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  System
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for Basis library package "System".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) Basis Library
+
+@node     System Package
+@section  The "System" Package
+@cindex   package, System
+@cindex   System package
+@cindex   sys namespace
+@cindex   namespaces, sys
+
+@table @strong
+@item Package name
+@code{System}
+
+@item Namespace name
+@code{sys}
+
+@item Header files
+@file{System.hh}, @file{SystemType.hh}
+@end table
+
+
+@include System/Overview.texi
+
+@include System/Classes.texi

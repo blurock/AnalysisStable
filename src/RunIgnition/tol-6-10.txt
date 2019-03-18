@@ -1,0 +1,362 @@
+cd /home/reaction/cvs/Cantera/RunIgnition/src/RunIgnition/
+cd ../../examples/RunIgnition;make clean all run
+rm -f core *.o *~ *.bak
+CompileC++  -Wall -g -I/home/reaction/cvs/Cantera/RunIgnition/include/Cantera -I/home/reaction/cvs/Cantera/RunIgnition/include/Reaction -I/home/reaction/cvs/Cantera/RunIgnition/include/CoreObjects -I/usr/local/cantera/build/include  -c -o main.o main.cc
+CompileC++ -g -o otest main.o -L/home/reaction/cvs/Cantera/RunIgnition/lib -L/home/reaction/cvs/AnalysisStable/lib -lFullReaction -lFullSystem -lRunIgnition -lChemkinConvert -lFlame -lMechanismGraph -lMechLumping -lMechanism -lRxn -lUtilities -lEquilibriumConst -lThermoProps -lThermoTables -lRxn -lSECharge -lMolecule -lMolBond -lMolAtom -lDbase -lStaticAtom -lMolStats -lConsecutive -lVectorOperations -lGeneticOperations -lPopulationBasedOptimization -lOptimize -lCobwebCluster -lDecisionTreeAlgorithms -lEntropyObjects -lEquivalentClasses -lDescriptionProbs -lPredicateGen -lPredicateObjects -lDistributionAlgorithm -lPrimitiveStats -lEvaluationTree -lNumericOperations -lParameterizedFunction -lGeneralGraph -lGraphOperations -lClusterTree -lExpressionTree -lIterator -lNumericProperties -lMenuObjects -lUtilities -lInstancePCA -lGoalObjects -lAlgorithmObjects -lInstanceAlgorithms -lInstanceObjects -lDataObjects -lSelectObjects -lDirectedTreeObjects -lOperationObjects -lFunctionReal1DObjects -lLogicalObjects -lLogicalOperations -lNumericObjects -lCoreDataObjects -lNonStandard -lPCAAnalysis -lEigenValues -lEigenValuesOut -lGraph -lPairs -lSystem -lMatrixUtilities -lMatrixNumeric -lMatrixOut -lBasicLaTeXTable -lVector -lONames -lMixedClasses -lString -lObjects -lCommBuffer -lm  -lgdbm -L/usr/local/cantera/build/lib/i686-pc-linux-gnu -L/usr/local/sundials/lib -luser -loneD -lzeroD -ltransport -lcantera -lsundials_cvodes -lsundials_shared -lsundials_nvecserial -lctlapack -lctblas -lctmath -ltpx -lctf2c -lconverters -lctcxx
+Test.sh
+The Inputs are: xxx Initial test 0 
+ID:          31310
+Name:        ObjectIterator
+Description: Object Iterator Class
+ID:          31320
+Name:        NumericIterator
+Description: Numeric Iterator Class
+ID:          31330
+Name:        RealIterator
+Description: Real Number Iterator Class
+Merge Classes  Instances  SetOfObjects
+Reaction::
+Reaction::
+Command Line: 'Read /home/reaction/cvs/Reaction/data/mol/inputs/MoleculeClass.inp /home/reaction/cvs/Reaction/data/mol/inputs/Molecule.inp 0'
+Command Line: 'Read /home/reaction/cvs/Reaction/data/mol/inputs/MoleculeClass.inp /home/reaction/cvs/Reaction/data/mol/inputs/Molecule.inp 0'
+RxnAtomInformationClass::Read
+The Atoms Read in:
+ H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca Sc Ti V Cr Mn Fe Co Ni Cu Zn Ga Ge As Se Br Kr Rb Sr Y Zr Nb Mo Tc Ru Rh Pd Ag Cd In Sn Sb Te I Xe                                                                                                
+Reaction::
+Reaction::
+Command Line: 'Read /home/reaction/cvs/Reaction/data/mol/inputs/MolDbaseClass.inp /home/reaction/cvs/Reaction/data/mol/inputs/MolDbase.inp 0'
+Command Line: 'Read /home/reaction/cvs/Reaction/data/mol/inputs/MolDbaseClass.inp /home/reaction/cvs/Reaction/data/mol/inputs/MolDbase.inp 0'
+Reaction::
+Reaction::
+Command Line: 'Read /home/reaction/cvs/Reaction/data/rxn/inputs/ReactionClass.inp /home/reaction/cvs/Reaction/data/rxn/inputs/Reaction.inp 0'
+Command Line: 'Read /home/reaction/cvs/Reaction/data/rxn/inputs/ReactionClass.inp /home/reaction/cvs/Reaction/data/rxn/inputs/Reaction.inp 0'
+Reaction::
+Reaction::
+Command Line: 'Read /home/reaction/cvs/Reaction/data/mech/inputs/MechanismClass.inp /home/reaction/cvs/Reaction/data/mech/inputs/Mechanism.inp 0'
+Command Line: 'Read /home/reaction/cvs/Reaction/data/mech/inputs/MechanismClass.inp /home/reaction/cvs/Reaction/data/mech/inputs/Mechanism.inp 0'
+Reaction::
+Reaction::
+Command Line: 'Read /home/reaction/cvs/Reaction/data/mech/inputs/MechDbaseClass.inp /home/reaction/cvs/Reaction/data/mech/inputs/MechDbase.inp 0'
+Command Line: 'Read /home/reaction/cvs/Reaction/data/mech/inputs/MechDbaseClass.inp /home/reaction/cvs/Reaction/data/mech/inputs/MechDbase.inp 0'
+Reaction::
+Reaction::
+Command Line: 'Print Class RunIgnition'
+Command Line: 'Print Class RunIgnition'
+DataType: [31211,RunIgnition]  P(2 2)  SubClass: AlgorithmOperation (Algorithm: Run a single ignition job with Cantera) RunIgnition   Reaction::
+Reaction::
+Command Line: 'Read RunClass.inp Run.inp 0'
+Command Line: 'Read RunClass.inp Run.inp 0'
+Read SelectClass (SelectionTreeClass)
+Read SubAlgorithms (SelectionTree)
+====== After Reading SubAlgorithms: 'AlgorithmSummary'
+====== After Reading AlgorithmSummary: 'BaseAlgorithmRun'
+Reaction::
+Reaction::
+Command Line: 'SetAlgorithmClass BaseAlgorithmRun'
+Command Line: 'SetAlgorithmClass BaseAlgorithmRun'
+Algorithm Run set to : BaseAlgorithmRun
+Reaction::
+Reaction::
+Command Line: 'Read RunDataBaseClass.inp RunDataBase.inp 0'
+Command Line: 'Read RunDataBaseClass.inp RunDataBase.inp 0'
+Merge Classes  HeptaneAirMoleFractionsSetClass  Instances
+Merge Classes  GRIMoleFractionsSetClass  Instances
+Merge Classes  H2O2MoleFractionsSetClass  Instances
+Merge Classes  BaseMoleFractionsSetClass  Instances
+Reading Type: 'StandardObjectIterator'
+Reading Type: 'StandardObjectIterator'
+Reading Type: 'StandardObjectIterator'
+Done
+Reaction::
+Reaction::
+Command Line: 'Print Attribute IterationSet'
+Command Line: 'Print Attribute IterationSet'
+Name(17): IterationSet  (90024)  [Encode: Object.IterationSet]  
+Begin: ---------------------The set of Data Objects---------------------
+Name(1): Species  (90023)  [Encode: Object.ObjectIterator]  
+Begin: ---------------------The set of Data Objects---------------------
+Name(1): Stoch  (90028)  [Encode: Object.SetOfObjects]  
+Begin: ---------------------The set of Data Objects---------------------
+Name(2): CH4  (130)  [Encode: Object.Real]  Value: 0.095
+Name(4): O2  (130)  [Encode: Object.Real]  Value: 0.19
+Name(6): N2  (130)  [Encode: Object.Real]  Value: 0.7149
+
+End:   ---------------------The set of Data Objects---------------------
+
+
+
+End:   ---------------------The set of Data Objects---------------------
+
+Elements Left
+Name(17001): KeyWords  (17001)  [Encode: Object.KeyWords]  
+
+Name(2): Temperature  (90023)  [Encode: Object.ObjectIterator]  
+Begin: ---------------------The set of Data Objects---------------------
+Name(1): T1200  (130)  [Encode: Object.Real]  Value: 1200
+Name(2): T1250  (130)  [Encode: Object.Real]  Value: 1250
+Name(3): T1300  (130)  [Encode: Object.Real]  Value: 1300
+Name(4): T1350  (130)  [Encode: Object.Real]  Value: 1350
+Name(5): T1400  (130)  [Encode: Object.Real]  Value: 1400
+Name(6): T1450  (130)  [Encode: Object.Real]  Value: 1450
+
+End:   ---------------------The set of Data Objects---------------------
+
+Elements Left
+Name(17001): KeyWords  (17001)  [Encode: Object.KeyWords]  
+
+Name(3): Pressure  (90023)  [Encode: Object.ObjectIterator]  
+Begin: ---------------------The set of Data Objects---------------------
+Name(1): OneAtm  (130)  [Encode: Object.Real]  Value: 100000
+
+End:   ---------------------The set of Data Objects---------------------
+
+Elements Left
+Name(17001): KeyWords  (17001)  [Encode: Object.KeyWords]  
+
+
+End:   ---------------------The set of Data Objects---------------------
+
+ Reaction::
+Reaction::
+Command Line: 'RunAlgorithm RunSetOfConditionsAlg 0'
+Command Line: 'RunAlgorithm RunSetOfConditionsAlg 0'
+Key Already in List:FileSummary
+Key Already in List:ExtraOutput
+Key Already in List:Excel
+Key Already in List:MolFractions
+Key Already in List:ForwardRates
+Key Already in List:ReverseRates
+Key Already in List:NetProductionRates
+Key Already in List:TimeStepProperties
+Number of Intervals: 30000
+Time Step:           1e-06
+Input File: LundBase.cti
+Constant-pressure Adiabatic Ignition
+Beginning at T = 1200KPressure = 100000
+Begin Setup
+IdealGasMix GasState set up: 'LundBase.cti', 'LundBase'
+
+**** WARNING ****
+For species C4H612, discontinuity in cp/R detected at Tmid = 1000
+	Value computed using low-temperature polynomial:  20.128.
+	Value computed using high-temperature polynomial: 20.1809.
+
+**** WARNING ****
+For species C4H7, discontinuity in cp/R detected at Tmid = 1000
+	Value computed using low-temperature polynomial:  22.2902.
+	Value computed using high-temperature polynomial: 22.2431.
+
+**** WARNING ****
+For species S-C6H9, discontinuity in cp/R detected at Tmid = 1380
+	Value computed using low-temperature polynomial:  31.0727.
+	Value computed using high-temperature polynomial: 34.1618.
+
+**** WARNING ****
+For species S-C6H9, discontinuity in h/RT detected at Tmid = 1380
+	Value computed using low-temperature polynomial:  42.5314.
+	Value computed using high-temperature polynomial: 43.1503.
+
+**** WARNING ****
+For species S-C6H9, discontinuity in s/R detected at Tmid = 1380
+	Value computed using low-temperature polynomial:  81.9498.
+	Value computed using high-temperature polynomial: 82.6914.
+
+**** WARNING ****
+For species P-C6H9, discontinuity in cp/R detected at Tmid = 1380
+	Value computed using low-temperature polynomial:  30.3428.
+	Value computed using high-temperature polynomial: 34.7297.
+
+**** WARNING ****
+For species P-C6H9, discontinuity in h/RT detected at Tmid = 1380
+	Value computed using low-temperature polynomial:  36.7412.
+	Value computed using high-temperature polynomial: 37.5963.
+
+**** WARNING ****
+For species P-C6H9, discontinuity in s/R detected at Tmid = 1380
+	Value computed using low-temperature polynomial:  81.1109.
+	Value computed using high-temperature polynomial: 82.1288.
+
+**** WARNING ****
+For species C6H10, discontinuity in cp/R detected at Tmid = 1000
+	Value computed using low-temperature polynomial:  31.855.
+	Value computed using high-temperature polynomial: 33.9914.
+
+**** WARNING ****
+For species C6H10, discontinuity in h/RT detected at Tmid = 1000
+	Value computed using low-temperature polynomial:  24.6953.
+	Value computed using high-temperature polynomial: 24.9007.
+
+**** WARNING ****
+For species C6H10, discontinuity in s/R detected at Tmid = 1000
+	Value computed using low-temperature polynomial:  72.2072.
+	Value computed using high-temperature polynomial: 72.4236.
+CH4(14): 0.095
+N2(96): 0.7149
+O2(95): 0.19
+Setup Time: 1.37
+Ignition Delay Time:
+       time(ms) max(dT/dt):  29.532
+       time(ms) max(OH):     29.567
+
+ Tfinal =          2580.28
+ time =            53.23
+ Iterations:       1895
+ Evaluations:      30853
+ time per eval:    0.00172528
+
+Number of Intervals: 30000
+Time Step:           1e-06
+Input File: LundBase.cti
+Constant-pressure Adiabatic Ignition
+Beginning at T = 1250KPressure = 100000
+Begin Setup
+Previous IdealGasMix GasState used
+CH4(14): 0.095
+N2(96): 0.7149
+O2(95): 0.19
+Setup Time: 0
+Ignition Delay Time:
+       time(ms) max(dT/dt):  17.9415
+       time(ms) max(OH):     17.9799
+
+ Tfinal =          2648.58
+ time =            50.18
+ Iterations:       1921
+ Evaluations:      30809
+ time per eval:    0.00162874
+
+Number of Intervals: 30000
+Time Step:           1e-06
+Input File: LundBase.cti
+Constant-pressure Adiabatic Ignition
+Beginning at T = 1300KPressure = 100000
+Begin Setup
+Previous IdealGasMix GasState used
+CH4(14): 0.095
+N2(96): 0.7149
+O2(95): 0.19
+Setup Time: 0
+Ignition Delay Time:
+       time(ms) max(dT/dt):  11.011
+       time(ms) max(OH):     11.0563
+
+ Tfinal =          2667.56
+ time =            48.46
+ Iterations:       1920
+ Evaluations:      30883
+ time per eval:    0.00156915
+
+Number of Intervals: 30000
+Time Step:           1e-06
+Input File: LundBase.cti
+Constant-pressure Adiabatic Ignition
+Beginning at T = 1350KPressure = 100000
+Begin Setup
+Previous IdealGasMix GasState used
+CH4(14): 0.095
+N2(96): 0.7149
+O2(95): 0.19
+Setup Time: 0
+Ignition Delay Time:
+       time(ms) max(dT/dt):  6.7805
+       time(ms) max(OH):     6.826
+
+ Tfinal =          2686.32
+ time =            47.3
+ Iterations:       1901
+ Evaluations:      30931
+ time per eval:    0.00152921
+
+Number of Intervals: 30000
+Time Step:           1e-06
+Input File: LundBase.cti
+Constant-pressure Adiabatic Ignition
+Beginning at T = 1400KPressure = 100000
+Begin Setup
+Previous IdealGasMix GasState used
+CH4(14): 0.095
+N2(96): 0.7149
+O2(95): 0.19
+Setup Time: 0
+Ignition Delay Time:
+       time(ms) max(dT/dt):  4.1985
+       time(ms) max(OH):     4.24375
+
+ Tfinal =          2704.61
+ time =            47.71
+ Iterations:       1917
+ Evaluations:      30958
+ time per eval:    0.00154112
+
+Number of Intervals: 30000
+Time Step:           1e-06
+Input File: LundBase.cti
+Constant-pressure Adiabatic Ignition
+Beginning at T = 1450KPressure = 100000
+Begin Setup
+Previous IdealGasMix GasState used
+CH4(14): 0.095
+N2(96): 0.7149
+O2(95): 0.19
+Setup Time: 0
+Ignition Delay Time:
+       time(ms) max(dT/dt):  2.6155
+       time(ms) max(OH):     2.66837
+
+ Tfinal =          2722.74
+ time =            46.05
+ Iterations:       1918
+ Evaluations:      30763
+ time per eval:    0.00149693
+
+Name(17005): ConditionNames  (17005)  [Encode: Object.KeySet]  
+LundBase-Set-OneAtm-Stoch-T1200 LundBase-Set-OneAtm-Stoch-T1250 LundBase-Set-OneAtm-Stoch-T1300 LundBase-Set-OneAtm-Stoch-T1350 LundBase-Set-OneAtm-Stoch-T1400 
+LundBase-Set-OneAtm-Stoch-T1450 
+
+Reaction::
+Reaction::
+Command Line: 'Print Attribute ConditionNames'
+Command Line: 'Print Attribute ConditionNames'
+Name(32): ConditionNames  (17005)  [Encode: Object.KeySet]  
+LundBase-Set-OneAtm-Stoch-T1200 LundBase-Set-OneAtm-Stoch-T1250 LundBase-Set-OneAtm-Stoch-T1300 LundBase-Set-OneAtm-Stoch-T1350 LundBase-Set-OneAtm-Stoch-T1400 
+LundBase-Set-OneAtm-Stoch-T1450 
+ Reaction::
+Reaction::
+Command Line: 'Print Attribute'
+Command Line: 'Print Attribute'
+SERVERSENDDATA
+
+TEXTCHOICE
+command=xxx Experiment  test 0 Print Attribute
+activeCommunication=TRUE
+ ConditionNames
+ Conditions
+ DeltaT
+ FileRoot
+ FinalTime
+ GraphClassName
+ IterationSet
+ LundBase-Set-OneAtm-Stoch-T1200
+ LundBase-Set-OneAtm-Stoch-T1250
+ LundBase-Set-OneAtm-Stoch-T1300
+ LundBase-Set-OneAtm-Stoch-T1350
+ LundBase-Set-OneAtm-Stoch-T1400
+ LundBase-Set-OneAtm-Stoch-T1450
+ MolecularStructureDataBase
+ OutputName
+ PrintMechanism
+ ReadChemkinAlg
+ RunIgnitionAlg
+ RunSetOfConditionsAlg
+
+ENDTEXTCHOICE
+END
+ENDSERVERSENDDATA
+Reaction::
+Reaction::
+Command Line: 'END'
+Command Line: 'END'
+Killed
+make: *** [run] Error 137
+
+Compilation exited abnormally with code 2 at Tue May 30 15:43:50

@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  GeneticOperations
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for CoreObjects library package "GeneticOperations".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) CoreObjects Library
+
+@node     GeneticOperations Package
+@section  The "GeneticOperations" Package
+@cindex   package, GeneticOperations
+@cindex   GeneticOperations package
+@cindex   gen namespace
+@cindex   namespaces, gen
+
+@table @strong
+@item Package name
+@code{GeneticOperations}
+
+@item Namespace name
+@code{gen}
+
+@item Header files
+@file{GeneticOperations.hh}, @file{GeneticOperationsType.hh}
+@end table
+
+
+@include GeneticOperations/Overview.texi
+
+@include GeneticOperations/Classes.texi

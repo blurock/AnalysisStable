@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  BasicLaTeXTable
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for Basis library package "BasicLaTeXTable".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) Basis Library
+
+@node     BasicLaTeXTable Package
+@section  The "BasicLaTeXTable" Package
+@cindex   package, BasicLaTeXTable
+@cindex   BasicLaTeXTable package
+@cindex   tex namespace
+@cindex   namespaces, tex
+
+@table @strong
+@item Package name
+@code{BasicLaTeXTable}
+
+@item Namespace name
+@code{tex}
+
+@item Header files
+@file{BasicLaTeXTable.hh}, @file{BasicLaTeXTableType.hh}
+@end table
+
+
+@include BasicLaTeXTable/Overview.texi
+
+@include BasicLaTeXTable/Classes.texi

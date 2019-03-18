@@ -1,0 +1,106 @@
+lex  -t sturm2texi.l > sturm2texi.c
+gcc -O -Wall   -c sturm2texi.c -o sturm2texi.o
+In file included from sturm2texi.l:41:
+sturm2texidef.c:99: redefinition of `YY_BUFFER_STATE'
+sturm2texi.c:99: `YY_BUFFER_STATE' previously declared here
+sturm2texidef.c:141: redefinition of `yy_size_t'
+sturm2texi.c:141: `yy_size_t' previously declared here
+sturm2texidef.c:145: redefinition of `struct yy_buffer_state'
+sturm2texidef.c:201: redefinition of `yy_current_buffer'
+sturm2texi.c:201: `yy_current_buffer' previously defined here
+sturm2texidef.c:219: redefinition of `yy_c_buf_p'
+sturm2texi.c:219: `yy_c_buf_p' previously defined here
+sturm2texidef.c:220: redefinition of `yy_init'
+sturm2texi.c:220: `yy_init' previously defined here
+sturm2texidef.c:221: redefinition of `yy_start'
+sturm2texi.c:221: `yy_start' previously defined here
+sturm2texi.l: In function `yylex':
+sturm2texi.l:51: `filename' undeclared (first use this function)
+sturm2texi.l:51: (Each undeclared identifier is reported only once
+sturm2texi.l:51: for each function it appears in.)
+sturm2texi.l:51: warning: implicit declaration of function `StrCpy'
+sturm2texi.l:52: `funcname' undeclared (first use this function)
+sturm2texi.l:53: `SectionFileName' undeclared (first use this function)
+sturm2texi.l:63: warning: implicit declaration of function `BeginSYNOPSIS_NAME'
+sturm2texi.l:65: warning: implicit declaration of function `NOECHO'
+sturm2texi.l:77: warning: implicit declaration of function `Error'
+sturm2texi.l:78: warning: implicit declaration of function `REPARSE'
+sturm2texi.l:87: warning: implicit declaration of function `NewSection'
+sturm2texi.l:109: `IsOperator' undeclared (first use this function)
+sturm2texi.l:110: warning: implicit declaration of function `AddSynFunction'
+sturm2texi.l:111: warning: implicit declaration of function `BeginFunction'
+sturm2texi.l:119: warning: implicit declaration of function `SetReturnVariable'
+sturm2texi.l:120: warning: implicit declaration of function `AddSynReturn'
+sturm2texi.l:126: `Synopsis' undeclared (first use this function)
+sturm2texi.l:126: warning: implicit declaration of function `StrCat'
+sturm2texi.l:143: warning: implicit declaration of function `AddSynVar'
+sturm2texi.l:144: `SynArgNum' undeclared (first use this function)
+sturm2texi.l:156: warning: implicit declaration of function `TXTOUT'
+sturm2texi.l:174: warning: implicit declaration of function `BeginBOLD'
+sturm2texi.l:175: warning: implicit declaration of function `BeginCODE'
+sturm2texi.l:176: warning: implicit declaration of function `BeginMATH'
+sturm2texi.l:177: warning: implicit declaration of function `BeginVAR'
+sturm2texi.l:184: warning: implicit declaration of function `SetIndent'
+sturm2texi.l:185: warning: implicit declaration of function `PushIndent'
+sturm2texi.l:186: `ReturnVarFlag' undeclared (first use this function)
+sturm2texi.l:187: warning: implicit declaration of function `EndSYNOPSIS_TXT'
+sturm2texi.l:194: warning: implicit declaration of function `SetExpectIndent'
+sturm2texi.l:195: warning: implicit declaration of function `BeginSYNOPSIS_DARG'
+sturm2texi.l:203: warning: implicit declaration of function `EndFunction'
+sturm2texi.l:210: warning: implicit declaration of function `BeginPROTO_RET'
+sturm2texi.l:215: `NoSynopsis' undeclared (first use this function)
+sturm2texi.l:226: warning: implicit declaration of function `CheckIndent'
+sturm2texi.l:232: `DescArgNum' undeclared (first use this function)
+sturm2texi.l:233: warning: implicit declaration of function `PopIndent'
+sturm2texi.l:235: warning: implicit declaration of function `EndSYNOPSIS_DARG'
+sturm2texi.l:251: warning: implicit declaration of function `VAROUT'
+sturm2texi.l:261: warning: implicit declaration of function `TypeSubstOUT'
+sturm2texi.l:263: warning: implicit declaration of function `RecursiveBegin'
+sturm2texi.l:300: warning: implicit declaration of function `HeaderOUT'
+sturm2texi.l:326: warning: implicit declaration of function `AddReturnSubst'
+sturm2texi.l:327: warning: implicit declaration of function `strstr'
+sturm2texi.l:329: `ReturnType' undeclared (first use this function)
+sturm2texi.l:349: warning: implicit declaration of function `StrLen'
+sturm2texi.l:350: `ClassStr' undeclared (first use this function)
+sturm2texi.l:350: warning: implicit declaration of function `GetClass'
+sturm2texi.l:354: warning: implicit declaration of function `AddClassSubst'
+sturm2texi.l:355: warning: implicit declaration of function `BeginPROTO_ARGS'
+sturm2texi.l:364: `TypeStr' undeclared (first use this function)
+sturm2texi.l:365: warning: implicit declaration of function `GetType'
+sturm2texi.l:366: warning: implicit declaration of function `AddTypeSubst'
+sturm2texi.l:367: `ClassSubstDone' undeclared (first use this function)
+sturm2texi.l:371: warning: implicit declaration of function `StrClear'
+sturm2texi.l:384: `ProtoArgNum' undeclared (first use this function)
+sturm2texi.l:386: `ArgsCnt' undeclared (first use this function)
+sturm2texi.l:454: warning: implicit declaration of function `BeginVERBATIM'
+sturm2texi.l:457: warning: implicit declaration of function `BeginLIST'
+sturm2texi.l:462: warning: implicit declaration of function `RecursiveReturn'
+sturm2texi.l:503: warning: implicit declaration of function `EndBOLD'
+sturm2texi.l:530: warning: implicit declaration of function `EndCODE'
+sturm2texi.l:552: warning: implicit declaration of function `ITEMOUT'
+sturm2texi.l:558: warning: implicit declaration of function `EndLIST'
+sturm2texi.l:588: warning: implicit declaration of function `EndMATH'
+sturm2texi.l:597: warning: implicit declaration of function `BeginMATHVAR'
+sturm2texi.l:598: warning: implicit declaration of function `EndMATHVAR'
+sturm2texi.l:600: `MathIText' undeclared (first use this function)
+sturm2texi.l:601: `MathTText' undeclared (first use this function)
+sturm2texi.l:633: warning: implicit declaration of function `EndVAR'
+sturm2texi.l:656: warning: implicit declaration of function `EndVERBATIM'
+sturm2texi.l: At top level:
+sturm2texi.l:327: warning: previous external decl of `strstr'
+In file included from sturm2texi.l:680:
+/usr/include/string.h:137: warning: type mismatch with previous implicit declaration
+sturm2texi.l:327: warning: previous implicit declaration of `strstr'
+/usr/include/string.h:137: warning: `strstr' was previously implicitly declared to return `int'
+sturm2texi.l: In function `usage':
+sturm2texi.l:708: `MAX_SUBST' undeclared (first use this function)
+sturm2texi.l:708: `OUTFILE_NAME' undeclared (first use this function)
+sturm2texi.l: In function `main':
+sturm2texi.l:729: `ProgramName' undeclared (first use this function)
+sturm2texi.l:748: `pipe_output' undeclared (first use this function)
+sturm2texi.l:753: `Max_Subst' undeclared (first use this function)
+sturm2texi.l:767: `OUTFILE_NAME' undeclared (first use this function)
+sturm2texi.l: At top level:
+sturm2texi.l:1029: warning: `yyunput' defined but not used
+make: *** [sturm2texi.o] Error 1
+rm sturm2texi.c

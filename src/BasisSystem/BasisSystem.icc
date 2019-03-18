@@ -1,0 +1,23 @@
+/*  FILE     BasisSystem.icc
+**  PACKAGE  BasisSystem
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    Inline functions for the "BasisSystem" package.
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1997 Basis Library
+*/
+ 
+#ifndef BasisSRC_BASISSYSTEM_ICC
+#define BasisSRC_BASISSYSTEM_ICC
+ 
+#pragma interface
+
+
+
+
+
+
+#endif

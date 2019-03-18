@@ -1,0 +1,25 @@
+FILE
+  SectionNames
+
+DESCRIPTION
+  Gives a list of standard section names.
+
+AUTHORS
+  Volker Stahl, Andreas Neubacher
+
+======================================================================
+
+Arithmetic
+Assignment
+Bit Operations
+Constants
+Constructors
+Conversion
+Evaluation
+Intern
+Differentiation
+IO
+Package Initialization
+Predicates
+Random
+Standard Functions

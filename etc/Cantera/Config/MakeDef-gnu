@@ -1,0 +1,71 @@
+# FILE     MakeDef-gnu
+# PACKAGE  Maintenance
+# AUTHOR   Andreas Neubacher
+#          Modified for the environment option by Edward S. Blurock
+#
+# CONTENT
+#   GNU Makefile containing standard definitions for makefiles used in the
+#   CodeBase system.  This file is intended for inclusion in other CodeBase
+#   makefiles.
+#
+#   GNU tools version.
+#
+# COPYRIGHT (C) 1997 =Environment= Library
+
+#V Command variable definitions.
+
+CC=CompileCC
+CXX=CompileC++
+
+ifeq "$(LTYPE)" "sequential"
+  CC=CompileCC
+  CXX=CompileC++
+endif
+
+ifeq "$(LTYPE)" "parallel"
+  CC=psturmcc
+  CXX=psturmc++
+endif
+
+AR=ar -vq
+RANLIB=ranlib
+
+export CC CXX RANLIB AR MAKE
+
+
+#V Other default variable definitions.
+
+CPPFLAGS+=-Wall
+
+ifeq "$(LSPEED)" "debugging"
+  CPPFLAGS+=-DSTURM_Assert
+  CXXFLAGS+=-ggdb -gstabs
+  CFLAGS+=-ggdb -gstabs
+#  LDFLAGS+=-g
+endif
+ifeq "$(LSPEED)" "optimized"
+  CXXFLAGS+=-O
+  CFLAGS+=-O
+  LDFLAGS+=-O
+endif
+ifeq "$(LSPEED)" "profiling"
+  CXXFLAGS+=-O -DSTURM_PROFILING
+  CFLAGS+=-O
+  LDFLAGS+=-O -DSTURM_PROFILING
+endif
+
+
+#F Default target definitions.
+
+.PHONY: all clean cleaner
+
+default:
+	@echo Do not run this makefile without arguments!
+	@echo Try "make all", "make clean", etc.
+
+clean::
+	$(RM) core *.o *~ *.bak
+
+cleaner:: clean
+
+

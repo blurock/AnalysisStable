@@ -1,0 +1,636 @@
+/*  FILE     Graph.icc
+**  PACKAGE     REACTION    
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1995  REACTION Project / Edward S. Blurock 
+*/
+/*S Constructors
+*/
+/*F GraphNode() . . . . . . . . . . . . . . . . . . . . . . Empty Constructor
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+GraphNode<KeyType,T>::GraphNode() 
+{
+}
+ 
+/*F GraphNode(node) . . . . . . . . . . . . . . . . . . . .  Copy Constructor
+**
+**  DESCRIPTION
+**    node: The node to be copied
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+GraphNode<KeyType,T>::GraphNode(const GraphNode& node)
+  : Key(node.Key),
+    Value(node.Value),
+    Sons(node.Sons),
+    Parents(node.Parents)
+{
+}
+ 
+/*F GraphNode(value,key,parent) . . . . . . . . . . . . . . . . .  Initialize
+**
+**  DESCRIPTION
+**    value: The value of the node
+**    key: The key word for the node
+**    parent: The first parent of the node
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+GraphNode<KeyType,T>::GraphNode(const T& value,
+                                const KeyType& key,
+                                const KeyType& parent)
+  : Key(key),
+    Value(value)
+{
+  Parents.AddObject(parent);
+}
+ 
+/*F GraphNode(value,key)  . . . . . . . . . . . . . . . . . . . .  Initialize
+**
+**  DESCRIPTION
+**    value: The value of the node
+**    key: The key word for the node
+**    
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+GraphNode<KeyType,T>::GraphNode(const T& value,
+                                const KeyType& key)
+  : Key(key),Value(value)
+{
+}
+
+/*S Modifiers
+*/
+/*F AddSonToNode(son) . . . . . . . . . . . . . . . . . . . . . . . Add a son
+**
+**  DESCRIPTION
+**    son: The keyword of the son to be added
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+inline void GraphNode<KeyType,T>::AddSonToNode(const KeyType& son)
+{
+  Sons.AddObject(son);
+}
+ 
+/*F AddParentToNode(parent) . . . . . . . . . . . . . . . . . .  Add a Parent
+**
+**  DESCRIPTION
+**    parent: The keyword of the parent to be added
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+inline void GraphNode<KeyType,T>::AddParentToNode(const KeyType& parent)
+{
+  Parents.AddObject(parent);
+}
+
+/*S Retrieval
+*/
+/*F value = GraphNodeValue()  . . . . . . . . . . . . . . . . . returns value
+**
+**  DESCRIPTION
+**    value: the value (dereferenced) of the node
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+inline T& GraphNode<KeyType,T>::GraphNodeValue()
+{
+  return Value;
+}
+/*F key = GetKey()  . . . . . . . . . . . . . . . . . . . . returns key value
+**
+**  DESCRIPTION
+**    key: the key value (dereferenced) of the node
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+inline KeyType& GraphNode<KeyType,T>::GetKey()
+{
+  return Key;
+}
+ 
+/*F nlist = GetNeighborList() . . . . . . . . . . . . . . . . . . . neighbors
+**
+**  DESCRIPTION
+**    nlist: The list of neighbors of the node.  This includes both the
+**           sons and the parents
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+inline ObjectList<KeyType> GraphNode<KeyType,T>::GetNeighborList()
+{
+  ObjectList<KeyType> neighbors(Sons.size()+Parents.size());
+  typename ObjectList<KeyType>::iterator i;
+          
+  i = copy(Sons.begin(),
+           Sons.end(),
+           neighbors.begin());
+  copy(Parents.begin(),
+       Parents.end(),
+       i);
+  return neighbors;
+}
+ 
+
+/*C RemoveAsParent<KeyType,T> . . . . . . . . . . . . . . . . . . . . .  work
+**
+**  DESCRIPTION
+**     Working routine to remove a node as a parent from the set of nodes.
+**     This is used when the node is to be erased and all references 
+**     to it must be removed from the set of nodes.  The class is 
+**     initialized with a set the set of nodes and then RemoveObject
+**     is used to remove the given node from the list of sons
+**     
+**  REMARKS
+**    A bad style routine, uses a pointer to the nodes in the class.
+**    The operator() modifies this node list.
+**
+*/
+template <class KeyType, class T>
+class RemoveAsParent
+{
+  KeyType ParentKey;
+  SearchableObjectListSimple< KeyType, GraphNode<KeyType,T> > *Nodes;
+ public:
+     
+  RemoveAsParent(const KeyType& key, 
+                 SearchableObjectListSimple< KeyType, GraphNode<KeyType,T> > *nodes)
+    : ParentKey(key)
+    {
+      Nodes = nodes;
+    }
+  void operator()(KeyType& parent)
+    {
+      (*Nodes)[parent].Sons.RemoveObject(ParentKey);
+    }
+};
+/*C RemoveAsSon<KeyType,T>  . . . . . . . . . . . . . . . . . . . . . .  work
+**
+**  DESCRIPTION
+**     Working routine to remove a node as a son from the set of nodes.
+**     This is used when the node is to be erased and all references 
+**     to it must be removed from the set of nodes.  The class is 
+**     initialized with a set the set of nodes and then RemoveObject
+**     is used to remove the given node from the list of parents
+**     
+**  REMARKS
+**    A bad style routine, uses a pointer to the nodes in the class.
+**    The operator() modifies this node list.
+**
+*/
+template <class KeyType, class T>
+class RemoveAsSon
+{
+  KeyType SonKey;
+  SearchableObjectListSimple< KeyType, GraphNode<KeyType,T> > *Nodes;
+     
+ public:
+     
+  RemoveAsSon(const KeyType& key, 
+              SearchableObjectListSimple< KeyType, GraphNode<KeyType,T> > *nodes)
+    : SonKey(key)
+    {
+      Nodes = nodes;
+    }
+  void operator()(const KeyType& son)
+    {
+      (*Nodes)[son].Parents.RemoveObject(SonKey);
+    }
+};
+
+ 
+
+/*S Constructors
+*/
+/*F Graph() . . . . . . . . . . . . . . . . . . . . . . . . Empty Constructor
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+inline Graph<KeyType,T>::Graph()
+  : Nodes()
+{
+}
+
+ 
+/*F Graph(graph)  . . . . . . . . . . . . . . . . . . . . .  Copy Constructor
+**
+**  DESCRIPTION
+**    graph: to be copied
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+inline Graph<KeyType,T>::Graph(const Graph& graph)
+  : Nodes(graph.Nodes),
+    Bonds(graph.Bonds)
+{
+}
+     
+ 
+/*S Modifiers
+*/
+/*F Graph<KeyType,T>::AddNodeToGraph(key,value,Parent)  . . . . .  Add a node
+**
+**  DESCRIPTION
+**    key: The keyword of the node
+**    value: The value of the node
+**    Parent: The parent of the node
+**
+**    The node is added to the list of nodes.  Within the Parent
+**    node, the key is added to the list of sons and within the 
+**    node itself, the Parent is added to the list of parents. 
+**
+**    In addition, a bond is defined between the Parent and this
+**    node and added to the list of bonds
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+inline void Graph<KeyType,T>::AddNodeToGraph(const KeyType& key, 
+                                             const T& value,
+                                             const KeyType& Parent)
+{
+  GraphNode<KeyType,T> node(value,key,Parent);
+  SymmetricPair<KeyType> bond(Parent,key);
+     
+  Nodes[Parent].AddSonToNode(key);
+  KeyType key1(key);
+  Nodes.AddObject(key1,node);
+  Bonds.AddObject(bond);
+     
+  //     cout << node;
+}
+
+ 
+/*F Graph<KeyType,T>::AddNodeToGraph(key,value) . . . . . . Add a (root) node
+**
+**  DESCRIPTION
+**    key: The keyword of the node
+**    value: The value of the node
+**
+**    The node is added to the list of nodes.
+**    
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+inline void Graph<KeyType,T>::AddNodeToGraph(const KeyType& key, 
+                                             const T& value)
+{
+  GraphNode<KeyType,T> node(value,key);
+  Nodes.AddObject(key,node); 
+  //     cout << node;
+}
+
+ 
+/*F Graph<KeyType,T>::AddBondToGraph(parent,son)  . .  Add bond between nodes
+**
+**  DESCRIPTION
+**    parent: The first node
+**    son: The second node
+**
+**    A bond is created and added to the bond list
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+inline void Graph<KeyType,T>::AddBondToGraph(const KeyType& parent,
+                                             const KeyType& son)
+{
+  SymmetricPair<KeyType> bond(parent,son);
+  Bonds.AddObject(bond);
+
+  Nodes[parent].AddSonToNode(son);
+  Nodes[son].AddParentToNode(parent);
+}
+     
+/*F Graph<KeyType,T>::RemoveGraphNode(key)  . . . . . . remove node and bonds
+**
+**  DESCRIPTION
+**    key: The keyword of the bond to be removed
+**
+**    The node and all references (sons and parents) 
+**    to this node are erased
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+inline void Graph<KeyType,T>::RemoveGraphNode(const KeyType& key)
+{
+  RemoveAsParent<KeyType,T> removeparent(key,&Nodes);
+  RemoveAsSon<KeyType,T> removeson(key,&Nodes);
+     
+  for_each(Nodes[key].Parents.begin(),
+           Nodes[key].Parents.end(),
+           removeparent);
+  for_each(Nodes[key].Sons.begin(),
+           Nodes[key].Sons.end(),
+           removeson);
+  Nodes.RemoveObject(key);
+
+  Bonds.RemoveWithI(key);
+  Bonds.RemoveWithJ(key);     
+}
+
+
+/*S Retrieval
+*/
+/*F node = Graph<KeyType,T>::FindGraphNode(key) . . . . . . .  find given key
+**
+**  DESCRIPTION
+**    key: Keyword of the node to be found
+**    node: The node with that keyword
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+inline GraphNode<KeyType,T>& Graph<KeyType,T>::FindGraphNode(const KeyType& key)
+{
+  return Nodes[key];
+}         
+
+ 
+ 
+/*C KeyOfMatchingValue  . . . . . . . . . . . . . . . . . . . . . . . .  work
+**
+**  DESCRIPTION
+**    A working class to form a list of keys of nodes matching a 
+**    given value.  The class is initialized with the value to
+**    be matched.  The operator() is used with an STL accumulate
+**    with each iteration giving the current list of keys and 
+**    the node pair (from the SearchableObjects).  If the
+**    values match, then the key is added to the list
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+struct KeyOfMatchingValue
+{
+  T Value;
+     
+  KeyOfMatchingValue(const T& value)
+    : Value(value)
+    {
+    }
+  ObjectList<KeyType>& operator()(ObjectList<KeyType>& keylist, 
+                                  pair<const KeyType, GraphNode<KeyType,T> >& objpair)
+    {
+      if(objpair.second == Value)
+        keylist.AddObject((KeyType&) objpair.first);
+      return keylist;
+    }
+};
+
+/*F klist = Graph<KeyType,T>::NodesMatchingValue(value) . . . matching values
+**
+**  DESCRIPTION
+**    value:  The value to compare with
+**    klist:  The list of keys of the nodes with this value
+**
+**    Within the graph, the list of nodes having the given value are 
+**    put into an ObjectList of keys.
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+inline ObjectList<KeyType> Graph<KeyType,T>::NodesMatchingValue(const T& value)
+{
+  ObjectList<KeyType> samelist;
+  KeyOfMatchingValue<KeyType,T> matching(value);
+     
+  samelist = accumulate(Nodes.begin(),
+                        Nodes.end(),
+                        samelist,
+                        matching);
+  return samelist;
+}
+
+ 
+/*F n = Graph<KeyType,T>::NumberOfNodes() . . . . . . . . . . . . . . . nodes
+**
+**  DESCRIPTION
+**    n: The number of nodes
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+inline int Graph<KeyType,T>::NumberOfNodes()
+{
+  return Nodes.size();
+}
+ 
+/*F plist = Graph<KeyType,T>::GraphToPairList() . . . . . .  create pair list
+**
+**  DESCRIPTION
+**    plist: The list of keyword-value pairs from the nodes
+**
+**    The set of nodes of the graph are converted to a set of pairs, where
+**    the first value of the pair is the keyword of the node and the 
+**    second is the value of the node.  This is used in conjuction with
+**    the Pairs routines (such as in Subgraph search)
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+inline PairList< KeyType,T > Graph<KeyType,T>::GraphToPairList()
+{
+  PairList< KeyType,T > plist(Nodes.size());
+  GraphNodeToPair<  KeyType,T > nodetopair;
+     
+  transform(Nodes.begin(),
+            Nodes.end(),
+            plist.begin(),
+            nodetopair);
+  return plist;
+}
+ 
+/*F plist = Graph<KeyType,T>::GraphToPairList(keys) . . . .  create pair list
+**
+**  DESCRIPTION
+**    keys: The keys of the nodes to make the pairs
+**    plist: The list of keyword-value pairs from the nodes
+**
+**    The set of nodes of the graph are converted to a set of pairs, where
+**    the first value of the pair is the keyword of the node and the 
+**    second is the value of the node.  This is used in conjuction with
+**    the Pairs routines (such as in Subgraph search)
+**
+**    
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+inline PairList< KeyType,T > Graph<KeyType,T>::GraphToPairList(ObjectList<KeyType>& keys)
+{
+  PairList< KeyType,T > plist;
+  typename ObjectList<KeyType>::iterator i;
+     
+  for(i=keys.begin(); i != keys.end() ; i++)
+    {
+      BasicPair<KeyType,T> p(*i,
+                             Nodes[(*i)].GraphNodeValue() );
+          
+      plist.AddObject(p);
+    }
+     
+  return plist;
+}
+ 
+/*F values = Graph<KeyType,T>::GetSetOfGraphKeys()  . . . . . .  list of keys
+**
+**  DESCRIPTION
+**    values: The list of keys of all the nodes in the graph
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+inline ObjectList<KeyType> Graph<KeyType,T>::GetSetOfGraphKeys() const
+{
+  ObjectList<KeyType> values(Nodes.size());
+  GetGraphNodeKey<KeyType,T> nodekeys;
+     
+  transform(Nodes.begin(),
+            Nodes.end(),
+            values.begin(),
+            nodekeys);
+  return values;
+}
+
+ 
+/*F u = Graph<KeyType,T>::GetSetOfUniqueGraphValues() . .  unique node values
+**
+**  DESCRIPTION
+**    u: The list of unique (i.e., no repititions) node values in the graph
+**    
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+inline ObjectList<T> Graph<KeyType,T>::GetSetOfUniqueGraphValues()
+{
+  ObjectList<T> values(Nodes.size());
+  GetGraphNodeValue<KeyType,T> nodevalue;
+     
+  transform(Nodes.begin(),
+            Nodes.end(),
+            values.begin(),
+            nodevalue);
+  values.Unique();
+
+  return values;
+}
+ 
+/*F u = Graph<KeyType,T>::GetSetOfUniqueGraphValues(keys)  unique node values
+**
+**  DESCRIPTION
+**    keys: The keys of the nodes from which to take the values (i.e. a
+**          subset of the nodes
+**    u: The list of unique (i.e., no repititions) node values in the graph
+**    
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+inline ObjectList<T> Graph<KeyType,T>::GetSetOfUniqueGraphValues(const ObjectList<KeyType>& keys)
+{
+  ObjectList<T> values;
+  typename ObjectList<KeyType>::const_iterator i;
+     
+  for(i=keys.begin(); i != keys.end() ; i++)
+    {
+      values.push_back( Nodes[(*i)].GraphNodeValue() );
+    }
+  values.Unique();
+  return values;
+}
+               
+/*F pairs = GraphEquivalentSets(values,l,key) . . . . . . . . . . equivalents
+**
+**  DESCRIPTION
+**    values: A list of unique node values
+**    l: A list of keys of current valid nodes
+**    key: A node key
+**    pairs: A list of PairLists, each corresponding to a particular node value (values).
+**
+**    - The neighbors of the node of key are determined
+**    - This is intersected with the current set of valid nodes
+**    - A set of key-value pairs is formed from this set
+**    - These are then grouped according to the list of values given
+**
+**    This is a key procedure in the subgraph search to find
+**    corresponding nodes of the same value
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+inline SetOfPairSets<KeyType,T> 
+Graph<KeyType,T>::GraphEquivalentSets(ObjectList< T > values,
+                                      ObjectList<KeyType>& l,
+                                      KeyType& key)
+
+{
+  //     cout << "GraphEquivalentSets\n";
+     
+     
+  GraphNode<KeyType,T> node = FindGraphNode(key);
+     
+  ObjectList<KeyType> neighbors = node.GetNeighborList();
+  //     cout << l;
+  //     cout << "\n";
+     
+  neighbors.Intersected(l);
+
+  //     cout << neighbors;
+  //     cout << "\n";
+
+  PairList<KeyType,T> gpairs = GraphToPairList(neighbors);
+     
+  SetOfPairSets<KeyType,T> pairs;
+     
+  pairs.SetsOfEquivalentJ(values,gpairs);
+     
+  return pairs;
+}

@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  PrimitiveStats
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for Basis library package "PrimitiveStats".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) Basis Library
+
+@node     PrimitiveStats Package
+@section  The "PrimitiveStats" Package
+@cindex   package, PrimitiveStats
+@cindex   PrimitiveStats package
+@cindex   stat namespace
+@cindex   namespaces, stat
+
+@table @strong
+@item Package name
+@code{PrimitiveStats}
+
+@item Namespace name
+@code{stat}
+
+@item Header files
+@file{PrimitiveStats.hh}, @file{PrimitiveStatsType.hh}
+@end table
+
+
+@include PrimitiveStats/Overview.texi
+
+@include PrimitiveStats/Classes.texi

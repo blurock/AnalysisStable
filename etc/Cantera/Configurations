@@ -1,0 +1,27 @@
+#  FILE     Configurations
+#  PACKAGE  Maintenance
+#  AUTHOR   Andreas Neubacher
+#
+#
+#  CONTENT
+#    This file contains valid configurations for the STURM library.
+#
+#    The *last* match found will be the one used.  For multiple matches
+#    the last option decides the priority and the other options refine the
+#    match.  Example:  If files
+#
+#		Config/FILE-generic
+#		Config/FILE-gnu-irix
+#		Config/FILE-nognu-irix
+#
+#    are configured for "irixgnu", "FILE-gnu-irix" will be chosen.
+#    "generic" is rejected because it comes earlier than "irix" in the
+#    optionlist for "irixgnu".  "-parallel-" is rejected because it does
+#    not match any option in the optionlist for "irixgnu".
+#
+#  COPYRIGHT (C)  STURM Project, 1995 RISC Linz
+
+generic		generic
+irix		generic nognu pvm irix
+irixgnu		generic gnu pvm irix
+linux		generic gnu linux

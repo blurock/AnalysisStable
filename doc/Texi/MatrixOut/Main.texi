@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  MatrixOut
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for Basis library package "MatrixOut".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) Basis Library
+
+@node     MatrixOut Package
+@section  The "MatrixOut" Package
+@cindex   package, MatrixOut
+@cindex   MatrixOut package
+@cindex   mout namespace
+@cindex   namespaces, mout
+
+@table @strong
+@item Package name
+@code{MatrixOut}
+
+@item Namespace name
+@code{mout}
+
+@item Header files
+@file{MatrixOut.hh}, @file{MatrixOutType.hh}
+@end table
+
+
+@include MatrixOut/Overview.texi
+
+@include MatrixOut/Classes.texi

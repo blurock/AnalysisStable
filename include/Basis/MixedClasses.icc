@@ -1,0 +1,636 @@
+/*  FILE     MixedClasses.icc
+**  PACKAGE  MixedClasses
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    Inline functions for the "MixedClasses" package.
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C)  REACTION Project, Edward S. Blurock
+*/
+ 
+#ifndef REACTIONSRC_MIXEDCLASSES_ICC
+#define REACTIONSRC_MIXEDCLASSES_ICC
+
+/*S Constructors
+*/
+/*F PntrMixed() . . . . . . . . . . . . . . . . . . . . . . empty constructor
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+template <class ObjectID,class BaseClass>
+PntrMixed<ObjectID,BaseClass>::PntrMixed()
+  : Pntr(NULL)
+{
+#ifdef MIXCLASSES_DEBUG
+  cout << "PntrMixed: Empty\n";
+  cout << this;
+  cout <<"\n";
+     
+#endif
+  Pntr = new BaseClass;
+}
+ 
+/*F PntrMixed(id,object)  . . . . . . . . . . . . . . . . . . . . . .  create
+**
+**  DESCRIPTION
+**    id: The key to identify the object
+**    object: The object to be stored
+**    name: The type of the object
+**
+**  REMARKS
+**
+*/
+template <class ObjectID,class BaseClass>
+PntrMixed<ObjectID,BaseClass>::PntrMixed(const ObjectID& id, 
+                                         BaseClass* object,
+                                         const String& name)
+  : Pntr(object->Clone()),ID(id),StructureName(name)
+{
+#ifdef MIXCLASSES_DEBUG
+  cout << "PntrMixed: object, baseclass -- ";
+  cout << this;
+  cout << "\n";
+#endif
+}
+ 
+/*F PntrMixed(mixed)  . . . . . . . . . . . . . . . . . . .  copy constructor
+**
+**  DESCRIPTION
+**    mixed: to be copied
+**
+**  REMARKS
+**    expects the Pntr to have a Clone function
+**
+*/
+template <class ObjectID,class BaseClass>
+PntrMixed<ObjectID,BaseClass>::PntrMixed(const PntrMixed& mixed)
+  : Pntr(mixed.Pntr->Clone()),ID(mixed.ID),StructureName(mixed.StructureName)
+{
+#ifdef MIXCLASSES_DEBUG
+  cout << "PntrMixed: copy constructor  ";
+  cout << this;
+  cout << "\n";
+#endif
+}
+/*F ~PntrMixed()  . . . . . . . . . . . . . . . . . . . . . . . . desctructor
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+template <class ObjectID,class BaseClass>
+PntrMixed<ObjectID,BaseClass>::~PntrMixed()
+{
+#ifdef MIXCLASSES_DEBUG
+  cout << "Destroy object -- ";
+  cout << this;
+  cout << "\n";
+#endif
+  delete Pntr;
+}
+/*F out1 = print(out)  . . . . . . . . . . . . . . . . . . PntrMixed
+**
+**  DESCRIPTION
+**    out,out1: The output stream
+**
+**  REMARKS
+**
+*/
+template <class ObjectID, class BaseClass> 
+ostream& PntrMixed<ObjectID,BaseClass>::print(ostream& out) const
+{
+  if(Pntr)
+    Pntr->print(out);
+  else
+    out << "No Pointer Object\n";
+      
+  return out;
+}
+/*F SearchableListOfMixedObjects()  . . . . . . . . . . . . empty constructor
+**
+**  DESCRIPTION
+**    This is the only way to initialize the class
+**
+**  REMARKS
+**
+*/
+template <class ObjectID,class BaseClass>
+inline SearchableListOfMixedObjects<ObjectID,BaseClass>::SearchableListOfMixedObjects()
+{
+} 
+/*F PropertyType()  . . . . . . . . . . . . . . . . . . . . empty constructor
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+template <class T>
+inline PropertyType<T>::PropertyType()
+  : Identify(0,"")
+{
+#ifdef MIXCLASSES_DEBUG
+  cout << "PropertyType<T>: empty\n";
+#endif
+}
+ 
+/*F PropertyType(prop)  . . . . . . . . . . . . . . . . . .  copy constructor
+**
+**  DESCRIPTION
+**    prop: to be copied
+**
+**  REMARKS
+**
+*/
+template <class T>
+inline PropertyType<T>::PropertyType(const PropertyType& prop)
+  : Identify(prop), Object(prop.Object)
+{
+#ifdef MIXCLASSES_DEBUG
+  cout << "PropertyType<T>: copy\n";
+#endif
+}
+ 
+/*F PropertyType(name,object) . . . . . . . . . . . . . . . . .  store object
+**
+**  DESCRIPTION
+**    name: The name of the object as a string
+**    object: The object to be stored
+**
+**    The Identification defaults to 0
+**
+**  REMARKS
+**
+*/
+template <class T>
+inline PropertyType<T>::PropertyType(const String& name, T& object)
+  : Identify(0,name), 
+    Object(object)
+{
+}
+ 
+/*F PropertyType(id,object) . . . . . . . . . . . . . . . . . .  store object
+**
+**  DESCRIPTION
+**    id: The numeric id of the object
+**    object: The object to be stored
+**
+**    The name defaults to empty string
+**
+**  REMARKS
+**
+*/
+template <class T>
+inline PropertyType<T>::PropertyType(const int id, T& object)
+  : Identify(id,""), 
+    Object(object)
+{
+}
+
+ 
+/*F PropertyType(id,object) . . . . . . . . . . . . . . . . . .  store object
+**
+**  DESCRIPTION
+**    id: The numeric id of the object
+**    object: The object to be stored
+**
+**  REMARKS
+**
+*/
+template <class T>
+inline PropertyTypeByID<T>::PropertyTypeByID(const int id, T& object)
+  : Identify(id,""), 
+    Object(object)
+{
+}
+/*F PropertyTypeByID()  . . . . . . . . . . . . . . . . . . empty constructor
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+template <class T>
+inline PropertyTypeByID<T>::PropertyTypeByID()
+  : Identify(0,"")
+{
+}
+ 
+/*F PropertyTypeByID(prop)  . . . . . . . . . . . . . . . .  copy constructor
+**
+**  DESCRIPTION
+**    prop: to be copied
+**
+**  REMARKS
+**
+*/
+template <class T>
+inline PropertyTypeByID<T>::PropertyTypeByID(const PropertyTypeByID& prop)
+  : Identify(prop), Object(prop.Object)
+{
+}
+ 
+/*F PropertyTypeByName()  . . . . . . . . . . . . . . . . . empty constructor
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+template <class T>
+inline PropertyTypeByName<T>::PropertyTypeByName()
+  : Identify(0,"")
+{
+}
+ 
+/*F PropertyTypeByName(prop)  . . . . . . . . . . . . . . .  copy constructor
+**
+**  DESCRIPTION
+**    prop: to be copied
+**
+**  REMARKS
+**
+*/
+template <class T>
+inline PropertyTypeByName<T>::PropertyTypeByName(const PropertyTypeByName& prop)
+  : Identify(prop), Object(prop.Object)
+{
+}
+ 
+/*F PropertyTypeByName(name,object) . . . . . . . . . . . . . .  store object
+**
+**  DESCRIPTION
+**    name: The string name of the object
+**    object: to be stored
+**    
+**  REMARKS
+**
+*/
+template <class T>
+inline PropertyTypeByName<T>::PropertyTypeByName(const String& name, T object)
+  : Identify(0,name), 
+    Object(object)
+{
+}
+ 
+/*F PropertyTypeByName(name,object) . . . . . . . . . . . . . .  store object
+**
+**  DESCRIPTION
+**    name: The string name of the object
+**    object: to be stored
+**
+**  REMARKS
+**
+*/
+template <class T>
+inline PropertyTypeByName<T>::PropertyTypeByName(const char* name, T object)
+  : Identify(0,name), 
+    Object(object)
+{
+} 
+/*F PropertyListByIdentify()  . . . . . . . . . . . . . . . empty constructor
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+inline PropertyListByIdentify::PropertyListByIdentify()
+  : SearchableListOfMixedObjects<Identify,Identify>()
+{
+  ChangeOutputFlag(SEARCHABLE_OBJECT);
+}
+/*F PropertyListByName()  . . . . . . . . . . . . . . . . . empty constructor
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+inline PropertyListByName::PropertyListByName()
+  : SearchableListOfMixedObjects<Identify,Identify>()
+{
+  ChangeOutputFlag(SEARCHABLE_OBJECT);
+} 
+/*F PropertyListByID()  . . . . . . . . . . . . . . . . . . empty constructor
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+inline PropertyListByID::PropertyListByID()
+  : SearchableListOfMixedObjects<Identify,Identify>()
+{
+  ChangeOutputFlag(SEARCHABLE_OBJECT);
+}
+/*F ans = EncodeThis(buffer) . . . . . . . . . . . . . . . . . . . PntrMixed
+**
+**  DESCRIPTION
+**    buffer: The buffer
+**    ans: true if successful
+**
+**  REMARKS
+**
+*/
+template <class ObjectID, class BaseClass>
+bool PntrMixed<ObjectID,BaseClass>::EncodeThis(CommBuffer& buffer)
+{
+  bool result = Encode(buffer,StructureName);
+  result = result && Encode(buffer,ID);
+  result = result && Pntr->EncodeThis(buffer);
+  return result;
+}
+
+ 
+/*F ans = DecodeThis(buffer) . . . . . . . . . . . . . . . . . . . PntrMixed
+**
+**  DESCRIPTION
+**    buffer: The buffer
+**    ans: true if successful
+**    
+**  REMARKS
+**
+*/
+template <class ObjectID, class BaseClass>
+bool PntrMixed<ObjectID,BaseClass>::DecodeThis(CommBuffer& buffer)
+{
+  bool result = Decode(buffer,StructureName);
+  result = result && Decode(buffer,ID);
+  
+  //cout << "StructureName: '" << StructureName << "'" << endl;
+  
+  if(result)
+    {
+      SingleDecodeRoutine routclass = (*SetOfEncodeDecodeRoutines)[StructureName];
+      result = result && (*(routclass.Routine))(buffer,Pntr);
+      if(!result)
+	{
+	  cerr << "Decode failed: '" << StructureName << "'" << endl;
+	  Pntr->print(cerr);
+	  cerr << endl;
+	}
+    }
+  return result;
+}
+
+ 
+
+/*S Copy/Clone
+*/
+/*F CopyClone(pntr) . . . . . . . . . . . . . . . . . . . . . . . . PntrMixed
+**
+**  DESCRIPTION
+**    pntr: The pointer to the PntrMixed
+**
+**  REMARKS
+**    Clone() for the pointer is used
+**
+*/
+template <class ObjectID, class BaseClass>
+void PntrMixed<ObjectID,BaseClass>::CopyClone(const PntrMixed<ObjectID,BaseClass> *pntr)
+{
+  if(pntr->Pntr != 0)
+    Pntr = pntr->Pntr->Clone();
+  else
+    Pntr = 0;
+     
+  ID = pntr->ID;
+  StructureName = pntr->StructureName;
+}
+ 
+/*F ans = Clone() . . . . . . . . . . . . . . . . . . . . . . . . . PntrMixed
+**
+**  DESCRIPTION
+**    ans: A copy of the structure
+**
+**  REMARKS
+**
+*/
+template <class ObjectID, class BaseClass>
+PntrMixed<ObjectID,BaseClass>* PntrMixed<ObjectID,BaseClass>::Clone() const
+{
+  PntrMixed<ObjectID,BaseClass>* pntr = new PntrMixed<ObjectID,BaseClass>();
+  pntr->CopyClone(this);
+  return pntr;
+}
+/*F CopyClone(prop) . . . . . . . . . . . . . . . . . . . .  PropertyTypeByID
+**
+**  DESCRIPTION
+**    prop: the property to be copied
+**
+**  REMARKS
+**    uses Clone() of class T
+**
+*/
+template <class T> 
+void PropertyTypeByID<T>::CopyClone(Identify *iden)
+{
+	PropertyTypeByID<T> *prop = (PropertyTypeByID<T> *) iden;
+  Identification = prop->Identification;
+  NameTag = "";
+  Object = prop->Object;
+} 
+/*F Clone() . . . . . . . . . . . . . . . . . . . . . . . .  PropertyTypeByID
+**
+**  DESCRIPTION
+**    Makes a new pointer to object
+**
+**  REMARKS
+**     uses CopyClone()
+**
+*/
+template <class T> 
+Identify * PropertyTypeByID<T>::Clone()
+{
+  PropertyTypeByID<T>* prop = new PropertyTypeByID<T>();
+  prop->CopyClone(this);
+  return prop;
+}
+/*S Modifiers
+*/
+ 
+/*F ChangeID(id)  . . . . . . . . . . . . . . . . change identifier of object
+**
+**  DESCRIPTION
+**    id: The identifier of the object
+**
+**  REMARKS
+**
+*/
+template <class ObjectID, class BaseClass>
+inline void PntrMixed<ObjectID,BaseClass>::ChangeID(const ObjectID& id)
+{
+  ID = id;
+}
+/*F ans = AddObject(id,object)  . . . . . . . . . . . .  SearchableObjectList
+**
+**  DESCRIPTION
+**    id: The key to access the object
+**    object: The object to be stored (as a pointer)
+**    ans: true if successful
+**
+**  REMARKS
+**    Always returns true
+**
+*/
+template <class ObjectID, class BaseClass>
+inline bool 
+SearchableListOfMixedObjects<ObjectID,BaseClass>::AddObject(const ObjectID& id, 
+                                                            BaseClass* object,
+                                                            const String& name)
+{
+  PntrMixed<ObjectID,BaseClass> *ido = new PntrMixed<ObjectID,BaseClass>(id,object,name);
+  (*this)[id] = *ido;
+  return true;
+}
+ 
+/*F RemoveObject(id)  . . . . . . . . . . . . . . . . .  SearchableObjectList
+**
+**  DESCRIPTION
+**    id: The id of the object to be removed
+**
+**  REMARKS
+**
+*/
+template <class ObjectID, class BaseClass>
+inline void SearchableListOfMixedObjects<ObjectID,BaseClass>::RemoveObject(const ObjectID& id)
+{
+  SearchableObjectList< ObjectID, PntrMixed< ObjectID, BaseClass > >::RemoveObject(id);
+}
+/*F pntr = GetPointerToObject(id) . . . . . . . . . . .  SearchableObjectList
+**
+**  DESCRIPTION
+**    id: The id of the object to be searched for
+**    pntr: pointer to object retrieved
+**
+**    It is up to the user to specify the class being retrieved
+** 
+**  REMARKS
+**
+*/
+template <class ObjectID, class BaseClass>
+inline BaseClass* SearchableListOfMixedObjects<ObjectID,BaseClass>::GetPointerToObject(const ObjectID &id)
+{
+  return (*this)[id].Pntr;
+}
+/*F ans = AddObject(object) . . . . . . . . . . . . .  PropertyListByIdentify
+**
+**  DESCRIPTION
+**    object: pointer to object
+**    name: The type of object that is added
+**    ans: true if successful
+**
+**   Since the object inherits the Identify key, this is extracted from the
+**   object itself.
+**
+**  REMARKS
+**   Always returns true
+**
+*/
+inline bool PropertyListByIdentify::AddObject(Identify* object,
+                                              const String& name)
+{
+  Identify* id = new Identify(object->Identification, object->NameTag);
+  return SearchableListOfMixedObjects<Identify,Identify>::AddObject(*id,object,name);
+     
+  //PntrMixed<Identify,Identify> *ido = new PntrMixed<Identify,Identify>(*id,object,name);
+  //(*this)[*id] = *ido;
+  //return true;
+}
+/*F ans = AddObject(object,name)  . . . . . . . . . . . .  PropertyListByName
+**
+**  DESCRIPTION
+**    object: to be stored
+**    name: The name of the object type
+**    ans: true if successful
+**
+**    The object is stored, but only the NameTag element (from Identify) is
+**    used to reference it.
+**
+**  REMARKS
+**
+*/
+inline bool PropertyListByName::AddObject(Identify* object, 
+                                          const String& name)
+{
+#ifdef MIXCLASSES_DEBUG
+  cout << "PropertyListByName -- AddObject\n";
+#endif
+  //      Identify* id = new Identify(0,object->NameTag);
+  //      return SearchableListOfMixedObjects<Identify,Identify>::AddObject(*id,object,name);
+  Identify* pid = new Identify(0,object->NameTag);
+  PntrMixed<Identify,Identify> *ido = new PntrMixed<Identify,Identify>(*pid,object,name);
+  (*this)[*pid] = *ido;
+  return true;
+}
+ 
+/*F pntr = GetPointerToProperty(name) . . . . . . . . . .  PropertyListByName
+**
+**  DESCRIPTION
+**    name: string name of the object to be retrieved
+**    pntr: pointer to object retrieved
+**
+**    It is up to the user to specify the class being retrieved
+**
+**  REMARKS
+**
+*/
+inline Identify* PropertyListByName::GetPointerToProperty(const String& name)
+{
+  Identify id(0,name);
+  return (*this)[id].Pntr;
+  //           SearchableListOfMixedObjects<Identify,Identify>::GetPointerToObject(id);
+}
+ 
+/*F ans = AddObject(object,name)  . . . . . . . . . . . . .  PropertyListByID
+**
+**  DESCRIPTION
+**    object: object to be added (pointer)
+**    name: The name of the object type
+**    ans: true if successful
+**
+**    The id is extracted from the object which inherits the Identify class
+**
+**  REMARKS
+**
+*/
+inline bool PropertyListByID::AddObject(Identify* object,const String& name)
+{
+  Identify* pid = new Identify(object->Identification,"");
+  PntrMixed<Identify,Identify> *ido = new PntrMixed<Identify,Identify>(*pid,object,name);
+  (*this)[*pid] = *ido;
+  delete pid;
+  delete ido;
+  
+  return true;
+}
+ 
+/*F pntr = GetPointerToProperty(id) . . . . . . . . . . . .  PropertyListByID
+**
+**  DESCRIPTION
+**    id: The numeric id of the object
+**    pntr: The pointer to the object
+**
+**    It is up to the user to specify the exact class being retrieved
+**
+**  REMARKS
+**
+*/
+inline Identify* PropertyListByID::GetPointerToProperty(const int id)
+{
+  Identify iden(id,"");
+  return 
+    SearchableListOfMixedObjects<Identify,Identify>::GetPointerToObject(iden);
+}
+
+ 
+/*I  . . . INCLUDES  . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+*/
+#endif

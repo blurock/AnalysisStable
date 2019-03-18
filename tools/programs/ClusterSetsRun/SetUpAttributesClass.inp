@@ -1,0 +1,14 @@
+%%% SetUpAttributesClass.inp ======================= Instance Attribute Setup ======================= 
+ObjectClasses:
+END
+ClassNamePairs:
+%% -----------------------------------------------------
+AttributeSpecs KeyWords
+END
+%% ----------------------------------------------------
+ObjectClasses:
+END
+%% ----------------------------------------------------
+ClassNamePairs:
+END
+%% ----------------------------------------------------

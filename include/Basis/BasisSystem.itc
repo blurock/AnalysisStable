@@ -1,0 +1,95 @@
+/*  FILE     
+**  PACKAGE     REACTION    
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1995  REACTION Project / Edward S. Blurock 
+*/
+/*S Utility
+ */ 
+
+/*S IO
+ */
+/*F out = operator<<(out,commands)  . . . . . . . . . . . . ListOfCommandBase
+**
+**  DESCRIPTION
+**    out: output stream
+**    commands: The list of commands
+**
+**  REMARKS
+**
+*/
+template <class CommandType>
+ostream& operator<<(ostream& out, const ListOfCommandsBase<CommandType>& commands)
+{
+  commands.print(out);
+  return out;
+}
+
+
+/*S EncodeDecode
+*/
+/*F ans = Decode(buffer,vec)  . . . . . . . . . . . . . . . . . . . .  vector
+**
+**  DESCRIPTION
+**    buffer: The buffer
+**    vec: The vector
+**    ans: True if successful
+**
+**  REMARKS
+**
+*/
+template <class Object>
+bool Encode(CommBuffer& buffer, vector<Object>& vec)
+{
+  typename vector<Object>::iterator ob;
+  int size = vec.size();
+     
+  bool result = Encode(buffer,size);
+  if(result)
+    {
+      for(ob = vec.begin();
+	  ob != vec.end();
+	  ob++)
+	{
+	  result = result && Encode(buffer,*ob);
+	}
+    }
+     
+  return result;
+}
+/*F ans = Decode(buffer,vec)  . . . . . . . . . . . . . . . . . . . .  vector
+**
+**  DESCRIPTION
+**    buffer: The buffer
+**    vec: The vector
+**    ans: True if successful
+**
+**  REMARKS
+**
+*/
+template <class Object>
+bool Decode(CommBuffer& buffer, vector<Object>& vec)
+{
+  vec.erase(vec.begin(),vec.end());
+     
+  int size,i;
+  bool result = Decode(buffer,size);
+  if(result)
+    {
+      for(i = 0;
+	  i < size;
+	  i++)
+	{
+	  Object ob;
+	  result = result && Decode(buffer,ob);
+	  vec.push_back(ob);
+	}
+    }
+     
+  return result;
+}

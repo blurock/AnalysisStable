@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  InstanceAlgorithms
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for CoreObjects library package "InstanceAlgorithms".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) CoreObjects Library
+
+@node     InstanceAlgorithms Package
+@section  The "InstanceAlgorithms" Package
+@cindex   package, InstanceAlgorithms
+@cindex   InstanceAlgorithms package
+@cindex   ialgs namespace
+@cindex   namespaces, ialgs
+
+@table @strong
+@item Package name
+@code{InstanceAlgorithms}
+
+@item Namespace name
+@code{ialgs}
+
+@item Header files
+@file{InstanceAlgorithms.hh}, @file{InstanceAlgorithmsType.hh}
+@end table
+
+
+@include InstanceAlgorithms/Overview.texi
+
+@include InstanceAlgorithms/Classes.texi

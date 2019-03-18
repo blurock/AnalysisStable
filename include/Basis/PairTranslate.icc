@@ -1,0 +1,388 @@
+/*  FILE     PairTranslate.icc
+**  PACKAGE     REACTION    
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1995  REACTION Project / Edward S. Blurock 
+*/
+/*S TranslateItoJ
+*/
+/*F TranslatePairItoJ() . . . . . . . . . . . . . . . . . . Empty Constructor
+**
+**  DESCRIPTION
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+TranslatePairItoJ<T1,T2>::TranslatePairItoJ()
+{
+}
+/*F TranslatePairItoJ(translate)  . . . . . . . . . . . . .  Copy Constructor
+**
+**  DESCRIPTION
+**    translate: A pairlist where I is to be translated to J
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+TranslatePairItoJ<T1,T2>::TranslatePairItoJ(const TranslatePairItoJ<T1,T2>& translate)
+  : SearchableObjectListSimple<T1,T2>(translate)
+{
+}
+/*F TranslatePairItoJ(translate)  . . . . . . . . . Constructor From PairList
+**
+**  DESCRIPTION
+**    translate: A pairlist where I is to be translated to J
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+TranslatePairItoJ<T1,T2>::TranslatePairItoJ(const PairList<T1,T2>& translate)
+{
+  typename PairList<T1,T2>::const_iterator i;
+     
+  for(i=translate.begin();i != translate.end() ;i++)
+    {
+      T1 ii((*i).I);
+      T2 ij((*i).J);
+      this->AddObject(ii,ij);
+    }
+}
+ 
+/*F j = TranslatePairItoJ<T1,T2>::operator()(i) . . . . . .  translate i to j
+**
+**  DESCRIPTION
+**    i: The I to translate
+**    j: The translated value
+**
+**    The translation pairs of the TranslatePairItoJ<T1,T2> class are used to 
+**    translate from an I to a J value.
+**
+**
+**  REMARKS
+**     The operator function of the TranslatePairItoJ class
+**
+*/
+template <class T1, class T2>
+T2 TranslatePairItoJ<T1,T2>::operator()(const T1& i)
+{
+  return (*this)[i];
+}
+
+/*S TranslateJtoI
+*/
+ 
+/*F TranslatePairJtoI() . . . . . . . . . . . . . . . . . . Empty Constructor
+**
+**  DESCRIPTION
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+TranslatePairJtoI<T1,T2>::TranslatePairJtoI()
+{
+}
+/*F TranslatePairJtoI(translate)  . . . . . . . . . . . . .  Copy Constructor
+**
+**  DESCRIPTION
+**     translate: to be copied
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+TranslatePairJtoI<T1,T2>::TranslatePairJtoI(const TranslatePairJtoI<T1,T2>& translate)
+  : SearchableObjectListSimple<T2,T1>(translate)
+{
+}
+/*F TranslatePairJtoI(translate)  . . . . . . . . . Constructor From PairList
+**
+**  DESCRIPTION
+**    translate: A pairlist where I is to be translated to J
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+TranslatePairJtoI<T1,T2>::TranslatePairJtoI(const PairList<T1,T2>& translate)
+{
+  typename PairList<T1,T2>::const_iterator i;
+     
+  for(i=translate.begin();i != translate.end() ;i++)
+    {
+      T1 ij((*i).J);
+      T2 ii((*i).I);
+      this->AddObject(ij,ii);
+    }
+}
+ 
+/*F j = TranslatePairJtoI<T1,T2>::operator()(i) . . . . . .  translate j to i
+**
+**  DESCRIPTION
+**    j: The J to translate
+**    i: The translated value
+**
+**    The translation pairs of the TranslatePairItoJ<T1,T2> class are used to 
+**    translate from an I to a J value.
+**
+**  REMARKS
+**     The operator() function of the TranslatePairItoJ class
+**
+*/
+template <class T1, class T2>
+T1 TranslatePairJtoI<T1,T2>::operator()(const T2& j)
+{
+  return (*this)[j];
+}
+
+/*S PairTranslatePairItoJ
+*/
+/*F PairTranslatePairItoJ() . . . . . . . . . . . . . . . . Empty Constructor
+**
+**  DESCRIPTION
+**
+**  REMARKS
+**
+*/
+template <class T>
+PairTranslatePairItoJ<T>::PairTranslatePairItoJ()
+{
+}
+/*F PairTranslatePairItoJ(translate)  . . . . . . . . . . .  Copy Constructor
+**
+**  DESCRIPTION
+**     translate: to be translated
+**
+**  REMARKS
+**
+*/
+template <class T>
+PairTranslatePairItoJ<T>::PairTranslatePairItoJ(const PairTranslatePairItoJ<T>& translate)
+  : TranslatePairItoJ<T,T>(translate)
+{
+}
+/*F PairTranslatePairItoJ(translate)  . .  Constructor From SymmetricPairList
+**
+**  DESCRIPTION
+**    translate: A pairlist where I is to be translated to J
+**
+**  REMARKS
+**
+*/
+template <class T>
+PairTranslatePairItoJ<T>::PairTranslatePairItoJ(const SymmetricPairList<T>& translate)
+  : TranslatePairItoJ<T,T>(translate)
+{
+}
+
+ 
+/*F n = PairTranslatePairItoJ<T>::operator()(s) . . . . . . . . . . Translate
+**
+**  DESCRIPTION
+**    s: The SymmetricPair to translate
+**    n: The translated pair
+**
+**    The translation pairs of the TranslatePairItoJ<T1,T2> class are used to 
+**    translate from an I to a J values (from the translation pairs) in the 
+**    SymmetricPair
+**
+**  REMARKS
+**
+*/
+template <class T>
+SymmetricPair<T> PairTranslatePairItoJ<T>::operator()(const BasicPair<T,T>& s)
+{
+  T i = (*this)[s.I];
+  T j = (*this)[s.J];
+     
+  return SymmetricPair<T>(i,j);
+}
+
+/*S PairTranslatePairJtoI
+*/
+/*F PairTranslatePairJtoI() . . . . . . . . . . . . . . . . Empty Constructor
+**
+**  DESCRIPTION
+**     Empty Constructor
+**
+**  REMARKS
+**
+*/
+template <class T>
+PairTranslatePairJtoI<T>::PairTranslatePairJtoI()
+{
+}
+/*F PairTranslatePairJtoI(translate)  . . . . . . . . . . .  Copy Constructor
+**
+**  DESCRIPTION
+**     translate: to be translated
+**
+**  REMARKS
+**
+*/
+template <class T>
+PairTranslatePairJtoI<T>::PairTranslatePairJtoI(const PairTranslatePairJtoI<T>& translate)
+  : TranslatePairJtoI<T,T>(translate)
+{
+}
+/*F PairTranslatePairJtoI(translate)  . .  Constructor From SymmetricPairList
+**
+**  DESCRIPTION
+**    translate: A pairlist where I is to be translated to J
+**
+**  REMARKS
+**
+*/
+template <class T>
+PairTranslatePairJtoI<T>::PairTranslatePairJtoI(const SymmetricPairList<T>& translate)
+  : TranslatePairJtoI<T,T>(translate)
+{
+}
+
+ 
+/*F n = PairTranslatePairJtoI<T>::operator()(s) . . . . . . . . . . Translate
+**
+**  DESCRIPTION
+**    s: The SymmetricPair to translate
+**    n: The translated pair
+**
+**    The translation pairs of the TranslatePairItoJ<T1,T2> class are used to 
+**    translate from an J to a I values (from the translation pairs) in the 
+**    SymmetricPair
+**
+**  REMARKS
+**
+*/
+template <class T>
+SymmetricPair<T> PairTranslatePairJtoI<T>::operator()(const BasicPair<T,T>& s)
+{
+  T i = (*this)[s.I];
+  T j = (*this)[s.J];
+     
+  return SymmetricPair<T>(i,j);
+}
+
+
+/*S PairTranslatePairItoJ
+*/
+/*C PairTranslatePairListItoJ() . . . . . . . . . . . . . . Empty Constructor
+**
+**  DESCRIPTION
+**
+**  REMARKS
+**
+*/
+template <class T>
+PairTranslatePairListItoJ<T>::PairTranslatePairListItoJ()
+{
+}
+/*C PairTranslatePairListItoJ() . . . . . . . . . . . . . .  Copy Constructor
+**
+**  DESCRIPTION
+**
+**  REMARKS
+**
+*/
+template <class T>
+PairTranslatePairListItoJ<T>::PairTranslatePairListItoJ(const PairTranslatePairListItoJ<T>& translate)
+  : Translate(translate.Translate)
+{
+}
+/*C PairTranslatePairListItoJ() . . . . .  Constructor From SymmetricPairList
+**
+**  DESCRIPTION
+**
+**  REMARKS
+**
+*/
+template <class T>
+PairTranslatePairListItoJ<T>::PairTranslatePairListItoJ(const SymmetricPairList<T>& translate)
+  : Translate(translate)
+{
+}
+
+ 
+/*C operator()(spairlist) . . . . . . . . . . . Translate a SymmetricPairList
+**
+**  DESCRIPTION
+**
+**  REMARKS
+**
+*/
+template <class T>
+SymmetricPairList<T> PairTranslatePairListItoJ<T>::operator()(const SymmetricPairList<T>& spairlist)
+{
+  SymmetricPairList<T> newlist(spairlist.size());
+     
+  transform(spairlist.begin(),
+            spairlist.end(),
+            back_insert_iterator< SymmetricPairList<T> > (newlist),
+            Translate);
+  return newlist;
+}
+
+/*S PairTranslatePairJtoI
+*/
+/*C PairTranslatePairListJtoI() . . . . . . . . . . . . . . Empty Constructor
+**
+**  DESCRIPTION
+**
+**  REMARKS
+**
+*/
+template <class T>
+PairTranslatePairListJtoI<T>::PairTranslatePairListJtoI()
+{
+}
+/*C PairTranslatePairListJtoI() . . . . . . . . . . . . . .  Copy Constructor
+**
+**  DESCRIPTION
+**
+**  REMARKS
+**
+*/
+template <class T>
+PairTranslatePairListJtoI<T>::PairTranslatePairListJtoI(const PairTranslatePairListJtoI<T>& translate)
+  : Translate(translate.Translate)
+{
+}
+/*C PairTranslatePairListJtoI() . . . . .  Constructor From SymmetricPairList
+**
+**  DESCRIPTION
+**
+**  REMARKS
+**
+*/
+template <class T>
+PairTranslatePairListJtoI<T>::PairTranslatePairListJtoI(const SymmetricPairList<T>& translate)
+  : Translate(translate)
+{
+}
+
+ 
+/*C operator()(spairlist) . . . . . . . . . . . Translate a SymmetricPairList
+**
+**  DESCRIPTION
+**
+**  REMARKS
+**
+*/
+template <class T>
+SymmetricPairList<T> PairTranslatePairListJtoI<T>::operator()(const SymmetricPairList<T>& spairlist)
+{
+  SymmetricPairList<T> newlist;
+     
+  transform(spairlist.begin(),
+            spairlist.end(),
+            back_insert_iterator< SymmetricPairList<T> > (newlist),
+            Translate);
+  return newlist;
+}

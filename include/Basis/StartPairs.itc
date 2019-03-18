@@ -1,0 +1,99 @@
+/*  FILE     StartPairs.itc
+**  PACKAGE     REACTION    
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1995  REACTION Project / Edward S. Blurock 
+*/
+/*S Boolean
+*/ 
+/*F ans = operator<(equiv1,equiv2)  . . . . . . . . . . . EquivalentPairClass
+**
+**  DESCRIPTION
+**    equiv1,equiv2: to be compared
+**    ans: true if the SizeScore of equiv1 is less than equiv2
+**
+**  REMARKS
+**
+*/
+template <class T1,class T2>
+bool operator<(const EquivalentPairClass<T1,T2>& equiv1,
+	       const EquivalentPairClass<T1,T2>& equiv2)
+	  {
+	  bool ans;
+	  
+	  if(equiv1.SizeScore != 0)
+	       ans = equiv1.SizeScore < equiv2.SizeScore;
+	  else
+	       ans = false;
+	  return ans;
+	  }
+/*F ans = operator==(equiv1,equiv2) . . . . . . . . . . . EquivalentPairClass
+**
+**  DESCRIPTION
+**    equiv1,equiv2: to be compared
+**    ans: true if the SizeScore of equiv1 is equal to equiv2
+**
+**  REMARKS
+**
+*/
+template <class T1,class T2>
+bool operator==(const EquivalentPairClass<T1,T2>& equiv1,
+		const EquivalentPairClass<T1,T2>& equiv2)
+	  {
+	  return equiv1.ClassValue == equiv2.ClassValue;
+	  }
+/*S IO
+*/
+/*F newout = operator<<(out,equiv)  . . . . . . . . . . . EquivalentPairClass
+**
+**  DESCRIPTION
+**    out: The output stream
+**    equiv: to be outputted
+**    newout: The output stream
+**
+**  REMARKS
+**
+*/
+template <class T1,class T2>
+ostream& operator<<(ostream& out, const EquivalentPairClass<T1,T2>& equiv)
+     {
+     return equiv.print(out);
+     } 
+/*S EncodeDecode
+*/
+ 
+/*F ans = Encode(buffer,equiv)  . . . . . . . . . . . . . EquivalentPairClass
+**
+**  DESCRIPTION
+**    buffer: The buffer
+**    equiv: The equivalent class
+**    ans: True if successful
+**
+**  REMARKS
+**
+*/
+template <class T1,class T2>
+bool Encode(CommBuffer& buffer, EquivalentPairClass<T1,T2>& equiv)
+     {
+     return equiv.EncodeThis(buffer);
+     }
+/*F ans = Decode(buffer,equiv)  . . . . . . . . . . . . . EquivalentPairClass
+**
+**  DESCRIPTION
+**    buffer: The buffer
+**    equiv: The equivalent class
+**    ans: True if successful
+**
+**  REMARKS
+**
+*/
+template <class T1,class T2>
+bool Decode(CommBuffer& buffer, EquivalentPairClass<T1,T2>& equiv)
+     {
+     return equiv.DecodeThis(buffer);
+     }

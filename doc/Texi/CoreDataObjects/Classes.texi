@@ -1,0 +1,100 @@
+
+@c
+@c This file was automatically produced at Sun Nov 14 20:10:39 1999 by
+@c package2texi
+@c
+@subsection Classes
+
+@deftp Class {ObjectNameClassPairs}
+  
+
+
+@strong{Description}@*
+
+
+@strong{Remarks}@*
+
+@end deftp
+
+@deftp Class {BaseDataObject}
+ data  
+
+
+@strong{Description}@*
+This is the most basic data object.  It defines the general
+routines for all data objects:
+@itemize @bullet
+@item GetType(): Retrieve the type of variable
+
+@end itemize
+and also the set of virtual functions for each object
+@itemize @bullet
+@item Read(stream,objc): Read from ASCII stream (using objc for additional format info)
+@item Read(stream,objc,name): Read from ASCII stream (if the name of the object already known)
+@item Write(stream,objc): Write with formatting details
+@item Clone(),CloneCopy(obj): Clone a copy
+@item EncodeThis(buffer),DecodeThis(buffer): Encode and Decode routines
+@item print(out): Standard default output routine
+
+@end itemize
+
+@strong{Remarks}@*
+Inheirits Identify
+@end deftp
+
+@deftp Class {DataObjectClass}
+ the info about a data type  
+
+
+@strong{Description}@*
+This is the base function about a data type:
+@example
+Identification: The numerical value of the type
+NameTag: The ASCII name of the type
+Description: The text description of the class
+@end example
+
+The are two print modes in this class:
+@itemize @bullet
+@item PrintMode: This specifies how the object represented by this class
+should be printed
+@item ClassPrintMode: This is how this class itself should be printed 
+(when, for example, a list of possible object types is wanted).
+
+@end itemize
+The basic functions:
+@itemize @bullet
+@item SetPrintMode(mode): The print mode of the data type 
+(used in the print routine)
+@item SetPrintMode(mode): The print mode of the class itself
+(used in the print routine)
+
+@end itemize
+
+@strong{Remarks}@*
+
+@end deftp
+
+@deftp Class {BaseDataSetOfObjects}
+ data  
+
+
+@strong{Description}@*
+This is the SetOfObjects class definitions.  
+
+
+@strong{Remarks}@*
+Inheirits BaseDataObject
+@end deftp
+
+@deftp Class {DataSetOfObjectsClass}
+ the info about a data type  
+
+
+@strong{Description}@*
+
+
+@strong{Remarks}@*
+Inheirits DataObjectClass
+@end deftp
+

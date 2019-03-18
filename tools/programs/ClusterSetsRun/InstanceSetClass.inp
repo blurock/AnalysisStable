@@ -1,0 +1,15 @@
+%%% InstanceSetClass.inp ======================= Set the training and test sets to the selected elements ======================= 
+ObjectClasses:
+END
+ClassNamePairs:
+%% -----------------------------------------------------
+InstanceNameList KeyWords
+TestPercentage Real
+END
+%% ----------------------------------------------------
+ObjectClasses:
+END
+%% ----------------------------------------------------
+ClassNamePairs:
+END
+%% ----------------------------------------------------

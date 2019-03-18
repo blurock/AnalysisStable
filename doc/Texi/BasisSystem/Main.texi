@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  BasisSystem
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for Basis library package "BasisSystem".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) Basis Library
+
+@node     BasisSystem Package
+@section  The "BasisSystem" Package
+@cindex   package, BasisSystem
+@cindex   BasisSystem package
+@cindex   BSYS namespace
+@cindex   namespaces, BSYS
+
+@table @strong
+@item Package name
+@code{BasisSystem}
+
+@item Namespace name
+@code{BSYS}
+
+@item Header files
+@file{BasisSystem.hh}, @file{BasisSystemType.hh}
+@end table
+
+
+@include BasisSystem/Overview.texi
+
+@include BasisSystem/Classes.texi

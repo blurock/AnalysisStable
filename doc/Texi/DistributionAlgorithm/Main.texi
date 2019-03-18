@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  DistributionAlgorithm
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for CoreObjects library package "DistributionAlgorithm".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) CoreObjects Library
+
+@node     DistributionAlgorithm Package
+@section  The "DistributionAlgorithm" Package
+@cindex   package, DistributionAlgorithm
+@cindex   DistributionAlgorithm package
+@cindex   alg namespace
+@cindex   namespaces, alg
+
+@table @strong
+@item Package name
+@code{DistributionAlgorithm}
+
+@item Namespace name
+@code{alg}
+
+@item Header files
+@file{DistributionAlgorithm.hh}, @file{DistributionAlgorithmType.hh}
+@end table
+
+
+@include DistributionAlgorithm/Overview.texi
+
+@include DistributionAlgorithm/Classes.texi

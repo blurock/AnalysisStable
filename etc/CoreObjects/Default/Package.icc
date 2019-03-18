@@ -1,0 +1,23 @@
+/*  FILE     =Package=.icc
+**  PACKAGE  =Package=
+**  AUTHOR   =Author=
+**
+**  CONTENT
+**    Inline functions for the "=Package=" package.
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1997 =Environment= Library
+*/
+ 
+#ifndef =Environment=SRC_=PACKAGE=_ICC
+#define =Environment=SRC_=PACKAGE=_ICC
+ 
+#pragma interface
+
+
+
+
+
+
+#endif

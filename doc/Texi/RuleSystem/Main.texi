@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  RuleSystem
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for CoreObjects library package "RuleSystem".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) CoreObjects Library
+
+@node     RuleSystem Package
+@section  The "RuleSystem" Package
+@cindex   package, RuleSystem
+@cindex   RuleSystem package
+@cindex   rle namespace
+@cindex   namespaces, rle
+
+@table @strong
+@item Package name
+@code{RuleSystem}
+
+@item Namespace name
+@code{rle}
+
+@item Header files
+@file{RuleSystem.hh}, @file{RuleSystemType.hh}
+@end table
+
+
+@include RuleSystem/Overview.texi
+
+@include RuleSystem/Classes.texi

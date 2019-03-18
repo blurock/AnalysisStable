@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  FullSystem
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for CoreObjects library package "FullSystem".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) CoreObjects Library
+
+@node     FullSystem Package
+@section  The "FullSystem" Package
+@cindex   package, FullSystem
+@cindex   FullSystem package
+@cindex   fls namespace
+@cindex   namespaces, fls
+
+@table @strong
+@item Package name
+@code{FullSystem}
+
+@item Namespace name
+@code{fls}
+
+@item Header files
+@file{FullSystem.hh}, @file{FullSystemType.hh}
+@end table
+
+
+@include FullSystem/Overview.texi
+
+@include FullSystem/Classes.texi

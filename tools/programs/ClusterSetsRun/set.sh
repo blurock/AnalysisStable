@@ -1,0 +1,59 @@
+#! /bin/tcsh -f
+#
+set CRITICALPROTO   = $HERE/CriticalPointPairs.proto
+set COMMAND = $ANALYSIS_BASE/tools/programs/ClusterRuns/$COMMAND
+
+# 00000.0382
+$COMMAND ../../many/logIp10-00a00000-0382tf0298.txt  -7.264 $CRITICALPROTO  clusters-00000-0382.out regions=00000-0382.out
+# 00000.0630
+$COMMAND ../../many/logIp10-00a00000-0630tf0298.txt  -6.764 $CRITICALPROTO clusters-00000-0630.out regions=00000-0630.out
+# 00000.1038
+$COMMAND ../../many/logIp10-00a00000-1038tf0298.txt  -6.265 $CRITICALPROTO clusters-00000-1038.out regions=00000-1038.out
+# 00000.1712
+$COMMAND ../../many/logIp10-00a00000-1712tf0298.txt  -5.764 $CRITICALPROTO clusters-00000-1712.out regions=00000-1712.out
+# 00000.2823
+$COMMAND ../../many/logIp10-00a00000-2823tf0298.txt  -5.264 $CRITICALPROTO clusters-00000-2823.out regions=00000-2823.out
+# 00000.4654
+$COMMAND ../../many/logIp10-00a00000-4654tf0298.txt  -4.764 $CRITICALPROTO clusters-00000-4654.out regions=00000-4654.out
+# 00000.7674
+$COMMAND ../../many/logIp10-00a00000-7674tf0298.txt  -4.264 $CRITICALPROTO clusters-00000-7674.out regions=00000-7674.out
+# 00001.2651
+$COMMAND ../../many/logIp10-00a00001-2651tf0298.txt  -3.764 $CRITICALPROTO clusters-00001-2651.out regions=00001-2651.out
+# 00002.0859
+$COMMAND ../../many/logIp10-00a00002-0859tf0298.txt  -3.264 $CRITICALPROTO clusters-00002-0859.out regions=00002-0859.out
+# 00003.4390
+$COMMAND ../../many/logIp10-00a00003-4390tf0298.txt  -2.764 $CRITICALPROTO clusters-00003-4390.out regions=00003-4390.out
+# 00005.6700
+$COMMAND ../../many/logIp10-00a00005-6700tf0298.txt  -2.264 $CRITICALPROTO clusters-00005-6700.out regions=00005-6700.out
+# 00009.3482
+$COMMAND ../../many/logIp10-00a00009-3482tf0298.txt  -1.764 $CRITICALPROTO clusters-00009-3482.out regions=00009-3482.out
+# 00015.4127
+$COMMAND ../../many/logIp10-00a00015-4127tf0298.txt  -1.264 $CRITICALPROTO clusters-00015-4127.out regions=00015-4127.out
+# 00025.4112
+$COMMAND ../../many/logIp10-00a00025-4112tf0298.txt  -0.764 $CRITICALPROTO clusters-00025-4112.out regions=00025-4112.out
+# 00041.8959
+$COMMAND ../../many/logIp10-00a00041-8959tf0298.txt  -0.264 $CRITICALPROTO clusters-00041-8959.out regions=00041-8959.out
+# 00069.0747
+$COMMAND ../../many/logIp10-00a00069-0747tf0298.txt   0.235 $CRITICALPROTO clusters-00069-0747.out regions=00069-0747.out
+# 00088.6937
+$COMMAND ../../many/logIp10-00a00088-6937tf0298.txt   0.485 $CRITICALPROTO clusters-00088-6937.out regions=00088-6937.out
+# 00113.8850
+$COMMAND ../../many/logIp10-00a00113-8850tf0298.txt   0.735 $CRITICALPROTO clusters-00113-8850.out regions=00113-8850.out
+# 00146.2312
+$COMMAND ../../many/logIp10-00a00146-2312tf0298.txt   0.985 $CRITICALPROTO clusters-00146-2312.out regions=00146-2312.out
+# 00165.7017
+$COMMAND ../../many/logIp10-00a00165-7017tf0298.txt   1.110 $CRITICALPROTO clusters-00165-7017.out regions=00165-7017.out
+# 00176.3885
+$COMMAND ../../many/logIp10-00a00176-3885tf0298.txt   1.172 $CRITICALPROTO clusters-00176-3885.out regions=00176-3885.out
+# 00181.9877
+$COMMAND ../../many/logIp10-00a00181-9877tf0298.txt   1.203 $CRITICALPROTO clusters-00181-9877.out regions=00181-9877.out
+# 00183.4151
+$COMMAND ../../many/logIp10-00a00183-4151tf0298.txt   1.211 $CRITICALPROTO clusters-00183-4151.out regions=00183-4151.out
+# 00183.7736
+$COMMAND ../../many/logIp10-00a00183-7736tf0298.txt   1.213 $CRITICALPROTO clusters-00183-7736.out regions=00183-7736.out
+# 00184.1329
+$COMMAND ../../many/logIp10-00a00184-1329tf0298.txt   1.215 $CRITICALPROTO clusters-00184-1329.out regions=00184-1329.out
+# 00184.8536
+$COMMAND ../../many/logIp10-00a00184-8536tf0298.txt   1.219 $CRITICALPROTO clusters-00184-8536.out regions=00184-8536.out
+# 00187.7646
+$COMMAND ../../many/logIp10-00a00187-7646tf0298.txt   1.235 $CRITICALPROTO clusters-00187-7646.out regions=00187-7646.out

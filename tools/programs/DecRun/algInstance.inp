@@ -1,0 +1,108 @@
+No attributes
+Attributes:
+12345
+%%%%% DecisionTreePredGen                    GoalSpec
+END
+%%%%% DecisionTreeRead                       GoalSpec
+END
+%%%%% CriticalPointRead                      GoalSpec
+END
+%%%%% PartitionsFromCriticalPoints           GoalSpec
+END
+%%%%% ReadInstances                          GoalSpec
+END
+%%%%% InstanceSetUp                          GoalSpec
+END
+%%%%% AttributeSetUp                         GoalSpec
+END
+%%%%% MatrixSetUp                            GoalSpec
+END
+%%%%-----------------------------------------------------------------------------
+%%%%  CriticalPointReadAlg    AlgorithmSummary
+      Initial PartitionAlgs PredGen END
+      Level0 END
+      Read END 
+                               % (Name-Class Pairs)
+     CriticalPointsRootName               KeyWords
+      CriticalPointsFileName               KeyWords
+      END
+                               %  Algorithm Result Parameters
+      CriticalPointsList             %  KeyWords
+      END
+%%%%-----------------------------------------------------------------------------
+%%%%  PartitionsFromCriticalPoints    AlgorithmSummary
+      Initial PartitionAlgs PredGen END
+      Level0 END
+      Partitions END
+                               % (Name-Class Pairs)
+      PartitionTypesFromPoints             KeyWords
+      CriticalPointsList                   KeyWords
+      END
+                               %  Algorithm Result Parameters
+      PredicateList                        %%KeyWords
+      PartitionList                        %%KeyWords
+      END
+%%%%-----------------------------------------------------------------------------
+%%%%   ReadInstancesAlg    AlgorithmSummary
+       Initial InstanceAlgs END    % Algorithm Category
+       END                                    % Algorithm KeyWords
+       Read END                               % Algorithm Specification
+                                              % Algorithm Input Parameters
+                               % (Name-Class Pairs)
+       InstanceReadFiles KeyWords
+       END
+                                              % Algorithm Result Parameters
+       END
+%%%%-----------------------------------------------------------------------------
+%%%%   InstanceSetUpAlg    AlgorithmSummary
+       Initial InstanceAlgs END    % Algorithm Category
+       END                                    % Algorithm KeyWords
+       Instances END                          % Algorithm Specification
+                                              % Algorithm Input Parameters
+       InstanceNameList KeyWords              % (Name-Class Pairs)
+       TestPercentage   Real
+       END
+                                              % Algorithm Result Parameters
+       TotalInstanceNameList %%KeyWords              % (Name-Class Pairs)
+       TestInstanceNameList  %%KeyWords
+       TrainInstanceNameList %%KeyWords
+       END
+%%%%-----------------------------------------------------------------------------
+%%%% AttributeSetUpAlg    AlgorithmSummary
+       Initial InstanceAlgs END    % Algorithm Category
+       Parameter END                          % Algorithm KeyWords
+       Attributes END                         % Algorithm Specification
+                                              % Algorithm Input Parameters
+                                              % (Name-Class Pairs)
+        AttributeSpecs        KeyWords
+        TotalInstanceNameList KeyWords
+        END
+                                              % Algorithm Result Parameters
+       AttributeNames
+       END
+%%%%-----------------------------------------------------------------------------
+%%%%   MatrixSetUpAlg    AlgorithmSummary
+       Initial InstanceAlgs END               % Algorithm Category
+       END                                    % Algorithm KeyWords
+       Matrix END                             % Algorithm Specification
+                                              % Algorithm Input Parameters
+       TotalInstanceNameList KeyWords
+       AttributeNames KeyWords
+       END
+                                              % Algorithm Result Parameters
+       MatrixObject                           % (Name-Class Pairs)
+       END
+%%%%-----------------------------------------------------------------------------
+%%%%   DecisionTreeAlg    AlgorithmSummary
+     Initial DecisionTreeAlgs        END    % Algorithm Category
+     Parameter Level0                END    % Algorithm KeyWords
+     Create SimpleSelect ZEntropy    END    % Algorithm Specification
+                                            % (Name-Class Pairs)
+     EntropyGoal            KeyWords
+     PartitionList          KeyWords
+     DecisionTreeParameters KeyWords
+     TrainInstanceNameList  KeyWords
+     END
+     DecisionTree %% KeyWords                        % Algorithm Result Parameters
+     END
+END

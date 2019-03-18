@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  GraphOperations
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for CoreObjects library package "GraphOperations".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) CoreObjects Library
+
+@node     GraphOperations Package
+@section  The "GraphOperations" Package
+@cindex   package, GraphOperations
+@cindex   GraphOperations package
+@cindex   gop namespace
+@cindex   namespaces, gop
+
+@table @strong
+@item Package name
+@code{GraphOperations}
+
+@item Namespace name
+@code{gop}
+
+@item Header files
+@file{GraphOperations.hh}, @file{GraphOperationsType.hh}
+@end table
+
+
+@include GraphOperations/Overview.texi
+
+@include GraphOperations/Classes.texi

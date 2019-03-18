@@ -1,0 +1,657 @@
+/*  FILE     Vector.icc
+**  PACKAGE     REACTION    
+**  AUTHOR   Harald Wahl
+**
+**  CONTENT
+**    
+**
+**  REFERENCES
+**
+*/
+#ifndef REACTIONSRC_VECTOR_ICC
+#define REACTIONSRC_VECTOR_ICC
+ 
+
+/*F Vector()  . . . . . . . . . . . . . . . . . . . . . Empty Constructor
+**
+**  DESCRIPTION
+**    Simple Empty Constructor
+**    Default Values: 
+**       Title     - Empty String
+**       Delimitor - Space
+**
+**  REMARKS
+**
+*/
+template <class T>
+Vector<T>::Vector()
+  : vector<T>(),
+    Title(""),
+    Delimitor(" ")
+{
+}
+
+ 
+/*F Vector(title,delim) . . . . . . . . . . . . . . . . . . . Constructor
+**
+**  DESCRIPTION
+**       title:      The title of the whole vector.
+**       delimitor:  The delimitor between the elements of the vector.
+** 
+**  REMARKS
+**
+*/
+template <class T>
+Vector<T>::Vector(const String& title, const String& delim)
+  : vector<T>(),
+    Title(title),
+    Delimitor(delim)
+{
+}
+/*F Vector(title,delim) . . . . . . . . . . . . . . . . . . . Constructor
+**
+**  DESCRIPTION
+**       title: The title of the whole vector
+**       delimitor: The delimitor between the elements of the vector
+** 
+**    Constructor with title and delimitor
+**
+**  REMARKS
+**
+*/
+template <class T>
+Vector<T>::Vector(const char *title, const char *delim)
+  : vector<T>(),
+    Title(title),
+    Delimitor(delim)
+{
+}
+
+ 
+/*F Vector(n) . . . . . . . . . . . . . . . . . . . . . . . . Constructor
+**
+**  DESCRIPTION
+**    n: The number of elements (empty) to initialize to
+**
+**  REMARKS
+**
+*/
+template <class T>
+Vector<T>::Vector(const int n)
+  : vector<T>(n),
+    Title(""),
+    Delimitor(" ")
+{
+}
+
+/*F Vector(n, elem)  . . . . . . . . . . . . . . . . . . . . . Constructor
+**
+**  DESCRIPTION
+**              n:              The number of elements to initialize to
+**              elem:   element to be filled 
+** 
+**  REMARKS
+**
+*/
+template <class T>
+Vector<T>::Vector(const int n, const T& elem)
+  : vector<T>(n, elem),
+    Title(""),
+    Delimitor(" ")
+{
+}
+
+/*F Vector(vec) . . . . . . . . . . . . . . . . . . .Copy Constructor  
+**
+**  DESCRIPTION
+**      vec: The Vector to be copied (const dereferenced)
+**
+**    The Copy Constructor
+**      
+**  REMARKS
+**
+*/
+template <class T>
+Vector<T>::Vector(const Vector<T>& vec)
+  : vector<T>(vec),
+    Title(vec.Title),
+    Delimitor(vec.Delimitor)
+{
+}
+
+/*F Vector(vec) 
+**
+**  DESCRIPTION
+**    Conversion
+**      
+**  REMARKS
+**
+*/
+template <class T>
+Vector<T>::Vector(const vector<T>& v)
+  : vector<T>(v)
+{
+}
+
+/*F VectorFull()  . . . . . . . . . . . . . . . . . . . . . Empty Constructor
+**
+**  DESCRIPTION
+**
+**  REMARKS
+**
+*/
+template <class T>
+VectorFull<T>::VectorFull()
+  : Vector<T>()
+{
+}
+ 
+/*F VectorFull(title,delim) . . . . . . . . . . . . . . . . . . . Constructor
+**
+**  DESCRIPTION
+** 
+**  REMARKS
+**
+*/
+template <class T>
+VectorFull<T>::VectorFull(const String& title, const String& delim)
+  : Vector<T>(title, delim)
+{
+}
+
+/*F VectorFull(title,delim) . . . . . . . . . . . . . . . . . . . Constructor
+**
+**  DESCRIPTION
+** 
+**    Constructor with title and delimitor
+**
+**  REMARKS
+**
+*/
+template <class T>
+VectorFull<T>::VectorFull(const char *title, const char *delim)
+  : Vector<T>(title, delim)
+{
+}
+ 
+/*F VectorFull(n) . . . . . . . . . . . . . . . . . . . . . . . . Constructor
+**
+**  DESCRIPTION
+**    n: The number of elements (empty) to initialize to
+**
+**  REMARKS
+**
+*/
+template <class T>
+VectorFull<T>::VectorFull(const int n)
+  : Vector<T>(n)
+{
+}
+
+/*F VectorFull(n, elem)  . . . . . . . . . . . . . . . . . . . . . Constructor
+**
+**  DESCRIPTION
+**              n:              The number of elements to initialize to
+**              elem:   element to be filled 
+** 
+**  REMARKS
+**
+*/
+template <class T>
+VectorFull<T>::VectorFull(const int n, const T& elem)
+  : Vector<T>(n, elem)
+{
+}
+
+/*F VectorFull(vec) . . . . . . . . . . . . . . . . . . .Copy Constructor  
+**
+**  DESCRIPTION
+**
+**    The Copy Constructor
+**      
+**  REMARKS
+**
+*/
+template <class T>
+VectorFull<T>::VectorFull(const VectorFull<T>& vec)
+  : Vector<T>(vec)
+{
+}
+
+/*F VectorFull(vec) 
+**
+**  DESCRIPTION
+**    Conversion
+**      
+**  REMARKS
+**
+*/
+template <class T>
+VectorFull<T>::VectorFull(const Vector<T>& v)
+  : Vector<T>(v)
+{
+}
+
+/*F VectorSimple()  . . . . . . . . . . . . . . . . . . . . . Empty Constructor
+**
+**  DESCRIPTION
+**
+**  REMARKS
+**
+*/
+template <class T>
+VectorSimple<T>::VectorSimple()
+  : Vector<T>()
+{
+}
+ 
+/*F VectorSimple(title,delim) . . . . . . . . . . . . . . . . . . . Constructor
+**
+**  DESCRIPTION
+** 
+**  REMARKS
+**
+*/
+template <class T>
+VectorSimple<T>::VectorSimple(const String& title, const String& delim)
+  : Vector<T>(title, delim)
+{
+}
+
+/*F VectorSimple(title,delim) . . . . . . . . . . . . . . . . . . . Constructor
+**
+**  DESCRIPTION
+** 
+**    Constructor with title and delimitor
+**
+**  REMARKS
+**
+*/
+template <class T>
+VectorSimple<T>::VectorSimple(const char *title, const char *delim)
+  : Vector<T>(title, delim)
+{
+}
+ 
+/*F VectorSimple(n) . . . . . . . . . . . . . . . . . . . . . . . . Constructor
+**
+**  DESCRIPTION
+**    n: The number of elements (empty) to initialize to
+**
+**  REMARKS
+**
+*/
+template <class T>
+VectorSimple<T>::VectorSimple(const int n)
+  : Vector<T>(n)
+{
+}
+
+/*F VectorSimple(n, elem)  . . . . . . . . . . . . . . . . . . . . . Constructor
+**
+**  DESCRIPTION
+**              n:              The number of elements to initialize to
+**              elem:   element to be filled 
+** 
+**  REMARKS
+**
+*/
+template <class T>
+VectorSimple<T>::VectorSimple(const int n, const T& elem)
+  : Vector<T>(n, elem)
+{
+}
+
+/*F VectorSimple(vec) . . . . . . . . . . . . . . . . . . .Copy Constructor  
+**
+**  DESCRIPTION
+**
+**    The Copy Constructor
+**      
+**  REMARKS
+**
+*/
+template <class T> VectorSimple<T>::VectorSimple(const VectorSimple<T>& vec)
+  : Vector<T>(vec)
+{
+}
+
+/*F VectorSimple(vec) 
+**
+**  DESCRIPTION
+**    Conversion
+**      
+**  REMARKS
+**
+*/
+template <class T>
+VectorSimple<T>::VectorSimple(const Vector<T>& v)
+  : Vector<T>(v)
+{
+}
+
+
+/*F Vector::CopyClone
+**
+**  DESCRIPTION
+**
+**  REMARKS
+**
+*/
+template <class T> void Vector<T>::CopyClone(Identify *vec) {
+	 Identify *vI = (Identify *) this;
+	 vI->Identify::CopyClone(vec);
+	 Vector<T> *v = (Vector<T> *) vec;
+  	 Title = v->Title;
+  	 Delimitor = v->Delimitor;
+  	 copy(v->begin(),v->end(),back_insert_iterator< Vector<T> >(*this));
+}
+
+/*F Vector::Clone
+**
+**  DESCRIPTION
+**      
+**  REMARKS
+**
+*/
+template <class T> Vector<T> * Vector<T>::Clone() {
+  	 Vector<T> *newvec = new Vector<T>;
+	 Identify *v = (Identify *) newvec;
+  	 v->Identify::CopyClone((Identify *) this);
+  	 newvec->Vector<T>::CopyClone((Identify *) this);
+  	 return newvec;
+}
+
+
+/*F VectorFull::print
+**
+**  DESCRIPTION
+**      
+**  REMARKS
+**
+*/
+template <class T>
+ostream& VectorFull<T>::print(ostream& out) const
+{
+  String temp;
+  temp = (String) (*this).Delimitor;
+
+  (*this).Title.print(out);
+  typename VectorFull<T>::const_iterator iterF;
+  for(iterF = (*this).begin(); iterF != (*this).end(); iterF++)
+    (*iterF).print(out);
+
+  return out;
+}
+
+/*F VectorFull::Read
+**
+**  DESCRIPTION
+**      
+**  REMARKS
+**
+*/
+template <class T>
+bool VectorFull<T>::Read(istream&)
+{
+  return true;
+}
+
+/*F Vector::EncodeThis
+**
+**  DESCRIPTION
+**      
+**  REMARKS
+**
+*/
+template <class T>
+bool VectorFull<T>::EncodeThis(CommBuffer& buffer)
+{
+  int siz = (*this).size();
+  bool result = (*this).Title.EncodeThis(buffer);
+  result = result && (*this).Delimitor.EncodeThis(buffer);
+  result = result && Encode(buffer,siz);
+  typename Vector<T>::iterator iter;
+  for(iter = (*this).begin(); iter != (*this).end(); iter++)
+    result = result && (*iter).EncodeThis(buffer);
+  return result;
+}
+
+/*F Vector::DecodeThis
+**
+**  DESCRIPTION
+**      
+**  REMARKS
+**
+*/
+template <class T>
+bool VectorFull<T>::DecodeThis(CommBuffer& buffer)
+{
+  int size = 0;
+  bool result = (*this).Title.DecodeThis(buffer);
+  result = result && (*this).Delimitor.DecodeThis(buffer);
+  result = result && Decode(buffer,size);
+  for(int iter = 0; iter != size; iter++)
+    {
+      T* object = new T;
+      result = result && (*object).DecodeThis(buffer);
+      (*this).AddObject(*object);
+    }
+  return result;
+}
+
+/*F VectorSimple::print
+**
+**  DESCRIPTION
+**      
+**  REMARKS
+**
+*/
+template <class T>
+ostream& VectorSimple<T>::print(ostream& out) const
+{
+  String temp;
+  temp = (String) (*this).Delimitor;
+
+  ostream_iterator< T > iter(out,(char *) temp.c_str());
+  (*this).Title.print(out);
+  copy((*this).begin(),(*this).end(),iter);
+  return out;
+}
+
+/*F VectorSimple::Read
+**
+**  DESCRIPTION
+**      
+**  REMARKS
+**
+*/
+template <class T>
+bool VectorSimple<T>::Read(istream&)
+{
+  return true;
+}
+
+/*F VectorSimple::EncodeThis
+**
+**  DESCRIPTION
+**      
+**  REMARKS
+**
+*/
+template <class T>
+bool VectorSimple<T>::EncodeThis(CommBuffer& buffer)
+{
+  int siz = (*this).size();
+  bool result = Encode(buffer,(*this).Title);
+  result = result && Encode(buffer,(*this).Delimitor);
+  result = result && Encode(buffer,siz);
+  typename Vector<T>::iterator iter;
+  for(iter = (*this).begin(); iter != (*this).end(); iter++)
+    result = result && Encode(buffer,*iter);
+  return result;
+}
+
+/*F VectorSimple::DecodeThis
+**
+**  DESCRIPTION
+**      
+**  REMARKS
+**
+*/
+template <class T>
+bool VectorSimple<T>::DecodeThis(CommBuffer& buffer)
+{
+  int size = 0;
+  bool result = Decode(buffer,(*this).Title);
+  result = result && Decode(buffer,(*this).Delimitor);
+  result = result && Decode(buffer,size);
+  for(int iter = 0; iter != size; iter++)
+    {
+      T* object = new T;
+      result = result && Decode(buffer,*object);
+      (*this).AddObject(*object);
+    }
+  return result;
+}
+
+
+
+/*S Utility
+*/
+/*F ChangeTitle(title)  . . . . . . . . . . . . . . . . . . . . .  Vector
+**
+**  DESCRIPTION
+**       title: The new title of the vector
+**
+**    The default title is changed
+**       
+**  REMARKS
+**
+*/
+template <class T>
+void Vector<T>::ChangeTitle(const String& title)
+{
+  Title = title;
+}
+/*F ChangeDelimitor(delimitor)  . . . . . . . . . . . . . . . . .  Vector
+**
+**  DESCRIPTION
+**       delimitor: The new delimitor of the vector
+**
+**    The default title is changed
+**       
+**  REMARKS
+**
+*/
+template <class T>
+void Vector<T>::ChangeDelimitor(const String& delimitor)
+{
+  Delimitor = delimitor;
+}
+
+/*F Vector<T>::AddObject(newobject) . . . . . . . . . Add a Single Object
+**
+**  DESCRIPTION
+**     newobject: The element to be put on the Vector
+**
+**
+**  REMARKS
+**   push_back(newobject) is used
+**
+*/
+template <class T>
+void Vector<T>::AddObject(const T& newobject)
+{
+  this->push_back(newobject);
+}
+
+/*F result = Concatenate(vec2) . . . . . . . . . . . . . Vector
+**
+**  DESCRIPTION
+**    vec2: The vector to be concatented
+**    result: A new vector that is the concatonation
+**
+**    Concatenate two vectors
+**
+**  REMARKS
+**
+*/
+template <class T> 
+Vector<T>& Vector<T>::Concatenate(const Vector<T>& vec2)
+{
+        
+  Vector<T> *newvec  = new Vector<T>( (*this).size() + vec2.size());
+  typename Vector<T>::iterator iter;
+     
+  iter = copy((*this).begin(),(*this).end(),newvec->begin());
+  copy(vec2.begin(),vec2.end(),iter);
+     
+  return *newvec;
+}
+
+
+/*S Boolean
+*/
+/*F b = operator==(vec1,vec2) . . . . . . . . . . . . . . . . .  Vector
+**
+**  DESCRIPTION
+**     vec1, vec2: The vectors to be compared
+**     b: true or false.
+**
+**    The equality of two vectors
+**
+**     The vectors are equal if every single element within the 
+**     vectors are equal
+**
+**  REMARKS
+**     equal is used to compare the vectors
+**
+*/
+template <class T>
+bool Vector<T>::operator==(const Vector<T>& vec2) const
+{
+  if((*this) < vec2 || vec2 < (*this))
+    return false;
+  else
+    return true;
+}
+ 
+/*F b = operator<(vec1,vec2)  . . . . . . . . . . . . . . . .  Vector
+**
+**  DESCRIPTION
+**     vec1, vec2: The vectors to be compared
+**     b: true or false.
+**
+**    The less than operator
+**
+**    vec1 < vec2
+**
+**    The vectors are compared element-wise.  If any element
+**    of vec1 is greater-than or equal to an element in
+**    vec2, then it fails.
+**
+**  REMARKS
+**     A while loop until failure or the end of the loop
+**
+*/
+template <class T>
+bool Vector<T>::operator<(const Vector<T>& vec2) const
+{
+  bool ans;
+
+  if((*this).size() < vec2.size())
+    ans = true;
+  else if((*this).size() > vec2.size())
+    ans = false;
+  else 
+    ans = lexicographical_compare((*this).begin(),
+                                  (*this).end(),
+                                  vec2.begin(),
+                                  vec2.end());
+  return ans;
+}
+
+
+
+#endif

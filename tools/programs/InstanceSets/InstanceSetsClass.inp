@@ -1,0 +1,14 @@
+ObjectClasses:
+END
+%% -------------------------------------------------
+ClassNamePairs:
+InstanceNameList                                   KeyWords
+TestPercentage                                     Real
+END
+%% -------------------------------------------------
+ObjectClasses:
+END
+%% -------------------------------------------------
+ClassNamePairs:
+END
+%% -------------------------------------------------

@@ -1,0 +1,41 @@
+/*  FILE     MixedClasses.itc
+**  PACKAGE     REACTION    
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1995  REACTION Project / Edward S. Blurock 
+*/
+/*S Boolean
+*/ 
+/*F ans = operator<(x,y)  . . . . . . . . . . . . . . . . . . . . . PntrMixed
+**
+**  DESCRIPTION
+**    x,y: to be compared
+**    ans: ID of x is less than y
+**
+**  REMARKS
+**
+*/
+template <class ObjectID, class BaseClass>
+bool operator<(const PntrMixed<ObjectID,BaseClass>& x, const PntrMixed<ObjectID,BaseClass>& y)
+{
+  return x.ID < y.ID;
+}
+/*F ans = operator==(x,y) . . . . . . . . . . . . . . . . . . . . . PntrMixed
+**
+**  DESCRIPTION
+**    x,y: to be compared
+**    ans: ID of x equal to y
+**    
+**  REMARKS
+**
+*/
+template <class ObjectID, class BaseClass>
+bool operator==(const PntrMixed<ObjectID,BaseClass>& x, const PntrMixed<ObjectID,BaseClass>& y)
+{
+  return x.ID == y.ID;
+}

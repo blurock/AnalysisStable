@@ -1,0 +1,111 @@
+/*  FILE     
+**  PACKAGE     REACTION    
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1995  REACTION Project / Edward S. Blurock 
+*/
+ 
+/*S IO
+*/
+/*F out = operator>>(out,info)  . . . . . . . . . . . . . . . GraphSearchInfo
+**
+**  DESCRIPTION
+**    out: The output stream
+**    info: to be outputted
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+ostream& operator<<(ostream& out, const GraphSearchInfo<KeyType,T>& info)
+     {
+     return info.print(out);
+     }
+ 
+/*F in = operator>>(in,info)  . . . . . . . . . . . . . . . . GraphSearchInfo
+**
+**  DESCRIPTION
+**    in: The input stream
+**    info: to be inputted
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+istream& operator>>(istream& in, GraphSearchInfo<KeyType,T>& info)
+	  {
+	  return in;
+	  }
+/*S Boolean
+*/
+ 
+/*F ans = operator==(info1,info2) . . . . . . . . . . . . . . GraphSearchInfo
+**
+**  DESCRIPTION
+**    info1,info2: to be compared
+**    ans: true if the start pairs are equal
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+bool operator==(const GraphSearchInfo<KeyType,T>& info1,
+		const GraphSearchInfo<KeyType,T>& info2)
+     {
+     return (ObjectList< BasicPair<T,T> > ) info1.Start == 
+       (ObjectList< BasicPair<T,T> > ) info2.Start;
+     }
+
+/*F ans = operator<(info1,info2)  . . . . . . . . . . . . . . GraphSearchInfo
+**
+**  DESCRIPTION
+**    info1,info2: to be compared
+**    ans: true if the Start pairs of 1 is less than 2
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+bool operator<(const GraphSearchInfo<KeyType,T>& info1, 
+	       const GraphSearchInfo<KeyType,T>& info2)
+	  {
+	    return (ObjectList< BasicPair<T,T> > ) info1.Start <
+	      (ObjectList< BasicPair<T,T> > ) info2.Start;
+	  }
+/*S EncodeDecode
+*/
+/*F ans = Encode(buffer,graphinfo)  . . . . . . . . . . . . . GraphSearchInfo
+**
+**  DESCRIPTION
+**    buffer: The buffer
+**    graphinfo: The graph search info
+**    ans: true if successful
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+bool Encode(CommBuffer& buffer, GraphSearchInfo<KeyType,T>& graphinfo)
+     {
+     return graphinfo.EncodeThis(buffer);
+     }
+/*F ans = Decode(buffer,graphinfo)  . . . . . . . . . . . . . GraphSearchInfo
+**
+**  DESCRIPTION
+**    buffer: The buffer
+**    graphinfo: The graph search info
+**    ans: true if successful
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+bool Decode(CommBuffer& buffer, GraphSearchInfo<KeyType,T>& graphinfo)
+     {
+     return graphinfo.DecodeThis(buffer);
+     }

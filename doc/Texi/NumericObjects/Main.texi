@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  NumericObjects
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for CoreObjects library package "NumericObjects".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) CoreObjects Library
+
+@node     NumericObjects Package
+@section  The "NumericObjects" Package
+@cindex   package, NumericObjects
+@cindex   NumericObjects package
+@cindex   num namespace
+@cindex   namespaces, num
+
+@table @strong
+@item Package name
+@code{NumericObjects}
+
+@item Namespace name
+@code{num}
+
+@item Header files
+@file{NumericObjects.hh}, @file{NumericObjectsType.hh}
+@end table
+
+
+@include NumericObjects/Overview.texi
+
+@include NumericObjects/Classes.texi

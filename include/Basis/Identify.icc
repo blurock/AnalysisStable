@@ -1,0 +1,88 @@
+/*  FILE     
+**  PACKAGE     REACTION    
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1995  REACTION Project / Edward S. Blurock 
+*/
+ 
+/*S Constructors
+*/
+/*F Identify()  . . . . . . . . . . . . . . . . . . . . . . empty constructor
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+inline Identify::Identify()
+	  : Identification(0),NameTag("")
+	  {
+//	  cout << "Identify: empty constructor\n";
+	  }
+ 
+/*F Identify(id,name) . . . . . . . . . . . . . . . . . . . . . . . .  create
+**
+**  DESCRIPTION
+**    id: The numeric id
+**    name: The String name
+**
+**  REMARKS
+**
+*/
+inline Identify::Identify(const INDEX id, const String& name)
+: Identification(id), NameTag(name)
+     {
+//     cout << "Identify: id,String constructor\n";
+     }
+/*F Identify(id)  . . . . . . . . . . . . . . . . . . . . . . . . from number
+**
+**  DESCRIPTION
+**    id: The id number
+**
+**    The NameTag defaults to the empty string
+**
+**  REMARKS
+**
+*/
+inline Identify::Identify(const INDEX id)
+: Identification(id),NameTag("")
+     {
+//     cout << "Identify: id constructor\n";
+     
+     }
+/*F Identify(name)  . . . . . . . . . . . . . . . . . . . . . . . from String
+**
+**  DESCRIPTION
+**    name: The name 
+**
+**    The Identification defaults to zero
+**
+**  REMARKS
+**
+*/
+inline Identify::Identify(const String name)
+: Identification(0),NameTag(name)
+     {
+//     cout << "Identify: String constructor\n";
+     }
+/*F Identify(id)  . . . . . . . . . . . . . . . . . . . . .  copy constructor
+**
+**  DESCRIPTION
+**    id: The Identify to be copied
+**
+**  REMARKS
+**
+*/
+inline Identify::Identify(const Identify& id)
+:
+Identification(id.Identification),
+NameTag(id.NameTag)
+     {
+//     cout << "Identify: copy constructor\n";
+     }
+

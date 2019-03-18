@@ -1,0 +1,23 @@
+/*  FILE     Pairs.icc
+**  PACKAGE  Pairs
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    Inline functions for the "Pairs" package.
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C)  REACTION Project, Edward S. Blurock
+*/
+ 
+#ifndef REACTIONSRC_PAIRS_ICC
+#define REACTIONSRC_PAIRS_ICC
+ 
+#pragma interface
+
+
+
+
+
+
+#endif

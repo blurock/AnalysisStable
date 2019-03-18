@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  InstancePCA
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for CoreObjects library package "InstancePCA".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) CoreObjects Library
+
+@node     InstancePCA Package
+@section  The "InstancePCA" Package
+@cindex   package, InstancePCA
+@cindex   InstancePCA package
+@cindex   pca namespace
+@cindex   namespaces, pca
+
+@table @strong
+@item Package name
+@code{InstancePCA}
+
+@item Namespace name
+@code{pca}
+
+@item Header files
+@file{InstancePCA.hh}, @file{InstancePCAType.hh}
+@end table
+
+
+@include InstancePCA/Overview.texi
+
+@include InstancePCA/Classes.texi

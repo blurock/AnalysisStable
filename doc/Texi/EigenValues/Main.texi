@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  EigenValues
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for Basis library package "EigenValues".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) Basis Library
+
+@node     EigenValues Package
+@section  The "EigenValues" Package
+@cindex   package, EigenValues
+@cindex   EigenValues package
+@cindex   eig namespace
+@cindex   namespaces, eig
+
+@table @strong
+@item Package name
+@code{EigenValues}
+
+@item Namespace name
+@code{eig}
+
+@item Header files
+@file{EigenValues.hh}, @file{EigenValuesType.hh}
+@end table
+
+
+@include EigenValues/Overview.texi
+
+@include EigenValues/Classes.texi

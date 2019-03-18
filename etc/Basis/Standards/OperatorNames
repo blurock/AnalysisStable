@@ -1,0 +1,44 @@
+FILE
+  OperatorNames
+
+DESCRIPTION
+  Gives a list of operator names to be used as filenames.
+
+AUTHORS
+  Volker Stahl, Andreas Neubacher
+
+======================================================================
+
+  +       Add
+  +=      AddEq
+  -(2)    Subtract 
+  -=      SubtractEq
+  -(1)    Negative
+  *       Multiply
+  *=      MultiplyEq
+  /       Divide
+  /=      DivideEq
+  %       Modulo
+  %=      ModuloEq
+  ++      PreIncrement or PostIncrement
+  --      PreDecrement or PostDecrement
+  =       Assign
+  ==      Equal
+  !=      NotEqual
+  >       Greater
+  <       Less
+  >=      GreaterEqual
+  <=      LessEqual
+  &       And
+  |       Or
+  ~       Not
+  >>      ShiftRight
+  >>=     ShiftRightEq
+  <<      ShiftLeft
+  <<=     ShiftLeftEq
+  .       Dot
+  ()      Paren
+  []      Brack
+  new     New
+  delete  Delete
+  ^       Hat

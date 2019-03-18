@@ -1,0 +1,338 @@
+/*  FILE     SearchableObjects.icc
+**  PACKAGE     REACTION    
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1995  REACTION Project / Edward S. Blurock 
+*/
+
+/*S Constructors
+   The basic constructors for the ObjectList class
+*/ 
+/*F SearchableObjectList()  . . . . . . . . . . . . . . . . Empty Constructor
+**
+**  DESCRIPTION
+**    Empty Constructor
+**    Default Values: 
+**       Title     - Empty String
+**       Delimitor - Carriage Return
+**       The list  - Empty list
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+SearchableObjectList<KeyType,T>::SearchableObjectList()
+: Title(""), Delimitor("\n"), OutputFlag(SEARCHABLE_BOTH)
+     {
+     }
+
+ 
+/*F SearchableObjectList(slist) . . . . . . . . . . . . . .  Copy Constructor
+**
+**  DESCRIPTION
+**    slist: The original list
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+SearchableObjectList<KeyType,T>::SearchableObjectList(const SearchableObjectList<KeyType,T>& slist)
+: map< KeyType,T,less<KeyType> >(slist),
+Title(slist.Title),
+Delimitor(slist.Delimitor),
+OutputFlag(slist.OutputFlag)
+     {
+     }
+/*F SearchableObjectListSimple()  . . . . . . . . . . . . . Empty Constructor
+**
+**  DESCRIPTION
+**    Empty Constructor
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+SearchableObjectListSimple<KeyType,T>::SearchableObjectListSimple()
+     {
+     }
+
+ 
+/*F SearchableObjectListSimple(slist) . . . . . . . . . . .  Copy Constructor
+**
+**  DESCRIPTION
+**    slist: The original list
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+SearchableObjectListSimple<KeyType,T>::SearchableObjectListSimple(const SearchableObjectListSimple<KeyType,T>& slist)
+  : SearchableObjectList<KeyType,T>(slist)
+{
+}
+/*F SearchableObjectListFull()  . . . . . . . . . . . . . . Empty Constructor
+**
+**  DESCRIPTION
+**    Empty Constructor
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+SearchableObjectListFull<KeyType,T>::SearchableObjectListFull()
+{
+}
+/*F SearchableObjectListFull(slist) . . . . . . . . . . . .  Copy Constructor
+**
+**  DESCRIPTION
+**    slist: The original list
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+SearchableObjectListFull<KeyType,T>::SearchableObjectListFull(const SearchableObjectListFull<KeyType,T>& slist)
+: SearchableObjectList<KeyType,T>(slist)
+{
+}
+
+/*S Utility
+*/
+ 
+/*F SearchableObjectList<KeyType,T>::ChangeTitle(title) . . . .  Change title
+**
+**  DESCRIPTION
+**    title: The new title
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+void SearchableObjectList<KeyType,T>::ChangeTitle(const String& title)
+{
+  Title = title;
+}
+ 
+/*F SearchableObjectList<KeyType,T>::ChangeDelimitor(delimitor) . . .  Change
+**
+**  DESCRIPTION
+**    delimitor: The new delimitor
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+void SearchableObjectList<KeyType,T>::ChangeDelimitor(const String& delimitor)
+{
+  Delimitor = delimitor;
+}
+ 
+/*F SearchableObjectList<KeyType,T>::ChangeOutputFlag(flag) . . . . .  Change
+**
+**  DESCRIPTION
+**    flag: The new output flag
+**
+**    The valid flags are:
+**         -SEARCHABLE_KEYWORD: Print just the keyword
+**         -SEARCHABLE_OBJECT:  Print just the object
+**         -SEARCHABLE_BOTH:    Print both
+**   
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+void SearchableObjectList<KeyType,T>::ChangeOutputFlag(const unsigned int flag)
+{
+  OutputFlag = flag;
+}
+/*S Modifying
+*/
+/*F SearchableObjectList<KeyType,T>::AddObject(key,value) . . . .  Add object
+**
+**  DESCRIPTION
+**    key: The keyword refering to the object
+**    value: The actual object to be stored
+**    ret:   true if the object was successfully stored
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+bool SearchableObjectList<KeyType,T>::AddObject(const KeyType &key,
+                                                T &value)
+{
+  typedef map< KeyType , T , less<KeyType> >  keymap;
+  typedef typename keymap::iterator keymapiter;
+  pair< keymapiter , bool> p;
+  //typename pair< map< KeyType , T , less<KeyType> >::iterator, bool> p;
+  p = this->insert( pair<const KeyType, T>(key,value) );
+  if(p.second == false)
+    cerr << "AddObject failed\n";
+  return p.second;
+}
+/*F SearchableObjectList<KeyType,T>::RemoveObject(key)  . . . . Remove object
+**
+**  DESCRIPTION
+**    key: The key of the object to be removed
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+void SearchableObjectList<KeyType,T>::RemoveObject(const KeyType& key)
+{
+  typename map< KeyType, T, less<KeyType> >::iterator p;
+  p = (*this).find(key);
+  this->erase(p);
+}
+/*F ans = EncodeThis(buffer)  . . . . . . . . . . . . .  SearchableObjectList
+**
+**  DESCRIPTION
+**    buffer: The buffer
+**    ans: true if successful
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+bool SearchableObjectListFull<KeyType,T>::EncodeThis(CommBuffer& buffer)
+{
+  bool result = Encode(buffer,(*this).Title);
+  result = result && Encode(buffer,(*this).Delimitor);
+  result = result && Encode(buffer,(*this).OutputFlag);
+          
+  int siz = (*this).size();
+  result = result && Encode(buffer,siz);
+
+  typename SearchableObjectList<KeyType,T>::iterator iter;
+  for(iter=(*this).begin();
+      !(iter == (*this).end());
+      iter++)
+    {
+      KeyType nkey = (*iter).first;
+      result = result && nkey.EncodeThis(buffer);
+      result = result && (*iter).second.EncodeThis(buffer);
+    }
+  return result;
+}
+
+ 
+/*F ans = DecodeThis(buffer)  . . . . . . . . . . . . .  SearchableObjectList
+**
+**  DESCRIPTION
+**    buffer: The buffer
+**    ans: true if successful
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+bool SearchableObjectListFull<KeyType,T>::DecodeThis(CommBuffer& buffer)
+{
+  bool result = Decode(buffer,(*this).Title);
+  result = result && Decode(buffer,(*this).Delimitor);
+
+  int out = (*this).OutputFlag;
+  result = result && Decode(buffer,out);
+          
+  int size;
+  result = result && Decode(buffer,size);
+
+  if(result)
+    {
+      for(int iter = 0;
+          iter != size;
+          iter++)
+        {
+          KeyType *key = new KeyType();
+          T *object = new T();
+          result = result && key->DecodeThis(buffer);
+          result = result && object->DecodeThis(buffer);
+          (*this)[*key] = *object;
+        }
+    }
+          
+  return result;
+}
+/*F ans = EncodeThis(buffer)  . . . . . . . . . . . . .  SearchableObjectList
+**
+**  DESCRIPTION
+**    buffer: The buffer
+**    ans: true if successful
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+bool SearchableObjectListSimple<KeyType,T>::EncodeThis(CommBuffer& buffer)
+{
+  bool result = Encode(buffer,(*this).Title);
+  result = result && Encode(buffer,(*this).Delimitor);
+  result = result && Encode(buffer,(*this).OutputFlag);
+          
+  int siz = (*this).size();
+  result = result && Encode(buffer,siz);
+
+  typename SearchableObjectList<KeyType,T>::iterator iter;
+  for(iter=(*this).begin();
+      !(iter == (*this).end());
+      iter++)
+    {
+      KeyType nkey = (*iter).first;
+      result = result && Encode(buffer,nkey);
+      result = result && Encode(buffer,(*iter).second);
+    }
+  return result;
+}
+
+ 
+/*F ans = DecodeThis(buffer)  . . . . . . . . . . . . .  SearchableObjectList
+**
+**  DESCRIPTION
+**    buffer: The buffer
+**    ans: true if successful
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+bool SearchableObjectListSimple<KeyType,T>::DecodeThis(CommBuffer& buffer)
+{
+  bool result = Decode(buffer,(*this).Title);
+  result = result && Decode(buffer,(*this).Delimitor);
+
+  int out = (*this).OutputFlag;
+  result = result && Decode(buffer,out);
+          
+  int size;
+  result = result && Decode(buffer,size);
+
+  if(result)
+    {
+      for(int iter = 0;
+          iter != size;
+          iter++)
+        {
+          KeyType *key = new KeyType();
+          T *object = new T();
+          result = result && Decode(buffer,*key);
+          result = result && Decode(buffer,*object);
+          (*this)[*key] = *object;
+        }
+    }
+          
+  return result;
+}
+
+
+
+
+
+
+

@@ -1,0 +1,148 @@
+/*  FILE     LineGraph.icc
+**  PACKAGE  LineGraph
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    Inline functions for the "LineGraph" package.
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C)  REACTION Project, Edward S. Blurock
+*/
+ 
+#ifndef REACTIONSRC_LINEGRAPH_ICC
+#define REACTIONSRC_LINEGRAPH_ICC
+ 
+/*S Constructors
+*/ 
+/*F GraphData() . . . . . . . . . . . . . . . . . . . . . . empty constructor
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+template <class Type>
+GraphData<Type>::GraphData()
+     {
+     }
+/*F GraphData(data) . . . . . . . . . . . . . . . . . . . .  copy constructor
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+template <class Type>
+GraphData<Type>::GraphData(const GraphData<Type>& data)
+: Sorted(data.Sorted),
+HiValue(data.HiValue),
+LoValue(data.LoValue),
+Begin(data.Begin),
+End(data.End),
+Increment(data.Increment),
+Original(data.Original)
+     {
+     }
+/*S Utility
+*/
+ 
+/*F
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+template <class Type>
+ostream& GraphData<Type>::CalcAndShowGraphData(ostream& out)
+     {
+     MaxMinSort();
+     CalcBeginEndInterval();
+     return print(out);
+     }
+
+     
+/*F operator()(data,point)  . . . . . . . . . . . Adds point to original list
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+template <class Type>
+GraphData<Type>&  GraphData<Type>::operator()(GraphData<Type>& data, const Type point)
+     {
+     data.Original.AddObject(point);
+     return data;
+     }
+
+/*F AddObject(point)  . . . . . . . . . . . . . . Adds point to original list
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+template <class Type>
+void GraphData<Type>::AddObject(const Type point)
+     {
+     Original.AddObject(point);
+     }
+
+/*F MaxMinSort()
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+template <class Type>
+void GraphData<Type>::MaxMinSort()
+     {
+     Sorted = Original;
+     Sorted.Sort();
+     HiValue = Sorted.back();
+     LoValue = Sorted.front();
+     }
+ 
+
+ 
+/*F CalcBeginEndInterval()  . . . . . . . . . .  Set up line-graph boundaries
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+template <class Type>
+void GraphData<Type>::CalcBeginEndInterval()
+     {
+     Increment = CalculateInterval((double) HiValue, (double) LoValue);
+     Begin = CalculateBeginValue((double) LoValue, (double) Increment);
+     End = CalculateEndValue((double) Begin, (double) HiValue, (double) Increment);
+     }
+
+/*S IO
+*/
+ 
+/*F newout = print(out) . . . . . . . . . . . . . . . . . . . . . . GraphData
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+template <class Type>
+ostream& GraphData<Type>::print(ostream& out) const
+     {
+     out << Begin;
+     out << "  ";
+     out << End;
+     out << "  ";
+     out << Increment;
+     out << "\n";
+     return out;
+     
+     }
+#endif

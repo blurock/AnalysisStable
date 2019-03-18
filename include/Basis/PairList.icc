@@ -1,0 +1,430 @@
+/*  FILE     PairList.icc
+**  PACKAGE     REACTION    
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1995  REACTION Project / Edward S. Blurock 
+*/
+/*S Utility
+*/
+/*C FormBasicPair<T1,T2>  . . . . . . . . . . . . . . form pair from elements
+**
+**  DESCRIPTION
+**     This is a helping routine class to form a pair given the two 
+**     objects, I and J.  This is used by the STL transform routines
+**
+**     It is formed with 
+**          FormBasicPair();
+**
+**     and the operator() takes the following input:
+**     (const T1& i, const T2& j)
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+class FormBasicPair
+{
+public:
+  T1 I;
+  T2 J;
+     
+  FormBasicPair(void)
+    {
+    }
+  BasicPair<T1,T2>& operator()(const T1& i, const T2& j)
+    {
+      BasicPair<T1,T2> *p;
+      p = new BasicPair<T1,T2>(i,j);
+      return *p;
+    }
+};
+
+/*C FormPairI<T1,T2>  . . . . . . . . . . . . . . . . . form pairs given an I
+ **
+ **  DESCRIPTION
+ **    Given an element of type T1 and an ObjectList<T2>, help form the 
+ **    PairList<T1,T2> of elements
+ **
+ **    The class is set up using FormPairI<T1,T2> form(elementi), where
+ **    elementi is the first element of all the pairs formed.  The routine is 
+ **    called with an element of the second pair: (const T2& j).
+ **
+ **  REMARKS
+ **
+ */
+template <class T1, class T2>
+class FormPairI
+{
+  T1 I;
+public:
+     
+  BasicPair<T1,T2> p;
+     
+  FormPairI() : p()
+    {
+    }
+     
+  FormPairI(const T1& i) : I(i), p()
+    {
+    }
+  BasicPair<T1,T2>& operator()(const T2& j)
+    {
+      BasicPair<T1,T2> *p1 = new BasicPair<T1,T2>(I,j);
+      return *p1;
+    }
+};     
+/*C FormPairJ<T1,T2>  . . . . . . . . . . . . . . . . . form pairs given an J
+**
+**  DESCRIPTION
+**    Given an element of type T2 and an ObjectList<T1>, help form the 
+**    PairList<T1,T2> of elements
+**
+**    The class is set up using FormPairI<T1,T2> form(elementj), where
+**    elementj is the second element of all the pairs formed.  The routine is 
+**    called with an element of the second pair: (const T2& j).
+**
+**  REMARKS
+**
+*/
+
+template <class T1, class T2>
+class FormPairJ
+{
+  T2 J;
+public:
+     
+  BasicPair<T1,T2> p;
+     
+  FormPairJ() : p()
+    {
+    }
+     
+  FormPairJ(const T2& j) : J(j), p()
+    {
+    }
+  BasicPair<T1,T2>& operator()(const T1& i)
+    {
+      BasicPair<T1,T2> *p1 = new BasicPair<T1,T2>(i,J);
+      return *p1;
+    }
+};     
+/*C EqualPairI<T1,T2>(i)  . . . . . . . . . . . . . . . . . .  having equal i
+**
+**  DESCRIPTION
+**      i: The comparison value of the first term
+**
+**      Helping class for BasicPair's that are equal to i
+**
+**      The class is formed with EqualPairI<T1,T2> e(i), i is the 
+**      element of type T1 that should be equal.  Successive calls
+**      to bool operator()(const BasicPair<T1,T2>& pair) const are made.
+**
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+class EqualPairI  : public unary_function<BasicPair<T1,T2>, bool>
+{
+  T1 I;
+public:
+     
+  EqualPairI(const T1& i) : I(i)
+    {
+    }
+     
+  bool operator()(const BasicPair<T1,T2>& pair) const
+    {
+      return pair.I == I;
+    }
+};
+
+ 
+/*C EqualPairJ<T1,T2>(j)  . . . . . . . . . . . . . . . . . .  having equal j
+**
+**  DESCRIPTION
+**      j: The comparison value of the second term
+**
+**      Helping class for BasicPair's that are equal to i
+**
+**      The class is formed with EqualPairI<T1,T2> e(j), j is the 
+**      element of type T2 that should be equal.  Successive calls
+**      to bool operator()(const BasicPair<T1,T2>& pair) const are made.
+**
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+class EqualPairJ : public unary_function<BasicPair<T1,T2>, bool>
+{
+  T2 J;
+public:
+     
+  EqualPairJ(const T2& j) : J(j)
+    {
+    }
+     
+  bool operator()(const BasicPair<T1,T2>& pair) const
+    {
+      return pair.J == J;
+    }
+
+};
+
+
+/*S Constructors
+*/
+ 
+/*F PairList()  . . . . . . . . . . . . . . . . . . . . . . empty constructor
+**
+**  DESCRIPTION
+**    The empty constructor
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+PairList<T1,T2>::PairList() 
+  : ObjectList< BasicPair<T1,T2> >("","  ")
+{
+}
+ 
+/*F PairList(n) . . . . . . . . . . . . . . . . . . . . . .  size of the list
+**
+**  DESCRIPTION
+**    n: The size to initialize the list to
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+PairList<T1,T2>::PairList(const int n) 
+  : ObjectList< BasicPair<T1,T2> >(n)
+{
+}
+/*F PairList(pairs) . . . . . . . . . . . . . . . . . . . .  copy Constructor
+**
+**  DESCRIPTION
+**    pairs: The PairList to be copied.
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+PairList<T1,T2>::PairList(const PairList<T1,T2>& pairs) 
+  : ObjectList< BasicPair<T1,T2> >(pairs)
+{
+}
+/*F PairList(l1,l2) . . . . . . . . . . . . . . . .  Pairs from element lists
+**
+**  DESCRIPTION
+**   l1: ObjectList of first elements to be combined
+**   l2: ObjectList of second elements to be combined
+** 
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+PairList<T1,T2>::PairList(const ObjectList<T1>& l1,
+                          const ObjectList<T2>& l2)
+  : ObjectList< BasicPair<T1,T2> >(l1.size())
+{
+  FormBasicPair<T1,T2> form;
+     
+  transform(l1.begin(),
+            l1.end(),
+            l2.begin(),
+            (*this).begin(),
+            form);
+}
+ 
+/*F PairList(i,second)  . . . . . . . . . . . . . . . . .  element and a list
+**
+**  DESCRIPTION
+**    i: The first element of the pairs to be made
+**    second: The ObjectList of elements to make Pairs
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+PairList<T1,T2>::PairList(const T1& i, const ObjectList<T2> second) 
+  : ObjectList< BasicPair<T1,T2> >(second.size())
+{
+  FormPairI<T1,T2> formi(i);
+     
+  transform(second.begin(),
+            second.end(),
+            (*this).begin(),
+            formi);
+}
+/*F PairList(first,j) . . . . . . . . . . . . . . . . . . list and an element
+**
+**  DESCRIPTION
+**    first: ObjectList of elements to make BasicPairs
+**    j: The element to combine
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+PairList<T1,T2>::PairList(const ObjectList<T1> first, const T2& j) 
+  : ObjectList< BasicPair<T1,T2> >(first.size())
+{
+  FormPairJ<T1,T2> formj(j);
+  transform(first.begin(),
+            first.end(),
+            (*this).begin(),
+            formj);
+}
+
+
+/*S Utility
+*/
+ 
+/*F l = VectorOfFirsts(vec) . . . . . . . . . . . . .  list of first elements
+**
+**  DESCRIPTION
+**    vec: The vector to put the elements in.
+**    l: The list of I values
+**
+**    Make an ObjectList of all the first elements in the pairs.
+**    
+**  REMARKS
+**    Elements added using AddObject
+**
+*/
+template <class T1, class T2>
+ObjectList<T1>& PairList<T1,T2>::VectorOfFirsts(ObjectList<T1>& vec)
+    {
+      for(typename ObjectList< BasicPair<T1,T2> >::iterator icnt=(*this).begin();
+	  icnt != (*this).end() ;
+	  icnt++)
+	vec.AddObject((*icnt).I);
+      
+      return vec;
+    }
+/*F l = VectorOfSeconds(vec)  . . . . . . . . . . . . list of second elements
+**
+**  DESCRIPTION
+**    vec: The vector to put the elements in
+**    l: The list of J values
+**
+**    Make an ObjectList of all the second elements in the pairs
+**    
+**  REMARKS
+**    Elements added using AddObject
+**
+*/
+template <class T1, class T2>
+ObjectList<T2>& PairList<T1,T2>::VectorOfSeconds(ObjectList<T2>& vec)
+    {
+      for(typename ObjectList< BasicPair<T1,T2> >::iterator i=(*this).begin();i != (*this).end() ; i++)
+	vec.AddObject((*i).J);
+      
+      return vec;
+    }
+/*F RemoveWithI(i)  . . . . . . . . . . . . . . Remove pairs containing the i
+**
+**  DESCRIPTION
+**    i: An element of type T1
+**
+**    Remove all pairs which have i as one of the first elements in the pair
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+void PairList<T1,T2>::RemoveWithI(const T1& i)
+{
+  EqualPairI<T1,T2> eqi(i);
+  /*
+  PairList<T1,T2>::iterator p;
+  p = STD_NAMESPACE remove_if(begin(),end(),eqi);
+  erase(p,end());
+  */
+  this->remove_if(eqi);
+} 
+/*F OnlyWithI(i)  . . . . . . . . . . . . . . . . . . . . . Keep those with i
+**
+**  DESCRIPTION
+**    i: An element of type T1
+**
+**    Remove all pairs which do not have an element i as the first
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+void PairList<T1,T2>::OnlyWithI(const T1& i)
+{
+
+  EqualPairI<T1,T2> eqi(i);
+
+  typename ObjectList< BasicPair<T1,T2> >::iterator first = (*this).begin();
+  typename ObjectList< BasicPair<T1,T2> >::iterator last = (*this).end();
+  while (first != last) 
+    {
+      typename ObjectList< BasicPair<T1,T2> >::iterator next = first;
+      ++next;
+      if (!eqi(*first)) this->erase(first);
+      first = next;
+    }
+  //PairList<T1,T2>::iterator p;
+  //p = STD_NAMESPACE remove_if(begin(),end(),not1(EqualPairI<T1,T2>(i)));
+  //erase(p,end());
+  //this->remove_if(not1(EqualPairI<T1,T2>(i)));
+}
+/*F RemoveWithJ(j)  . . . . . . . . . . . . . . Remove pairs containing the j
+**
+**  DESCRIPTION
+**    j: An element of type T2
+**
+**    Remove all pairs which have i as one of the second elements in the pair
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+void PairList<T1,T2>::RemoveWithJ(const T2& j)
+{
+  EqualPairJ<T1,T2> eqj(j);
+  /*
+  PairList<T1,T2>::iterator p;
+  p = STD_NAMESPACE remove_if(begin(),end(),eqj);
+  erase(p,end());
+  */
+  this->remove_if(eqj);
+}
+    
+/*F OnlyWithJ(j)  . . . . . . . . . . . . . . . . . . . . . Keep those with j
+**
+**  DESCRIPTION
+**    j: An element of type T2
+**
+**    Remove all pairs which do not have an element j as the second
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+void PairList<T1,T2>::OnlyWithJ(const T2& j)
+{
+  EqualPairJ<T1,T2> eqj(j);
+
+  typename ObjectList< BasicPair<T1,T2> >::iterator first = (*this).begin();
+  typename ObjectList< BasicPair<T1,T2> >::iterator last = (*this).end();
+  while (first != last) 
+    {
+      typename ObjectList< BasicPair<T1,T2> >::iterator next = first;
+      ++next;
+      if (!eqj(*first)) this->erase(first);
+      first = next;
+    }
+  
+}

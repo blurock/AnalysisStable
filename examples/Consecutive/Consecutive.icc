@@ -1,0 +1,23 @@
+/*  FILE     Consecutive.icc
+**  PACKAGE  Consecutive
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    Inline functions for the "Consecutive" package.
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1997 CoreObjects Library
+*/
+ 
+#ifndef CoreObjectsSRC_CONSECUTIVE_ICC
+#define CoreObjectsSRC_CONSECUTIVE_ICC
+ 
+#pragma interface
+
+
+
+
+
+
+#endif

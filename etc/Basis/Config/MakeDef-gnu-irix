@@ -1,0 +1,63 @@
+# FILE     MakeDef-gnu-irix
+# PACKAGE  Maintenance
+# AUTHOR   Andreas Neubacher
+#
+# CONTENT
+#   GNU Makefile containing standard definitions for makefiles used in the
+#   STURM system.  This file is intended for inclusion in other STURM
+#   makefiles.
+#
+#   IRIX with GNU tools version.
+#
+# COPYRIGHT (C) STURM Project  1995 RISC Linz
+
+#V Command variable definitions.
+
+CC=sturmcc
+CXX=sturmc++
+
+ifeq "$(LTYPE)" "sequential"
+  CC=sturmcc
+  CXX=sturmc++
+endif
+
+ifeq "$(LTYPE)" "parallel"
+  CC=psturmcc
+  CXX=psturmc++
+endif
+
+AR=ar -vq
+RANLIB=echo
+
+export CC CXX RANLIB AR MAKE
+
+
+#V Other default variable definitions.
+
+CPPFLAGS+=-Wall
+
+ifeq "$(LSPEED)" "debugging"
+  CPPFLAGS+=-DSTURM_Assert
+  CXXFLAGS+=-ggdb -gstabs
+  CFLAGS+=-ggdb -gstabs
+  LDFLAGS+=-g
+endif
+ifeq "$(LSPEED)" "optimized"
+  CXXFLAGS+=-O
+  CFLAGS+=-O
+  LDFLAGS+=-O
+endif
+
+
+#F Default target definitions.
+
+.PHONY: all clean cleaner
+
+default:
+	@echo Do not run this makefile without arguments!
+	@echo Try "make all", "make clean", etc.
+
+clean::
+	$(RM) core *.o *~ *.bak
+
+cleaner:: clean

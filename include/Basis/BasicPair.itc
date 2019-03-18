@@ -1,0 +1,77 @@
+/*  FILE     BasicPair.itc
+**  PACKAGE	REACTION    
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1995	REACTION Project / Edward S. Blurock 
+*/
+/*S Boolean
+*/
+/*F b = operator==(pair1,pair2) . . . . . . . . . . . . . . . . . . BasicPair
+**
+**  DESCRIPTION
+**    pair1,pair2: To be compared
+**    b: true if I and J are the same
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+bool operator==(const BasicPair<T1,T2>& pair1, const BasicPair<T1,T2>& pair2)
+{
+  return pair1.I == pair2.I && pair1.J == pair2.J;
+}
+/*F b = operator<(pair1,pair2)	. . . . . . . . . . . . . . . . . . BasicPair
+**
+**  DESCRIPTION
+**    pair1,pair2: To be compared
+**    b: true if I less (if equal then compare J)
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+bool operator<(const BasicPair<T1,T2>& pair1, const BasicPair<T1,T2>& pair2)
+{
+  if(pair1.I == pair2.I)
+    return pair1.J < pair2.J;
+  else
+    return pair1.I < pair2.I;
+}
+/*S IO
+*/
+/*F newout = operator<<(out,p)	. . . . . . . . . . . . . . . . . . BasicPair
+**
+**  DESCRIPTION
+**    out: The output stream
+**    p: the pair
+**    newout: The output stream
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+ostream& operator<<(ostream& out, const BasicPair<T1,T2>& p)
+{
+  return p.print(out);
+}
+ 
+/*F newin = operator>>(in,p)  . . . . . . . . . . . . . . . . . . . BasicPair
+**
+**  DESCRIPTION
+**    in: The input stream
+**    p: The pair
+**    newin: The input stream
+**
+**  REMARKS
+**     At the moment, it is empty
+*/
+template <class T1, class T2>
+istream& operator>>(istream& in, const BasicPair<T1,T2>& p)
+{
+  return in;
+}

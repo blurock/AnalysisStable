@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  CommBuffer
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for Basis library package "CommBuffer".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) Basis Library
+
+@node     CommBuffer Package
+@section  The "CommBuffer" Package
+@cindex   package, CommBuffer
+@cindex   CommBuffer package
+@cindex   com namespace
+@cindex   namespaces, com
+
+@table @strong
+@item Package name
+@code{CommBuffer}
+
+@item Namespace name
+@code{com}
+
+@item Header files
+@file{CommBuffer.hh}, @file{CommBufferType.hh}
+@end table
+
+
+@include CommBuffer/Overview.texi
+
+@include CommBuffer/Classes.texi

@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  Graph
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for Basis library package "Graph".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) Basis Library
+
+@node     Graph Package
+@section  The "Graph" Package
+@cindex   package, Graph
+@cindex   Graph package
+@cindex   grph namespace
+@cindex   namespaces, grph
+
+@table @strong
+@item Package name
+@code{Graph}
+
+@item Namespace name
+@code{grph}
+
+@item Header files
+@file{Graph.hh}, @file{GraphType.hh}
+@end table
+
+
+@include Graph/Overview.texi
+
+@include Graph/Classes.texi

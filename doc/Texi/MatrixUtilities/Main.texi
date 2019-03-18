@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  MatrixUtilities
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for Basis library package "MatrixUtilities".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) Basis Library
+
+@node     MatrixUtilities Package
+@section  The "MatrixUtilities" Package
+@cindex   package, MatrixUtilities
+@cindex   MatrixUtilities package
+@cindex   mutl namespace
+@cindex   namespaces, mutl
+
+@table @strong
+@item Package name
+@code{MatrixUtilities}
+
+@item Namespace name
+@code{mutl}
+
+@item Header files
+@file{MatrixUtilities.hh}, @file{MatrixUtilitiesType.hh}
+@end table
+
+
+@include MatrixUtilities/Overview.texi
+
+@include MatrixUtilities/Classes.texi

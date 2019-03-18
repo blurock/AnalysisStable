@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  LogicalOperations
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for CoreObjects library package "LogicalOperations".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) CoreObjects Library
+
+@node     LogicalOperations Package
+@section  The "LogicalOperations" Package
+@cindex   package, LogicalOperations
+@cindex   LogicalOperations package
+@cindex   log namespace
+@cindex   namespaces, log
+
+@table @strong
+@item Package name
+@code{LogicalOperations}
+
+@item Namespace name
+@code{log}
+
+@item Header files
+@file{LogicalOperations.hh}, @file{LogicalOperationsType.hh}
+@end table
+
+
+@include LogicalOperations/Overview.texi
+
+@include LogicalOperations/Classes.texi

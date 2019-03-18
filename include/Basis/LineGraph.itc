@@ -1,0 +1,26 @@
+/*  FILE     
+**  PACKAGE     REACTION    
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1995  REACTION Project / Edward S. Blurock 
+*/
+
+  
+/*F newout = operator<<(out,data) . . . . . . . . . . . . . output graph data
+**
+**  DESCRIPTION
+**    out: 
+**  REMARKS
+**
+*/
+template <class Type> 
+ostream& operator<<(ostream& out, const GraphData<Type>& data)
+     {
+     return data.print(out);
+     }
+

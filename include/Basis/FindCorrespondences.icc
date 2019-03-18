@@ -1,0 +1,228 @@
+/*  FILE     FindCorrespondences.icc
+**  PACKAGE  FindCorrespondences
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    Inline functions for the "FindCorrespondences" package.
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C)  REACTION Project, Edward S. Blurock
+*/
+ 
+#ifndef REACTIONSRC_FINDCORRESPONDENCES_ICC
+#define REACTIONSRC_FINDCORRESPONDENCES_ICC
+
+/*S Constructors
+*/ 
+/*F CheckIfValidBonds() . . . . . . . . . . . . . . . . . . empty constructor
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+CheckIfValidBonds<KeyType,T>::CheckIfValidBonds()
+	  {
+	  }
+ 
+/*F CheckIfValidBonds(valid)  . . . . . . . . . . . . . . .  copy constructor
+**
+**  DESCRIPTION
+**    valid: The valid bonds
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+CheckIfValidBonds<KeyType,T>::CheckIfValidBonds(const CheckIfValidBonds<KeyType,T>& valid)
+	  : Bonds1(valid.Bonds1),Bonds2(valid.Bonds2)
+     {
+     }
+ 
+/*F CheckIfValidBonds(graph1,graph2)  . . . . . . . . . . sets up with graphs
+**
+**  DESCRIPTION
+**    graph1,graph2: The graph to compare
+**
+**    The bond lists are extracted from the graphs.
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+CheckIfValidBonds<KeyType,T>::CheckIfValidBonds(const Graph<KeyType,T>& graph1,
+						const Graph<KeyType,T>& graph2)
+: Bonds1(graph1.Bonds),Bonds2(graph2.Bonds)
+     {
+     Bonds1.Sort();
+     }
+
+ 
+ 
+/*F FilterOutSmallerCorrespondences(n)  . . . . . . . . . . . . . with size n
+**
+**  DESCRIPTION
+**    n: The minimum size of the pair list
+**
+**  REMARKS
+**
+*/
+template <class KeyType>
+FilterOutSmallerCorrespondences<KeyType>::FilterOutSmallerCorrespondences(int n)
+	  : ProperSize(n)
+	       {
+	       }
+
+/*S Utilities
+*/
+/*F ans = operator()(plist)
+**
+**  DESCRIPTION
+**    plist: Correspondences between graph1 and graph2
+**    ans: true if the same
+**
+**    The indicies of the bonds of graph2 are translated, sorted and 
+**    compared with the sorted bonds of graph1.  If they are the same
+**    the procedure returns true
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+bool CheckIfValidBonds<KeyType,T>::operator()(const SymmetricPairList<KeyType>& plist)
+     {
+     SymmetricPairList<T> newlist;
+     PairTranslatePairJtoI<T> translate(plist);
+     
+     transform(Bonds2.begin(),
+	       Bonds2.end(),
+	       back_insert_iterator< SymmetricPairList<T> >(newlist),
+	       translate);
+     newlist.Sort();
+     
+     return (PairList<T,T>&) newlist == (PairList<T,T>&) Bonds1;
+     }
+ 
+/*F corrs = operator()(info)  . . . . . . IsolateCorrespondencesFromGraphInfo
+**
+**  DESCRIPTION
+**    info: From where the correspondences are to be extracted
+**    corrs: The Correspondences (Start)
+**
+**    The Start element of the info is returned
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+SymmetricPairList<KeyType> 
+IsolateCorrespondencesFromGraphInfo<KeyType,T>::operator()(const GraphSearchInfo<KeyType,T>& info)
+	  {
+	  return info.Start;
+	  }
+/*F ans = operator()(plist) . . . . . . . . . FilterOutSmallerCorrespondences
+**
+**  DESCRIPTION
+**    plist: The list of correspondences
+**    ans: true if the size of the correspondence list is equal to n
+**
+**    The size of plist is compared to the ProperSize
+**    
+**  REMARKS
+**
+*/
+template <class KeyType>
+bool FilterOutSmallerCorrespondences<KeyType>::operator()(const SymmetricPairList<KeyType>& plist)
+	  {
+	  return plist.size() != ProperSize;
+	  }
+
+ 
+/*F FindSubGraphCorrespondences(corr) . . . . . . . . . . .  copy constructor
+**
+**  DESCRIPTION
+**    corr: to be copied
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+FindSubGraphCorrespondences<KeyType,T>::FindSubGraphCorrespondences(const FindSubGraphCorrespondences<KeyType,T>& corr)
+: 
+Starts(corr.Starts),
+Search(corr.Search),
+EnoughCheck(corr.EnoughCheck),
+BondCheck(corr.BondCheck),
+Correspondences(corr.Correspondences)
+     {
+     }
+ 
+/*F FindSubGraphCorrespondences(graph1,graph2)  . . . . . . . . . . .  search
+**
+**  DESCRIPTION
+**    graph1,graph2: The graphs to be compared
+**
+**    Find the set of correspondences between the two graphs.  The
+**    result of the constructor has not been filtered.
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+FindSubGraphCorrespondences<KeyType,T>::FindSubGraphCorrespondences(const Graph<KeyType,T>& graph1,
+			    const Graph<KeyType,T>& graph2)
+: 
+Starts(graph1,graph2), 
+Search(graph1,graph2),
+EnoughCheck( graph1.Nodes.size() ),
+BondCheck(graph1,graph2)
+     {
+     FindBasicCorrespondences();
+     }
+
+ 
+/*F FindBasicCorrespondences()  . . . . . . . . . . . . . . . . . . . .  work
+**
+**  DESCRIPTION
+**    This determines the a set of start pairs, 
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+void FindSubGraphCorrespondences<KeyType,T>::FindBasicCorrespondences()
+     {
+     IsolateCorrespondencesFromGraphInfo<int,int> isolate;
+     SymmetricPairList<int> starts = Starts.GetStartPairList();
+     Search.IterateWithGraphInfoSet(starts);
+     transform(Search.Iteration.Done.begin(),
+	       Search.Iteration.Done.end(),
+	       back_insert_iterator< SymmetricSetOfPairSets<KeyType> >(Correspondences),
+	       isolate);
+     }	  
+	  
+
+template <class KeyType, class T>
+void FindSubGraphCorrespondences<KeyType,T>::FilterOutSmallCorrespondences()
+     {
+     typename SymmetricSetOfPairSets<KeyType>::iterator i = remove_if(Correspondences.begin(),
+							     Correspondences.end(),
+							     EnoughCheck);
+     Correspondences.erase(i,Correspondences.end());
+     }
+
+template <class KeyType, class T>
+void FindSubGraphCorrespondences<KeyType,T>::FilterIfNotEnoughBonds()
+     {
+     typename SymmetricSetOfPairSets<KeyType>::iterator i = remove_if(Correspondences.begin(),
+							     Correspondences.end(),
+							     BondCheck);
+     Correspondences.erase(i,Correspondences.end());
+     }
+
+/*I  . . . INCLUDES  . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+*/
+
+
+#endif

@@ -1,0 +1,58 @@
+# FILE     MakeDef-sunos
+# PACKAGE  Maintenance
+# AUTHOR   Andreas Neubacher
+#
+# CONTENT
+#   GNU Makefile containing standard definitions for makefiles used in the
+#   STURM system.  This file is intended for inclusion in other STURM
+#   makefiles.
+#
+# COPYRIGHT (C) STURM Project  1995 RISC Linz
+
+#V Command variable definitions.
+
+CC=sturmcc
+CXX=sturmc++
+
+ifeq "$(LTYPE)" "sequential"
+  CC=sturmcc
+  CXX=sturmc++
+endif
+
+ifeq "$(LTYPE)" "parallel"
+  CC=psturmcc
+  CXX=psturmc++
+endif
+
+AR=ar qv
+RANLIB=ranlib
+
+export CC CXX AR RANLIB
+
+
+#V Other default variable definitions.
+
+CXXFLAGS+=-fno-implicit-templates
+LDFLAGS+=-static
+
+ifeq "$(LSPEED)" "optimized"
+  CPPFLAGS+=-O -DNDEBUG
+  LDFLAGS+=-O
+else
+  CPPFLAGS+=-g
+  LDFLAGS+=-g
+endif
+
+
+#F Default target definitions.
+
+.PHONY: all clean cleaner
+
+default:
+	@echo Do not run this makefile without arguments!
+	@echo Try "make all", "make clean", etc.
+
+clean::
+	$(RM) core *.o *~ *.bak
+
+cleaner:: clean

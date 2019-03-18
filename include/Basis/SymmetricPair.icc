@@ -1,0 +1,55 @@
+/*  FILE     SymmetricPair.icc
+**  PACKAGE     REACTION    
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1995  REACTION Project / Edward S. Blurock 
+*/
+ 
+/*S Constructors
+*/
+ 
+/*F SymmetricPair() . . . . . . . . . . . . . . . . . . . . empty constructor
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+template <class T>
+SymmetricPair<T>::SymmetricPair()
+{
+}
+ 
+/*F SymmetricPair(i,j)  . . . . . . . . . . . . construct with i and j values
+**
+**  DESCRIPTION
+**    i: The first value of the pair
+**    j: The second value of the pair
+**
+**  REMARKS
+**
+*/
+template <class T>
+SymmetricPair<T>::SymmetricPair(const T& i, const T& j)
+  : BasicPair<T,T>(i,j)
+{
+}
+ 
+/*F SymmetricPair(p)  . . . . . . . . . . . . . . . . . . .  copy constructor
+**
+**  DESCRIPTION
+**    p: The pair
+**
+**  REMARKS
+**
+*/
+template <class T>
+SymmetricPair<T>::SymmetricPair(const SymmetricPair<T>& p)
+  : BasicPair<T,T>(p)
+{
+}

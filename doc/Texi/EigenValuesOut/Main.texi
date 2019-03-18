@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  EigenValuesOut
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for Basis library package "EigenValuesOut".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) Basis Library
+
+@node     EigenValuesOut Package
+@section  The "EigenValuesOut" Package
+@cindex   package, EigenValuesOut
+@cindex   EigenValuesOut package
+@cindex   eot namespace
+@cindex   namespaces, eot
+
+@table @strong
+@item Package name
+@code{EigenValuesOut}
+
+@item Namespace name
+@code{eot}
+
+@item Header files
+@file{EigenValuesOut.hh}, @file{EigenValuesOutType.hh}
+@end table
+
+
+@include EigenValuesOut/Overview.texi
+
+@include EigenValuesOut/Classes.texi

@@ -1,0 +1,57 @@
+ObjectClasses:
+DataType:
+NumericPredicate A sample predicate
+FuzzyPredicate Continuous PyramidODReal
+DataType:
+Predicate A predicate of a numeric predicate function
+FuzzyParameterPredicate FuzzyPredicate
+END
+ClassNamePairs:
+RunID Integer
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The List of Predicates
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Var3.GreaterThanZero       FuzzyParameterPredicate
+Var3.LessThanZero          FuzzyParameterPredicate
+Var3.EqualToZero           FuzzyParameterPredicate
+Var1.GreaterThanZero       FuzzyParameterPredicate
+Var1.LessThanZero          FuzzyParameterPredicate
+Var1.EqualToZero           FuzzyParameterPredicate
+Var1.NotEqualToZero        FuzzyParameterPredicate
+Var3.NotEqualToZero        FuzzyParameterPredicate
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The List of Partitions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Partition.Var3.Zero.2      KeyWords
+Partition.Var1.Zero.2      KeyWords
+Partition.Var3             KeyWords
+Partition.Var1             KeyWords
+Goal.Var1                  KeyWords
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%PartitionTable.Var3.Var1   KeyWords
+%%EntropyConjunction         KeyWords
+EntropyGoal                  KeyWords
+PartitionList                KeyWords
+DecisionTreeParameters       KeyWords
+TrainInstanceNameList        KeyWords
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+END
+ObjectClasses:
+DataType: NValued An Assortment of Colors
+Colors Red 0.0 Green 0.5 Blue 1.0
+DataType: NValued True-False Logic
+TrueFalse True 1.0 False 0.0
+DataType: LinearODReal A Linear Function
+TestLinear
+DataType: NumericPredicate An exact Predicate
+PredicateExact TrueFalse PyramidODReal
+END
+ClassNamePairs:
+Color Colors
+VarT TrueFalse 
+Var1 Real
+Var2 Integer
+Var3 Real
+Var4 Integer
+END
+

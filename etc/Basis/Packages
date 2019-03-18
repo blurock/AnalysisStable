@@ -1,0 +1,134 @@
+P Vector _T_
+  C Ve_Vector _T_
+    STURM_TemplRandom
+    STURM_TemplSetZero
+  R Array _T_
+  R SmallInt
+  R System
+
+P Matrix _T_
+  C Ma_Matrix _T_
+    STURM_TemplRandom
+    STURM_TemplSetOne
+  R Vector _T_
+  R Array _T_
+  R SmallInt
+  R System
+
+P OuterBox _T_
+  C OB
+  R DistPoly _T_
+  R UnivPoly _T_
+  R Array _T_
+  R Interval _T_
+  R DoubleFloat
+  R SmallInt
+  R System
+
+P Range _T_
+  C Rng_NestPoly _T_
+  R DistPoly _T_
+  R UnivPoly _T_
+  R Array _T_
+  R Interval _T_
+  R SmallInt
+  R System
+
+P DistPoly _T_
+  C DP_DMon _T_
+    STURM_TemplEncDec
+  C DP_DPol _T_
+    STURM_TemplEncDec
+  R Array DP_DMon< _T_ >
+  R Array SI_SInt
+  R SmallInt
+  R System
+
+P UnivPoly _T_
+  C UP_UMon _T_
+    STURM_TemplSetZero
+    STURM_TemplSetOne
+    STURM_TemplEncDec
+  C UP_UPol _T_
+    STURM_TemplSetZero
+    STURM_TemplSetOne
+    STURM_TemplEncDec
+  R Array UP_UMon< _T_ >
+  R SmallInt
+  R System
+
+P Boxes _T_
+  C Bx_Box _T_
+    STURM_TemplEncDec
+  R Array Iv_Itvl< _T_ >
+  R SmallInt
+
+P Interval _T_
+  C Iv_Itvl _T_
+    STURM_TemplRandom
+    STURM_TemplSetZero
+    STURM_TemplSetOne
+    STURM_TemplEncDec
+  R SmallInt
+  R System
+
+P List _T_
+  C Li_List _T_
+    STURM_TemplEncDec
+  R System
+
+P Array _T_
+  C Arr_Array _T_
+    STURM_TemplRandom
+    STURM_TemplEncDec
+  R SmallInt
+  R System
+
+P MultiFloat
+  C MF_MFlt
+    STURM_TemplRandom
+    STURM_TemplSetZero
+    STURM_TemplSetOne
+    STURM_TemplEncDec
+  R Integer
+  R SmallInt
+  R System
+
+P Rational
+  C Rat_Rat
+    STURM_TemplRandom
+    STURM_TemplSetZero
+    STURM_TemplSetOne
+  R Integer
+  R SmallInt
+
+P Integer
+  C Int_Int
+    STURM_TemplRandom
+    STURM_TemplSetZero
+    STURM_TemplSetOne
+  R SmallInt
+  R System
+
+P DoubleFloat
+  C DF_DFlt
+    STURM_TemplNoConstructor
+    STURM_TemplNoDestructor
+    STURM_TemplRandom
+    STURM_TemplSetZero
+    STURM_TemplSetOne
+    STURM_TemplEncDec
+  R SmallInt
+  R System
+
+P SmallInt
+  C SI_SInt
+    STURM_TemplNoConstructor
+    STURM_TemplNoDestructor
+    STURM_TemplRandom
+    STURM_TemplSetZero
+    STURM_TemplSetOne
+    STURM_TemplEncDec
+  R System
+
+P System

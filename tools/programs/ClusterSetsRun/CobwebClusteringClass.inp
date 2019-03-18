@@ -1,0 +1,26 @@
+%%% CobwebClusteringClass.inp ======================= Calculation of Cobweb Cluster ======================= 
+ObjectClasses:
+END
+ClassNamePairs:
+%% -----------------------------------------------------
+MaxLevel Integer
+z_physical0.0 FuzzyParameterPredicate
+z_physical0.1 FuzzyParameterPredicate
+z_physical0.2 FuzzyParameterPredicate
+z_physical0.30000000000000004 FuzzyParameterPredicate
+z_physical0.4 FuzzyParameterPredicate
+z_physical0.5 FuzzyParameterPredicate
+z_physical0.6000000000000001 FuzzyParameterPredicate
+z_physical0.7000000000000001 FuzzyParameterPredicate
+z_physical0.8 FuzzyParameterPredicate
+z_physical0.9 FuzzyParameterPredicate
+GoalNameList KeyWords
+LogicType KeyWords
+END
+%% ----------------------------------------------------
+ObjectClasses:
+END
+%% ----------------------------------------------------
+ClassNamePairs:
+END
+%% ----------------------------------------------------

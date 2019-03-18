@@ -1,0 +1,23 @@
+/*  FILE     ChemkinConvert.icc
+**  PACKAGE  ChemkinConvert
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    Inline functions for the "ChemkinConvert" package.
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1997 Cantera Library
+*/
+ 
+#ifndef CanteraSRC_CHEMKINCONVERT_ICC
+#define CanteraSRC_CHEMKINCONVERT_ICC
+ 
+#pragma interface
+
+
+
+
+
+
+#endif

@@ -1,0 +1,358 @@
+/*  FILE     SymmetricPairs.itc
+**  PACKAGE     REACTION    
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1995  REACTION Project / Edward S. Blurock 
+*/
+/*S Boolean
+*/
+/*F operator==(pair1,pair2) . . . . . . . . . . . . . . . . . . SymmetricPair
+**
+**  DESCRIPTION
+**    pair1,pair2: to be compared
+**
+**  REMARKS
+**
+*/
+template <class T>
+bool operator==(const SymmetricPair<T>& pair1, const SymmetricPair<T>& pair2)
+{
+  return pair1.I == pair2.I && pair1.J == pair2.J;
+}
+/*F operator<(pair1,pair2)  . . . . . . . . . . . . . . . . . . SymmetricPair
+**
+**  DESCRIPTION
+**    pair1,pair2: to be compared
+**
+**  REMARKS
+**
+*/
+template <class T>
+bool operator<(const SymmetricPair<T>& pair1, const SymmetricPair<T>& pair2)
+{
+  if(pair1.I == pair2.I)
+    return pair1.J < pair2.J;
+  else
+    return pair1.I < pair2.I;
+}
+/*S IO
+*/ 
+/*F out = operator<<(out,p) . . . . . . . . . . . . . . . . . . SymmetricPair
+**
+**  DESCRIPTION
+**    out: The output stream
+**    p: The pair
+**
+**  REMARKS
+**
+*/
+template <class T>
+ostream& operator<<(ostream& out, const SymmetricPair<T>& p)
+{
+  out << "(" << p.I << "," << p.J << ")";
+  return out;
+}
+ 
+/*F in = operator>>(in,p) . . . . . . . . . . . . . . . . . . . SymmetricPair
+**
+**  DESCRIPTION
+**    in: The input stream
+**    p: The pair
+**
+**  REMARKS
+**
+*/
+template <class T>
+istream& operator>>(istream& in, const SymmetricPair<T>& p)
+{
+  return in;
+}
+
+/*S IO
+*/ 
+/*F out = operator<<(out,set) . . . . . . . . . . . .  SymmetricSetOfPairSets
+**
+**  DESCRIPTION
+**    out: The output stream
+**    set: The sets of pair lists
+**
+**  REMARKS
+**
+*/
+template <class T>
+ostream& operator<<(ostream& out, const SymmetricSetOfPairSets<T>& set)
+{
+  return set.print(out);
+}
+
+ 
+/*F in = operator>>(in,set) . . . . . . . . . . . . .  SymmetricSetOfPairSets
+**
+**  DESCRIPTION
+**    in: The input stream
+**    set: The sets of pair lists
+**
+**  REMARKS
+**
+*/
+template <class T>
+istream& operator>>(istream& in, SymmetricSetOfPairSets<T>& set)
+{
+	return in;
+}
+
+/*S Utility
+*/
+/*C CreatePairSetsForEquivalents<T1,T2> . . . . . . . . . . . . . . . .  Work
+**
+**  DESCRIPTION
+**     This is a work class to create a SymmetricSetOfPairSets<T1>
+**     from the first elements of two PairLists, set1 and set2.
+**     This mainly routine is used when the PairLists represent
+**     a keyword and a value.  The values of the two sets
+**     are the same (the routine does not check this, however)
+**     and the purpose is to make all permutations of the 
+**     keys given in the first element.  This routine
+**     is used in the CombineEquivalentJ routine
+**     
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+class CreatePairSetsForEquivalents
+{
+public:
+     
+  SymmetricSetOfPairSets<T1> operator()(PairList<T1,T2>& set1,
+                                        PairList<T1,T2>& set2)
+    {
+      ObjectList<T1> olist1,olist2;
+      olist1 = set1.VectorOfFirsts(olist1);
+      olist2 = set2.VectorOfFirsts(olist2);
+#ifdef SYMMETRIC_PAIRS_DEBUG
+      cout << "CreatePairSetsForEquivalents\n";
+      cout << set1 << "\n";
+      cout << set2 << "\n";
+      cout << olist1 << "\n";
+      cout << olist2 << "\n";
+#endif
+      SymmetricSetOfPairSets<T1> p(olist1,olist2);
+
+#ifdef SYMMETRIC_PAIRS_DEBUG
+      cout << "CreatePairSetsForEquivalents\n";
+      cout << p;
+      cout << "\n";
+#endif
+          
+      return p;
+    }
+};
+ 
+/*C PutPairListOnSet<T> . . . . . . . . . . . . . . . . . . . . . . . .  Work
+**
+**  DESCRIPTION
+**     This routine is used in an STL accumulation.  A SymmetricPairList
+**     is checked to see whether any of its elements (SymmetricPairs) are
+**      on the set (given initially upon the classes creation).  
+**      The routine AddOnlyUniqueObjects is used to do this.  The 
+**      newly formed SymmetricPairList is then returned
+**     
+**  REMARKS
+**
+*/
+template <class T>
+class PutPairListOnSet : public unary_function< SymmetricPairList<T>& , SymmetricSetOfPairSets<T> >
+{
+  SymmetricPairList<T> set2;
+     
+public:
+  PutPairListOnSet(const SymmetricPairList<T>& pairlist)
+    : set2(pairlist)
+    {
+    }
+
+  SymmetricPairList<T> operator()(const SymmetricPairList<T>& set1)
+    {
+
+      SymmetricPairList<T> newlist = set1;
+
+      newlist.AddOnlyUniqueObjects(set2);
+
+      return newlist;
+    }
+};
+ 
+/*C MergePairSetToSetOfSets . . . . . . . . . Merge to SymmetricSetOfPairSets
+**
+**  DESCRIPTION
+**     
+**  REMARKS
+**
+*/
+template <class T>
+class MergePairSetToSetOfSets
+{
+  SymmetricSetOfPairSets<T> Original;
+public:
+  MergePairSetToSetOfSets(const SymmetricSetOfPairSets<T>& original)
+    : Original(original)
+    {
+    }
+               
+  SymmetricSetOfPairSets<T> operator()(SymmetricSetOfPairSets<T> set,
+                                       const SymmetricPairList<T>& pairset)
+    {
+
+      PutPairListOnSet<T> putpair(pairset);
+      if(Original.size() == 0)
+        {
+          set.AddObject(pairset);
+        }
+      else
+        {
+          transform(Original.begin(),
+                    Original.end(),
+                    back_insert_iterator< SymmetricSetOfPairSets<T> > (set),
+                    putpair);
+        }
+#ifdef SYMMETRIC_PAIRS_DEBUG
+      cout << "MergePairSetToSetOfSets After Copy\n";
+      cout << set;
+      cout << "\n";
+#endif
+      return set;
+
+    }
+};
+ 
+/*C MergePairSetToSetOfSetsNoOriginal . . . . . . . . . . . . . . . . .  Work
+**
+**  DESCRIPTION
+**
+**  REMARKS
+**
+*/
+template <class T>
+class MergePairSetToSetOfSetsNoOriginal
+{
+  SymmetricSetOfPairSets<T> Original;
+public:
+  MergePairSetToSetOfSetsNoOriginal(const SymmetricSetOfPairSets<T>& original)
+    : Original(original)
+    {
+    }
+               
+  SymmetricSetOfPairSets<T> operator()(SymmetricSetOfPairSets<T> set,
+                                       const SymmetricPairList<T>& pairset)
+    {
+#ifdef SYMMETRIC_PAIRS_DEBUG
+      cout << "MergePairSetToSetOfSets Before\n";
+      cout << pairset << "\n";
+      cout << "___________\n";
+      cout << set;
+      cout << "\n";
+#endif
+
+      if(pairset.size() != 0)
+        {
+          PutPairListOnSet<T> putpair(pairset);
+          transform(Original.begin(),
+                    Original.end(),
+                    back_insert_iterator< SymmetricSetOfPairSets<T> > (set),
+                    putpair);
+        }
+#ifdef SYMMETRIC_PAIRS_DEBUG
+      cout << "MergePairSetToSetOfSets After Copy\n";
+      cout << set;
+      cout << "\n";       
+#endif
+
+      return set;
+    }
+};
+
+ 
+/*C AccumulateSetsOfPairSets  . . . . . . . . . . . . . . . . . . . . .  Work
+**
+**  DESCRIPTION
+**
+**  REMARKS
+**
+*/
+template <class T>
+class AccumulateSetsOfPairSets
+{
+public:
+     
+  SymmetricSetOfPairSets<T> operator()(const SymmetricSetOfPairSets<T>& total,
+                                       const SymmetricSetOfPairSets<T>& pairset)
+    {
+      SymmetricSetOfPairSets<T> newtotal;
+      MergePairSetToSetOfSets<T> mergesets(total);
+
+      newtotal = accumulate(pairset.begin(),
+                            pairset.end(),
+                            newtotal,
+                            mergesets);
+
+#ifdef SYMMETRIC_PAIRS_DEBUG
+      cout << "AccumulateSetsOfPairSets - After\n";
+      cout << newtotal;
+#endif
+      if(pairset.size() != 0)
+        return newtotal;
+      else
+        return total;
+    };
+};
+ 
+/*F combined = CombineEquivalentJ(set1,set2)  . . . . . Permute two sets of J
+**
+**  DESCRIPTION
+**    set1: The first set of PairLists
+**    set2: The other set of PairLists
+**    combined: The permutations
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+SymmetricSetOfPairSets<T1> CombineEquivalentJ(SetOfPairSets<T1,T2>& set1,
+                                              SetOfPairSets<T1,T2>& set2)
+{
+  SymmetricSetOfPairSets<T1> total;
+
+  ObjectList< SymmetricSetOfPairSets<T1> > combined(set1.size());
+  CreatePairSetsForEquivalents<T1,T2> createsets;
+  AccumulateSetsOfPairSets<T1> combinesets;
+     
+  transform(set1.begin(),
+            set1.end(),
+            set2.begin(),
+            combined.begin(),
+            createsets);
+#ifdef SYMMETRIC_PAIRS_DEBUG
+  cout << "CombineEquivalent - 1\n";
+  cout << combined;
+  cout << "\n";
+#endif
+     
+     
+  total = accumulate(combined.begin(),
+                     combined.end(),
+                     total,
+                     combinesets);
+
+#ifdef SYMMETRIC_PAIRS_DEBUG
+  cout << "CombineEquivalent - 2\n";
+  cout << total;
+  cout << "\n";
+#endif
+
+  return total;
+}

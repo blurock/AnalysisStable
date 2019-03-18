@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  ClusterTree
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for CoreObjects library package "ClusterTree".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) CoreObjects Library
+
+@node     ClusterTree Package
+@section  The "ClusterTree" Package
+@cindex   package, ClusterTree
+@cindex   ClusterTree package
+@cindex   clt namespace
+@cindex   namespaces, clt
+
+@table @strong
+@item Package name
+@code{ClusterTree}
+
+@item Namespace name
+@code{clt}
+
+@item Header files
+@file{ClusterTree.hh}, @file{ClusterTreeType.hh}
+@end table
+
+
+@include ClusterTree/Overview.texi
+
+@include ClusterTree/Classes.texi

@@ -1,0 +1,640 @@
+/*  FILE     SubGraph.icc
+**  PACKAGE  SubGraph
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    Inline functions for the "SubGraph" package.
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C)  REACTION Project, Edward S. Blurock
+*/
+ 
+#ifndef REACTIONSRC_SUBGRAPH_ICC
+#define REACTIONSRC_SUBGRAPH_ICC
+/*S Constructors
+*/
+
+//#define SUBGRAPH_DEBUG 1
+
+/*F GraphSearchInfo() . . . . . . . . . . . . . . . . . . . empty constructor
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+GraphSearchInfo<KeyType,T>::GraphSearchInfo()
+     {
+     }
+ 
+/*F GraphSearchInfo(start,graph1,graph2)  . . . . . . search from start pairs
+**
+**  DESCRIPTION
+**    start: List of valid start pairs
+**    graph1,graph2: The graphs
+**
+**    The search is started from the list of start pairs given (i.e. 
+**    these pairs have already been matched).  These nodes are then taken
+**    off the active list of nodes.
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+GraphSearchInfo<KeyType,T>::GraphSearchInfo(const SymmetricPairList<KeyType>& start,
+				 const Graph<KeyType,T>& graph1,
+				 const Graph<KeyType,T>& graph2)
+: Start(start)
+     {
+     NodeList1 = graph1.GetSetOfGraphKeys();
+     NodeList2 = graph2.GetSetOfGraphKeys();
+     
+     ObjectList<KeyType> set1,set2; 
+     set1= Start.VectorOfFirsts(set1);
+     set2 = Start.VectorOfSeconds(set2);
+     RemoveFromGraphNodePairs1(set1);
+     RemoveFromGraphNodePairs2(set2);
+     }
+
+ 
+/*F GraphSearchInfo(start,graph1,nodes1,graph2,nodes2)  . .  start with nodes
+**
+**  DESCRIPTION
+**    start: The set of start pairs
+**    nodes1,nodes2: The set of nodes already matched
+**    graph1,graph2: The graphs to match
+**
+**    The start pairs and nodes are given.  It is assumed that the
+**    start pair nodes  have already been eliminated from the nodes
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+GraphSearchInfo<KeyType,T>::GraphSearchInfo(const SymmetricPairList<KeyType>& start,
+		     const Graph<KeyType,T>& graph1, 
+		     const ObjectList<KeyType>& nodes1,
+		     const Graph<KeyType,T>& graph2, 
+		     const ObjectList<KeyType>& nodes2)
+	  : Start(start),
+	  NodeList1(nodes1),
+	  NodeList2(nodes2)
+	       {
+	       ObjectList<KeyType> set1 = Start.VectorOfFirsts(set1);
+	       ObjectList<KeyType> set2 = Start.VectorOfSeconds(set2);
+	       RemoveFromGraphNodePairs1(set1);
+	       RemoveFromGraphNodePairs2(set2);
+	       }
+ 
+/*F FormNextNode(graph1,graph2) . . . . . . . . . . . . . . . . . constructor
+**
+**  DESCRIPTION
+**    graph1,graph2: The graphs to be compared
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+FormNextNode<KeyType,T>::FormNextNode(const Graph<KeyType,T>& graph1,
+				      const Graph<KeyType,T>& graph2)
+: Graph1(graph1), Graph2(graph2)
+     {
+     }
+
+ 
+/*F GraphSearch() . . . . . . . . . . . . . . . . . . . . . empty constructor
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+GraphSearch<KeyType,T>::GraphSearch()
+     {
+     }
+/*F GraphSearch(graph1,graph2)  . . . . . . . . . . . . . . . . . constructor
+**
+**  DESCRIPTION
+**    graph1,graph2: The graphs to be compared
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+GraphSearch<KeyType,T>::GraphSearch(const Graph<KeyType,T>& graph1,
+				    const Graph<KeyType,T>& graph2)
+: Graph1(graph1), Graph2(graph2)
+     {
+     }
+/*F GraphSearch(graph1,nodelist1,graph2,nodelist2)  . . . . . . . constructor
+**
+**  DESCRIPTION
+**    graph1,graph2: The graphs to compare
+**    nodelist1,nodelist2: The valid nodes to search
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+GraphSearch<KeyType,T>::GraphSearch(const Graph<KeyType,T>& graph1,
+				    const ObjectList<KeyType> nodelist1,
+				    const Graph<KeyType,T>& graph2,
+				    const ObjectList<KeyType> nodelist2)
+: Graph1(graph1), Graph2(graph2)
+     {
+     }
+
+ 
+/*F FilterDone(filter)  . . . . . . . . . . . . . . . . . .  copy constructor
+**
+**  DESCRIPTION
+**    filter: The filter
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+FilterDone<KeyType,T>::FilterDone(const FilterDone<KeyType,T>& filter)
+  : Source(filter.Source),Filtered(filter.Filtered)
+     {
+     }
+ 
+/*F FilterDone(source,filtered) . . . . . . . . . . . . . . . . . constructor
+**
+**  DESCRIPTION
+**    source: The current set of pairsets
+**    filtered: The set of done and not done
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+FilterDone<KeyType,T>::FilterDone(const GraphSearchInfo<KeyType,T> source,
+				  FilterSet<KeyType,T>& filtered)
+: Source(source),Filtered(filtered)
+     {
+     }
+
+ 
+/*F GraphSearchSingleIteration()  . . . . . . . . . . . . . empty constructor
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+template <class  KeyType,class T>
+GraphSearchSingleIteration<KeyType,T>::GraphSearchSingleIteration()
+     {
+     }
+ 
+/*F GraphSearchSingleIteration(graph1,graph2) . . . . . . . . . . . . . start
+**
+**  DESCRIPTION
+**    graph1,graph2: graphs
+**
+**    This initializes the GraphSearch class
+**
+**  REMARKS
+**
+*/
+template <class  KeyType,class T>
+GraphSearchSingleIteration<KeyType,T>::GraphSearchSingleIteration(const Graph<KeyType,T>& graph1,
+								  const Graph<KeyType,T>& graph2)
+: GSearch(graph1,graph2)
+     {
+     }
+
+ 
+/*F SubGraphSearch()  . . . . . . . . . . . . . . . . . . . empty constructor
+**
+**  DESCRIPTION
+**    
+**  REMARKS
+**
+*/
+template <class  KeyType,class T>
+SubGraphSearch<KeyType,T>::SubGraphSearch()
+     {
+     }
+
+ 
+/*F SubGraph(graph1,graph2) . . . . . . . . . . . . . . . . . . .  initialize
+**
+**  DESCRIPTION
+**    graph1,graph2: the graphs
+**
+**    The initialization of the GraphSearchSingleIteration<KeyType,T> class
+**
+**  REMARKS
+**
+*/
+template <class  KeyType,class T>
+SubGraphSearch<KeyType,T>::SubGraphSearch(const Graph<KeyType,T>& graph1,
+					  const Graph<KeyType,T>& graph2)
+: Iteration(graph1,graph2)
+     {
+     }
+
+
+/*S Iterations
+*/ 
+/*F RemoveFromGraphNodePairs1(toremove) . . . . . . . . . . . . . . .  remove
+**
+**  DESCRIPTION
+**    toremove: Remove these nodes from NodeList1
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+     void GraphSearchInfo<KeyType,T>::RemoveFromGraphNodePairs1(const ObjectList<KeyType>& toremove)
+     {
+     NodeList1.Remove(toremove);
+     }
+/*F RemoveFromGraphNodePairs2(toremove) . . . . . . . . . . . . . . .  remove
+**
+**  DESCRIPTION
+**    toremove: Remove these nodes from NodeList2
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+void GraphSearchInfo<KeyType,T>::RemoveFromGraphNodePairs2(const ObjectList<KeyType>& toremove)
+     {
+     NodeList2.Remove(toremove);
+     }
+ 
+/*F search = operator()(start)  . . . . . . . . . . . .  form GraphSearchInfo
+**
+**  DESCRIPTION
+**    search: The next set of search nodes
+**    start: The pair list of start nodes for the next iteration
+**
+**    This helping routine converts a set of pair lists into a new set of 
+**    GraphSearchInfo nodes for the next expansion
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+     GraphSearchInfo<KeyType,T> FormNextNode<KeyType,T>::operator()(const SymmetricPairList<KeyType>& start)
+     {
+     GraphSearchInfo<KeyType,T> next(start,Graph1,Graph2);
+     return next;
+     }
+ 
+/*F list = GetUniqueValueUnion(nodelist1,nodelist2) . . . . . . common values
+**
+**  DESCRIPTION
+**    nodelist1,nodelist2: The nodes of the graph
+**    list: List of unique node values of the nodes given
+**
+**    The values of the nodes are collected and reduced to a single 
+**    unique set.
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+ObjectList< T > GraphSearch<KeyType,T>::GetUniqueValueUnion(const ObjectList<KeyType>& nodelist1,
+							    const ObjectList<KeyType>& nodelist2)
+     {
+     ObjectList< T > values1 = Graph1.GetSetOfUniqueGraphValues(nodelist1);
+     ObjectList< T > values2 = Graph2.GetSetOfUniqueGraphValues(nodelist2);
+     ObjectList< T > valuestot = values1;
+     valuestot.AddOnlyUniqueObjects(values2);
+     
+     return valuestot;
+     }
+
+ 
+/*F sets = GetNextSetOfPairSets(key1,nodelist1,key2,nodelist2)  .  next level
+**
+**  DESCRIPTION
+**     key1,key2: The current nodes of graph1 and graph2 respectively.
+**     nodelist1,nodelist2: The nodes left to choose from for expansion
+**     sets: The combined sets
+**
+**     Starting from key1 and key2, the neighbors are found, matched with the 
+**     given values and grouped (GraphEquivalentSets).  These matched sets
+**     are then combined to form the next level of pairs.
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+SymmetricSetOfPairSets<KeyType> GraphSearch<KeyType,T>::GetNextSetOfPairSets(KeyType& key1,
+									     ObjectList<KeyType>& nodelist1,
+									     KeyType& key2,
+									     ObjectList<KeyType>& nodelist2)
+	  {
+	  ObjectList< T > valuestot = GetUniqueValueUnion(nodelist1,
+							  nodelist2);
+	  SetOfPairSets<KeyType,T> pairs1 = 
+	       Graph1.GraphEquivalentSets(valuestot,nodelist1,key1);
+	  SetOfPairSets<KeyType,T> pairs2 = 
+	       Graph2.GraphEquivalentSets(valuestot,nodelist2,key2);
+	  
+	  #ifdef SUBGRAPH_DEBUG
+	  cout << "\n GetNextSetOfPairSets - 1";
+	  cout << pairs1;
+	  cout << "\n GetNextSetOfPairSets - 2";
+	  cout << pairs2;
+	  #endif
+
+	  SymmetricSetOfPairSets<KeyType> next = CombineEquivalentJ(pairs1,pairs2);
+	  
+	  return next;
+	  }
+
+ 
+/*F newsearch = NextNodeFromPairList(search)  .  next iteration from pairlist
+**
+**  DESCRIPTION
+**    search: The start pairs to expand
+**    newsearch: The new merged set
+**
+**    For each of the pairs, a set of pair lists are found of the neighboring nodes 
+**    (GetNextSetOfPairs).  Each new set is merged with the previous (MergePairSetToSetOfSets).
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+GraphSearchInfo<KeyType,T>& 
+GraphSearch<KeyType,T>::NextNodeFromPairList(GraphSearchInfo<KeyType,T>& search)
+     {
+     typename SymmetricPairList<KeyType>::iterator i;
+     PutPairListOnSet<T> putpair(search.Start);
+     
+     #ifdef SUBGRAPH_DEBUG
+     cout << "\nNodeLists\n";	  
+     cout << search.NodeList1 << "\n";
+     cout << search.NodeList2 << "\n";
+     #endif
+
+     search.NextGraphPairs.AddObject(search.Start);
+     
+     for(i= search.Start.begin(); i != search.Start.end() ; i++)
+	  {
+	  #ifdef SUBGRAPH_DEBUG
+	  cout << "Set of Pairs - " << search.NextGraphPairs.size() ;
+	  cout << "(" << (*i).I << "," << (*i).J << ")\n";
+	  cout << search.NextGraphPairs << "\n";
+	  #endif
+
+	  SymmetricSetOfPairSets<KeyType> next = GetNextSetOfPairSets((*i).I,
+								      search.NodeList1,
+								      (*i).J,
+								      search.NodeList2);
+	  
+	  #ifdef SUBGRAPH_DEBUG
+	  cout << "Set of New Pairs -- " << next.size() << "\n";
+	  cout << next;
+          #endif
+	  if(next.size() != 0)
+	       {
+	       MergePairSetToSetOfSets<T> mergesets(search.NextGraphPairs);
+	       SymmetricSetOfPairSets<KeyType> total;
+	       search.NextGraphPairs = accumulate(next.begin(),
+						  next.end(),
+						  total,
+						  mergesets);
+	       }		    
+	  }
+#ifdef SUBGRAPH_DEBUG     
+     cout << "Set of Pairs - Final\n";
+     cout << search.NextGraphPairs << "\n";
+#endif
+     return search;
+     }
+ 
+/*F list = SeparateSearchNodes(search)  . . . . . . . . . . form new node set
+**
+**  DESCRIPTION
+**    search: The current node that has been expanded with new pair lists
+**    list: Each pair list is converted (FormNextNode)
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+ObjectList< GraphSearchInfo<KeyType,T> > 
+     GraphSearch<KeyType,T>::SeparateSearchNodes(const GraphSearchInfo<KeyType,T>& search)
+     {
+     ObjectList< GraphSearchInfo<KeyType,T> > searchlist(search.NextGraphPairs.size());
+     FormNextNode<KeyType,T> formnext(Graph1,Graph2);
+     
+     transform(search.NextGraphPairs.begin(),
+	       search.NextGraphPairs.end(),
+	       searchlist.begin(),
+	       formnext);
+     return searchlist;
+     }
+ 
+/*F newfilter = operator()(filter,info) . . . . . . . . . . . . .  FilterDone
+**
+**  DESCRIPTION
+**    filter: Current set of done and not done
+**    info: The pairlist to be filtered
+**    newfilter: The filter with the info added to Done or ToDo
+**
+**    If the start pair has the same number of elements as the original
+**    (made at the creation of this class) then nothing was added and
+**    it is done.
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+FilterSet<KeyType,T>  FilterDone<KeyType,T>::operator()(FilterSet<KeyType,T>& set, 
+							GraphSearchInfo<KeyType,T> info)
+     {
+     if(info.Start.size() == Source.Start.size())
+	  set.Done.AddObjectIfNotThere(info);
+     else
+	  set.ToDo.AddObjectIfNotThere(info);
+
+     #ifdef SUBGRAPH_DEBUG
+     cout << "FilterDone -- Current ToDo -- ";
+     cout << info.Start.size() << "," << Source.Start.size() << "\n";
+     cout << set.ToDo;
+     cout << "+++++++++++++++++++++++++\n";
+     #endif
+
+     return set;
+     }
+
+ 
+/*F filter=operator()(notdone,search) . . . . . . . . . . . iterate with pair
+**
+**  DESCRIPTION
+**    notdone: The set of done and not done sets
+**    search: The current pair list
+**    filter: The new filtered set of done and not done.
+**
+**    The next set of pair lists are formed (NextNodeFromPairList).
+**    The pair lists are converted to GraphSearchInfo classes, 
+**    and then these are separated into done and not done.
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+FilterSet<KeyType,T> GraphSearchSingleIteration<KeyType,T>::operator()(FilterSet<KeyType,T>& notdone,
+								       GraphSearchInfo<KeyType,T>& search)
+     {
+     FilterDone<KeyType,T> filter(search,notdone);
+     
+     #ifdef SUBGRAPH_DEBUG
+     cout << "Iterate with Pair\n";
+     cout << search.Start;
+     #endif
+
+     GSearch.NextNodeFromPairList( search );
+     
+     #ifdef SUBGRAPH_DEBUG
+     cout << search.NextGraphPairs;
+     #endif
+     
+     ObjectList< GraphSearchInfo<KeyType,T> > 
+	  next = GSearch.SeparateSearchNodes(search);
+     
+     filter.Filtered = accumulate(next.begin(),
+				  next.end(),
+				  filter.Filtered,
+				  filter);
+     
+     return filter.Filtered;
+     }
+ 
+/*F IterateWithGraphInfoSet(startpair,nodes1,nodes2)  . . . . . . . . .  find
+**
+**  DESCRIPTION
+**    startpair: The starting point
+**    nodes1,nodes2: The valid nodes to search in
+**
+**    This sets up the initial GraphSearchInfo and then iterates (IterateWithGraphInfoSet 
+**    with just the start pairs
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+void SubGraphSearch<KeyType,T>::IterateWithGraphInfoSet(const SymmetricPair<KeyType>& startpair,
+							const ObjectList<KeyType>& nodes1,
+							const ObjectList<KeyType>& nodes2)
+     {
+     SymmetricPairList<KeyType> startpairs;	  
+     startpairs.AddObject(startpair);
+     GraphSearchInfo<KeyType,T> startinfo(startpairs,
+					  Iteration.GSearch.Graph1,
+					  nodes1,
+					  Iteration.GSearch.Graph2,
+					  nodes2);
+     IterateWithGraphInfoSet(startinfo);
+     }
+
+ 
+/*F IterateWithGraphInfoSet(startpairs) . . . . . . . . .  loop through pairs
+**
+**  DESCRIPTION
+**    startpairs: The set of possible starts
+**    
+**    Each of the start pairs are looped through calling (IterateWithGraphInfoSet)
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+void SubGraphSearch<KeyType,T>::IterateWithGraphInfoSet(const SymmetricPairList<KeyType>& startpairs)
+     {
+     typename SymmetricPairList<KeyType>::const_iterator i;
+     for(i=startpairs.begin(); i != startpairs.end();i++)
+	  IterateWithGraphInfoSet((*i));
+     }
+ 
+/*F IterateWithGraphInfoSet(pair) . . . . . . . . . .  start with single pair
+**
+**  DESCRIPTION
+**    pair: single pair turned into a pair list and IterateWithGraphInfoSet is called 
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+void SubGraphSearch<KeyType,T>::IterateWithGraphInfoSet(const BasicPair<KeyType,KeyType>& startpair)
+     {
+     SymmetricPairList<KeyType> startpairs;	  
+     startpairs.AddObject(startpair);
+     GraphSearchInfo<KeyType,T> startinfo(startpairs,
+					  Iteration.GSearch.Graph1,
+					  Iteration.GSearch.Graph2);
+     IterateWithGraphInfoSet(startinfo);
+     }
+
+ 
+/*F IterateWithGraphInfoSet(todo) . . . . . . . . . . .  from GraphSearchInfo
+**
+**  DESCRIPTION
+**    todo: the GraphSearchInfo structure
+**
+**    The class is converted to a list and IterateWithGraphInfoSet
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+void SubGraphSearch<KeyType,T>::IterateWithGraphInfoSet(const GraphSearchInfo<KeyType,T>& todo)
+	  {
+	  ObjectList< GraphSearchInfo<KeyType,T> > start;
+	  start.AddObject(todo);
+	  IterateWithGraphInfoSet(start);
+	  }
+     
+ 
+/*F IterateWithGraphInfoSet(todo) . . . . . . . . . . list of GraphSearchInfo
+**
+**  DESCRIPTION
+**    todo: The list of GraphSearchInfo classes
+**
+**    The list of list is looped through until there are no more
+**    to be expanded.
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+void SubGraphSearch<KeyType,T>::IterateWithGraphInfoSet(ObjectList< GraphSearchInfo<KeyType,T> > todo)
+	  {
+	  while(todo.size() > 0)
+	       {
+	       #ifdef SUBGRAPH_DEBUG
+	       cout << "Next SubGraphSearch Iteration\n";
+	       cout << todo;
+	       #endif
+	       FilterSet<KeyType,T> nextstart,filter;
+	       filter = accumulate(todo.begin(),
+				   todo.end(),
+				   nextstart,
+				   Iteration);
+	       todo = filter.ToDo;
+	       Iteration.Done.AddOnlyUniqueObjects(filter.Done);
+	       #ifdef SUBGRAPH_DEBUG
+	       cout << "Done Up Until Now\n";
+	       cout << Iteration.Done;
+               #endif
+	       }
+	  };
+
+/*I  . . . INCLUDES  . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+*/
+
+
+#endif
+

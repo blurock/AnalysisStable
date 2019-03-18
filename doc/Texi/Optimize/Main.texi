@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  Optimize
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for CoreObjects library package "Optimize".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) CoreObjects Library
+
+@node     Optimize Package
+@section  The "Optimize" Package
+@cindex   package, Optimize
+@cindex   Optimize package
+@cindex   opt namespace
+@cindex   namespaces, opt
+
+@table @strong
+@item Package name
+@code{Optimize}
+
+@item Namespace name
+@code{opt}
+
+@item Header files
+@file{Optimize.hh}, @file{OptimizeType.hh}
+@end table
+
+
+@include Optimize/Overview.texi
+
+@include Optimize/Classes.texi

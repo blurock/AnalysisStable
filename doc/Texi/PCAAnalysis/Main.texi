@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  PCAAnalysis
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for Basis library package "PCAAnalysis".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) Basis Library
+
+@node     PCAAnalysis Package
+@section  The "PCAAnalysis" Package
+@cindex   package, PCAAnalysis
+@cindex   PCAAnalysis package
+@cindex   pca namespace
+@cindex   namespaces, pca
+
+@table @strong
+@item Package name
+@code{PCAAnalysis}
+
+@item Namespace name
+@code{pca}
+
+@item Header files
+@file{PCAAnalysis.hh}, @file{PCAAnalysisType.hh}
+@end table
+
+
+@include PCAAnalysis/Overview.texi
+
+@include PCAAnalysis/Classes.texi

@@ -1,0 +1,23 @@
+/*  FILE     Iterator.icc
+**  PACKAGE  Iterator
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    Inline functions for the "Iterator" package.
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1997 CoreObjects Library
+*/
+ 
+#ifndef CoreObjectsSRC_ITERATOR_ICC
+#define CoreObjectsSRC_ITERATOR_ICC
+ 
+#pragma interface
+
+
+
+
+
+
+#endif

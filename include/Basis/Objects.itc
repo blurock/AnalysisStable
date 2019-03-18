@@ -1,0 +1,145 @@
+/*  FILE     Objects.itc
+**  PACKAGE     REACTION    
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    exported functions
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1995  REACTION Project / Edward S. Blurock 
+*/
+/*S Boolean
+*/
+/*F b = operator==(olist1,olist2) . . . . . . . . . . . . . . . .  ObjectList
+**
+**  DESCRIPTION
+**     olist1, olist2: The lists to be compared
+**     b: true or false.
+**
+**    The equality of two lists
+**
+**     The lists are equal if every single element within the 
+**     lists are equal
+**
+**  REMARKS
+**     equal is used to compare the lists
+**
+*/
+template <class T>
+bool operator==(const ObjectList<T>& olist1, 
+                const ObjectList<T>& olist2)
+{
+  if(olist1 < olist2 || olist2 < olist1)
+    return false;
+  else
+    return true;
+}
+
+ 
+/*F b = operator<(olist1,olist2)  . . . . . . . . . . . . . . . .  ObjectList
+**
+**  DESCRIPTION
+**     olist1, olist2: The lists to be compared
+**     b: true or false.
+**
+**    The less than operator
+**
+**    olist1 < olist2
+**
+**    The lists are compared element-wise.  If Any element
+**    of olist1 is greater-than or equal to an element in
+**    olist2, then it fails.
+**
+**  REMARKS
+**     A while loop until failure or the end of the loop
+**
+*/
+template <class T>
+bool operator<(const ObjectList<T>& olist1, const ObjectList<T>& olist2)
+{
+  bool ans;
+
+  if(olist1.size() < olist2.size())
+    ans = true;
+  else if(olist1.size() > olist2.size())
+    ans = false;
+  else 
+    ans = lexicographical_compare(olist1.begin(),
+                                  olist1.end(),
+                                  olist2.begin(),
+                                  olist2.end());
+  return ans;
+}
+ 
+/*F result = operator+(olist1,olist2) . . . . . . . . . . . . . Concatenation
+**
+**  DESCRIPTION
+**    olist1,olist2: The lists to be concatented
+**    result: A new list that is the concatonation
+**
+**    Concatenate two lists
+**
+**  REMARKS
+**
+*/
+template <class T> 
+ObjectList<T> operator+(ObjectList<T>& olist1,
+                        ObjectList<T>& olist2)
+{
+  ObjectList<T> newlist(olist1.size() + olist2.size());
+  typename ObjectList<T>::iterator i;
+     
+  i = copy(olist1.begin(),olist1.end(),newlist.begin());
+  copy(olist2.begin(),olist2.end(),i);
+     
+  return newlist;
+}
+/*S IO
+*/
+/*F out1 = operator<<(out,olist) . . . . . . . . . . . . . . . . .  ObjectList
+**
+**  DESCRIPTION
+**    out,out1: The output stream.
+**    olist: The list to be outputted.
+**
+**    The default output of a list of objects
+**
+**  REMARKS
+**      Uses the STL copy to ostream_iterator
+*/
+template <class T>
+ostream& operator<<(ostream& out, const ObjectList<T>& olist)
+{
+  return olist.print(out);
+}
+/*S EncodeDecode
+ */
+/*F Encode(buffer,id) . . . . . . . . . . . . . . . . . . . . . .  ObjectList
+**
+**  DESCRIPTION
+**    buffer: the buffer (to be written)
+**    id: The class to be written
+**
+**  REMARKS
+**
+*/
+template <class T>
+bool Encode(CommBuffer& buffer, ObjectList<T>& llist)
+{
+  return llist.EncodeThis(buffer);
+}
+/*F Decode(buffer,id) . . . . . . . . . . . . . . . . . . . . . .  ObjectList
+**
+**  DESCRIPTION
+**    buffer: the buffer (to be read)
+**    id: The class to be built
+**
+**  REMARKS
+**
+*/
+template <class T>
+bool Decode(CommBuffer& buffer, ObjectList<T>& llist)
+{
+  return llist.DecodeThis(buffer);
+}

@@ -1,0 +1,439 @@
+/*  FILE     SetOfPairSets.icc
+**  PACKAGE     REACTION    
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1995  REACTION Project / Edward S. Blurock 
+*/
+
+/*S Constructors
+*/
+ 
+/*F SetOfPairSets() . . . . . . . . . . . . . . . . . . . . empty constructor
+**
+**  DESCRIPTION
+**    The empty constructor
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+SetOfPairSets<T1,T2>::SetOfPairSets() 
+  : ObjectList< PairList<T1,T2> >("","\n-------- \n")
+{
+}
+ 
+/*F SetOfPairSets(n)  . . . . . . . . . . . . . . . Construct with n elements
+**
+**  DESCRIPTION
+**    n: The number of elements in the list
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+SetOfPairSets<T1,T2>::SetOfPairSets(int n) 
+  : ObjectList< PairList<T1,T2> >(n)
+{
+}
+
+ 
+/*F SetOfPairSets(title,delim)  . . . . . . . . . . . . . . Basic Constructor
+**
+**  DESCRIPTION
+**    title: The title to print with list
+**    delim: The delimitor between list sets
+**
+**  REMARKS
+**
+*/ 
+template <class T1, class T2>
+SetOfPairSets<T1,T2>::SetOfPairSets(const char *title, const char *delim) 
+  : ObjectList< PairList<T1,T2> >(title,delim)
+{
+}
+
+ 
+/*F SetOfPairSets(sets) . . . . . . . . . . . . . . . . . .  Copy Constructor
+**
+**  DESCRIPTION
+**    sets: The SetOfPairSets to copy
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+SetOfPairSets<T1,T2>::SetOfPairSets(const SetOfPairSets<T1,T2>& sets) 
+  : ObjectList< PairList<T1,T2> >(sets)
+{
+}
+/*f GenerateSetOfPairSetsWorkOver2(set1,set2) . . . . . . . . .  help routine
+**
+**  DESCRIPTION
+**    set1: list of T1 objects
+**    set2: list of T2 objects
+**
+**    This is the work routine to generate all pairs.   This routine is used if
+**    the size of set1 is greater than  set2
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+void SetOfPairSets<T1,T2>::GenerateSetOfPairSetsWorkOver2(const ObjectList<T1>& set1,
+                                                                 const ObjectList<T2>& set2)
+{
+  ObjectList<T1> other(set1);
+  list<T2> current;
+  PairList<T1,T2> vec(set1.size());
+  FormBasicPair<T1,T2> basic;
+     
+  copy(set2.begin(),
+       set2.end(),
+       back_insert_iterator< list<T2> > (current));
+     
+  transform(other.begin(),
+            other.end(),
+            current.begin(),
+            vec.begin(),
+            basic);
+     
+  this->AddObject(vec);
+     
+  while(next_permutation(current.begin(),
+                         current.end()))
+    {
+      transform(other.begin(),
+                other.end(),
+                current.begin(),
+                vec.begin(),
+                basic);
+      this->AddObject(vec);
+    }
+}
+ 
+/*f GenerateSetOfPairSetsWorkOver1(set1,set2) . . . . . . . . .  help routine
+**
+**  DESCRIPTION
+**    set1: list of T1 objects
+**    set2: list of T2 objects
+**
+**    This is the work routine to generate all pairs.   This routine is used if
+**    the size of set1 is less than or equal to set2
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+void SetOfPairSets<T1,T2>::GenerateSetOfPairSetsWorkOver1(const ObjectList<T1>& set1,
+                                                                 const ObjectList<T2>& set2)
+{
+  ObjectList<T2> other(set2);
+  list<T1> current;
+  PairList<T1,T2> vec(set2.size());
+  FormBasicPair<T1,T2> basic;
+     
+  copy(set1.begin(),
+       set1.end(),
+       back_insert_iterator< list<T1> > (current));
+     
+  transform(current.begin(),
+            current.end(),
+            other.begin(),
+            vec.begin(),
+            basic);
+     
+  this->AddObject(vec);
+     
+  while(next_permutation(current.begin(),
+                         current.end()))
+    {
+      transform(current.begin(),
+                current.end(),
+                other.begin(),
+                vec.begin(),
+                basic);
+      this->AddObject(vec);
+    }
+}
+
+/*F SetOfPairSets(set1,set2)  . . . . . . . . . . . . . .  all possible pairs
+**
+**  DESCRIPTION
+**    set1: list of T1 objects
+**    set2: list of T2 objects
+**
+**    The rusult is the list of all possible combinations (pairs)
+**    the two lists
+**
+**  REMARKS
+**    Uses the work routines GenerateSetOfPairSetsWorkOver1 and 2
+**
+*/
+template <class T1, class T2>
+SetOfPairSets<T1,T2>::SetOfPairSets(const ObjectList<T1>& set1,
+                                    const ObjectList<T2>& set2)
+  : ObjectList< PairList<T1,T2> >("","\n")
+{
+  if(set1.size() != 0 && set2.size() != 0)
+    {
+      ObjectList<T1> sortset1 = set1;
+      ObjectList<T2> sortset2 = set2;
+          
+      if(set1.size() <= set2.size())
+        GenerateSetOfPairSetsWorkOver2(sortset1,sortset2);
+      else
+        GenerateSetOfPairSetsWorkOver1(sortset1,sortset2);
+    }
+     
+}
+
+
+
+
+
+
+/*S Utility
+*/
+ 
+/*C SortPairLists . . . . . . . . . . . . . . . . . . . . Help class for sort
+**
+**  DESCRIPTION
+**      This class is used to sort each  PairList within a 
+**      SetOfPairSets.  It is used within a for_each statement.
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+struct SortPairLists
+{
+  SortPairLists()
+  {
+  }
+  void operator()(PairList<T1,T2>& pairlist)
+  {
+    pairlist.Sort();
+  }
+};
+
+ 
+/*F WithAndWithoutValueI(plist,value) . . . . . . Sets with and without value
+**
+**  DESCRIPTION
+**    plist:  A list of pairs
+**    value:  A given value for I
+**
+**    This routine (assuming an empty set to begin with) creates
+**    two pair lists, the first with pairs having the given I value
+**    and the second with the remaining pairs
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+void SetOfPairSets<T1,T2>::WithAndWithoutValueI(const PairList<T1,T2>& plist, 
+                                                const T1& value)
+{
+  PairList<T1,T2> pwith = plist;
+  PairList<T1,T2> pwithout = plist;
+
+  pwith.OnlyWithI(value);
+  pwithout.RemoveWithI(value);
+          
+
+  this->AddObject(pwith);
+  this->AddObject(pwithout);
+}
+/*F WithAndWithoutValueJ(plist,value) . . . . . . Sets with and without value
+**
+**  DESCRIPTION
+**    plist:  A list of pairs
+**    value:  A given value for J
+**
+**    This routine (assuming an empty set to begin with) creates
+**    two pair lists, the first with pairs having the given J value
+**    and the second with the remaining pairs
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+void SetOfPairSets<T1,T2>::WithAndWithoutValueJ(const PairList<T1,T2>& plist, const T2& value)
+{
+  PairList<T1,T2> pwith = plist;
+  PairList<T1,T2> pwithout = plist;
+     
+  pwith.OnlyWithJ(value);
+  pwithout.RemoveWithJ(value);
+     
+  this->AddObject(pwith);
+  this->AddObject(pwithout);
+}
+
+ 
+/*F IterativeValueI(plist)  . . . . . . . . . . . . .  Separate Same I Values
+**
+**  DESCRIPTION
+**    plist: The PairList to process
+**
+**   The result is a SetOfPairSets where each PairList has the same I value
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+void SetOfPairSets<T1,T2>::IterativeValueI(const PairList<T1,T2>& plist)
+{
+  PairList<T1,T2> next = plist;
+  PairList<T1,T2> with;
+     
+  while(next.size() > 0)
+    {
+      //               T1 value = next[0].I;
+      T1 value = next.front().I;
+      with = next;
+      with.OnlyWithI(value);
+          
+      this->AddObject(with);
+      next.RemoveWithI(value);
+    }
+}
+/*F IterativeValueJ(plist)  . . . . . . . . . . . . .  Separate Same J Values
+**
+**  DESCRIPTION
+**    plist: The PairList to process
+**
+**   The result is a SetOfPairSets where each PairList has the same J value
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+void SetOfPairSets<T1,T2>::IterativeValueJ(const PairList<T1,T2>& plist)
+{
+  PairList<T1,T2> next = plist;
+  PairList<T1,T2> with;
+     
+  while(next.size() > 0)
+    {
+      //               T2 value = next[0].J;
+      T2 value = next.front().J;
+      with = next;
+      with.OnlyWithJ(value);
+          
+      this->AddObject(with);
+      next.RemoveWithJ(value);
+    }
+}
+
+ 
+/*F SetsOfEquivalentI(ilist,plist)  . . . . . .  Separate out set of I values
+**
+**  DESCRIPTION
+**    ilist: The the set of I values to pick out
+**    plist: The PairList to separate
+**
+**    The result is a SetOfPairSets where each PairList corresponds
+**    to a value in the ilist.  The BasicPairs within each of the 
+**    corresponding PairLists have as an I value the value given in
+**    the ilist
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+void SetOfPairSets<T1,T2>::SetsOfEquivalentI(const ObjectList<T1>& ilist, 
+                                             const PairList<T1,T2>& plist)
+{
+  typename ObjectList<T1>::const_iterator i;
+     
+  for(i=ilist.begin();i != ilist.end();i++)
+    {
+      PairList<T1,T2> next = plist;
+      next.OnlyWithI(*i);
+      this->AddObject(next);
+    }
+}
+/*F SetsOfEquivalentJ(jlist,plist)  . . . . . .  Separate out set of J values
+**
+**  DESCRIPTION
+**    jlist: The the set of J values to pick out
+**    plist: The PairList to separate
+**
+**    The result is a SetOfPairSets where each PairList corresponds
+**    to a value in the ilist.  The BasicPairs within each of the 
+**    corresponding PairLists have as an I value the value given in
+**    the ilist
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+void SetOfPairSets<T1,T2>::SetsOfEquivalentJ(const ObjectList<T2>& jlist, 
+                                             const PairList<T1,T2>& plist)
+{
+  typename ObjectList<T2>::const_iterator i;
+     
+  for(i=jlist.begin();i != jlist.end();i++)
+    {
+      PairList<T1,T2> next = plist;
+      next.OnlyWithJ(*i);
+      this->AddObject(next);
+    }
+}
+/*F Sort()  . . . . . . . . . . . . . . . . . . . . . Sorts the SetOfPairSets
+**
+**  DESCRIPTION
+**    First each PairList in the SetOfPairSets are sorted and 
+**    the the SetOfPairSets is itself sorted.
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+void SetOfPairSets<T1,T2>::Sort()
+{
+  SortPairLists<T1,T2> sortpairlists;
+     
+  for_each((*this).begin(),(*this).end(),sortpairlists);
+  Sort();
+}     
+
+ 
+/*F ans = operator==(s1,s2) . . . . . . . . . . . . . . . . . . SetOfPairSets
+**
+**  DESCRIPTION
+**    s1,s2: the sets
+**    ans: true of equal
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+bool operator==(const SetOfPairSets<T1,T2>& s1,
+                const SetOfPairSets<T1,T2>& s2)
+{
+  return (ObjectList< PairList<T1,T2> >) s1 ==
+    (ObjectList< PairList<T1,T2> >) s2;
+}
+/*F ans = operator==(s1,s2) . . . . . . . . . . . . . . . . . . SetOfPairSets
+**
+**  DESCRIPTION
+**    s1,s2: the sets
+**    ans: true of equal
+**
+**  REMARKS
+**
+*/
+template <class T1, class T2>
+bool operator<(const SetOfPairSets<T1,T2>& s1,
+               const SetOfPairSets<T1,T2>& s2)
+{
+  return (ObjectList< PairList<T1,T2> >) s1 <
+    (ObjectList< PairList<T1,T2> >) s2;
+}

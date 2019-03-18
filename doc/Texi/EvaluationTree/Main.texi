@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  EvaluationTree
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for CoreObjects library package "EvaluationTree".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) CoreObjects Library
+
+@node     EvaluationTree Package
+@section  The "EvaluationTree" Package
+@cindex   package, EvaluationTree
+@cindex   EvaluationTree package
+@cindex   evt namespace
+@cindex   namespaces, evt
+
+@table @strong
+@item Package name
+@code{EvaluationTree}
+
+@item Namespace name
+@code{evt}
+
+@item Header files
+@file{EvaluationTree.hh}, @file{EvaluationTreeType.hh}
+@end table
+
+
+@include EvaluationTree/Overview.texi
+
+@include EvaluationTree/Classes.texi

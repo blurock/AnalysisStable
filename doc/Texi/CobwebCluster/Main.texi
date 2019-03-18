@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  CobwebCluster
+@c AUTHOR   Edward S. Blurock
+@c 
+@c CONTENT
+@c   Texinfo documentation for CoreObjects library package "CobwebCluster".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) CoreObjects Library
+
+@node     CobwebCluster Package
+@section  The "CobwebCluster" Package
+@cindex   package, CobwebCluster
+@cindex   CobwebCluster package
+@cindex   nwp namespace
+@cindex   namespaces, nwp
+
+@table @strong
+@item Package name
+@code{CobwebCluster}
+
+@item Namespace name
+@code{nwp}
+
+@item Header files
+@file{CobwebCluster.hh}, @file{CobwebClusterType.hh}
+@end table
+
+
+@include CobwebCluster/Overview.texi
+
+@include CobwebCluster/Classes.texi

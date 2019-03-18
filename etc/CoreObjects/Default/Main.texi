@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  =Package=
+@c AUTHOR   =Author=
+@c 
+@c CONTENT
+@c   Texinfo documentation for =Environment= library package "=Package=".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) =Environment= Library
+
+@node     =Package= Package
+@section  The "=Package=" Package
+@cindex   package, =Package=
+@cindex   =Package= package
+@cindex   =Pac= namespace
+@cindex   namespaces, =Pac=
+
+@table @strong
+@item Package name
+@code{=Package=}
+
+@item Namespace name
+@code{=Pac=}
+
+@item Header files
+@file{=Package=.hh}, @file{=Package=Type.hh}
+@end table
+
+
+@include =Package=/Overview.texi
+
+@include =Package=/Classes.texi

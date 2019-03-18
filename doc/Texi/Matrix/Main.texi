@@ -1,0 +1,33 @@
+@c FILE     Main.texi
+@c PACKAGE  Matrix
+@c AUTHOR   wahl
+@c 
+@c CONTENT
+@c   Texinfo documentation for Basis library package "Matrix".
+@c
+@c REFERENCES
+@c
+@c COPYRIGHT (C) Basis Library
+
+@node     Matrix Package
+@section  The "Matrix" Package
+@cindex   package, Matrix
+@cindex   Matrix package
+@cindex   nn namespace
+@cindex   namespaces, nn
+
+@table @strong
+@item Package name
+@code{Matrix}
+
+@item Namespace name
+@code{nn}
+
+@item Header files
+@file{Matrix.hh}, @file{MatrixType.hh}
+@end table
+
+
+@include Matrix/Overview.texi
+
+@include Matrix/Classes.texi

@@ -1,0 +1,66 @@
+# FILE     Makefile.doc
+# PACKAGE  CodeBase
+# AUTHOR   Andreas Neubacher
+#          Modified for the environment option by Edward S. Blurock
+#
+# CONTENT
+#   GNU Makefile for the .texi files.  This file should be used from
+#   withing the STURM "doc/Texi/Functions/" tree in the form
+#
+#	make -f $(CodeBaseRoot)/etc/$(Environment)/Makefile.doc all
+#
+#   and will produce ".texi" files for all ".c" and ".cc" files in the
+#   corresponding directory within the STURM "src/" tree.
+#
+#   If the "src/" tree is not rooted in the same directory as the "doc/"
+#   tree, a path to the source tree must be given by the command line
+#   argument
+#
+#	make SRCROOT=Path-to-src-tree ...
+#
+# COPYRIGHT (C) CoreObjects Library
+
+include $(CodeBaseRoot)/etc/CoreObjects/MakeDef
+
+
+#V Variable definitions.
+
+ifndef CLEAN
+SRCROOT=$(shell pwd | sed "s/\/doc\/.*$$/\/src/")
+THISDIR:=$(shell pwd | sed "s/^.*\/doc\/Texi\/Functions\///")
+SRCDIR:=$(SRCROOT)/$(THISDIR)
+CSRC=$(filter-out *.c, $(shell cd $(SRCDIR); echo *.c))
+ICCSRC=$(filter-out *.icc, $(shell cd $(SRCDIR); echo *.icc))
+TCCSRC=$(filter-out *.tcc, $(shell cd $(SRCDIR); echo *.tcc))
+ITCSRC=$(filter-out *.itc, $(shell cd $(SRCDIR); echo *.itc))
+CCSRC=$(filter-out *.cc, $(shell cd $(SRCDIR); echo *.cc))
+
+VPATH=$(SRCDIR)
+endif
+
+
+#I Read directory specific makefile if it exists.
+
+ifeq ($(wildcard Makefile), Makefile)
+  include Makefile
+endif
+
+
+#F Targets.
+
+all: sturm2texi.texi
+
+sturm2texi.texi: $(CSRC) $(CCSRC) $(ICCSRC) $(TCCSRC) $(ITCSRC)
+	@echo $(THISDIR) ...
+	@MakePackageDoc $^
+
+clean::
+	$(RM) *.sub
+
+cleaner::
+	find . -type f -name "*.texi" ! -name "xxAUXxx.*" -exec $(RM) {} \;
+
+
+#f Special targets.
+
+.SUFFIXES: .icc .texi

@@ -1,0 +1,111 @@
+/*  FILE     
+**  PACKAGE     REACTION    
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1995  REACTION Project / Edward S. Blurock 
+*/
+ 
+ 
+/*C GraphNodeOut  . . . . . . . . . . . .  prints out the node (for graphing)
+**
+**  DESCRIPTION
+**     According to the boolean values of PrintKey and PrintValue, 
+**     the key and value of the node will be printed to stream Out.
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+class GraphNodeOut
+{
+  ostream& Out;
+  bool PrintKey;
+  bool PrintValue;
+     
+public:
+  GraphNodeOut(ostream& out,
+               bool printKey,
+               bool printValue)
+    : Out(out),
+    PrintKey(printKey),
+    PrintValue(printValue)
+    {
+    }
+  void operator()(pair<const KeyType,GraphNode<KeyType,T> >& node)
+    {
+      if(PrintKey)
+        Out << node.second.GetKey();
+      if(PrintKey && PrintValue)
+        Out << " # ";
+      if(PrintValue)
+        Out << node.second.GraphNodeValue();
+      if(PrintValue || PrintKey)
+        Out << "\n";
+    }
+};
+ 
+/*C GraphBondOut  . . . . . . . . . . . . . . . . . . print out the bond pair
+**
+**  DESCRIPTION
+**     The operator() function prints a bond pair on one line (i.e. the
+**     print ends with a "\n".
+**
+**  REMARKS
+**
+*/
+template <class KeyType>
+class GraphBondOut
+{
+  ostream& Out;
+     
+public:
+  GraphBondOut(ostream& out)
+    : Out(out)
+    {
+    }
+  void operator()(BasicPair< KeyType,KeyType >& pair)
+    {
+      Out << pair.I;
+      Out << " # ";
+      Out << pair.J;
+          
+      Out << "\n";
+    }
+};
+
+/*F GraphOut(out,graph) . . . . . . . . . . . .  Print out graph for graphing
+**
+**  DESCRIPTION
+**    out: The output stream
+**    graph: The graph
+**
+**  REMARKS
+**
+*/
+template <class KeyType, class T>
+void GraphOut(ostream& out,
+              Graph<KeyType,T>& graph,
+              bool printKey,
+              bool printValue)
+{
+  GraphNodeOut<KeyType,T> node(out,printKey,printValue);
+  GraphBondOut<KeyType> bond(out);
+     
+  out << "----------\n";
+  out << graph.Nodes.size();
+  out << " ";
+  out << graph.Bonds.size();
+  out << "\n";
+     
+  for_each(graph.Nodes.begin(),
+             graph.Nodes.end(),
+             node);
+  for_each(graph.Bonds.begin(),
+             graph.Bonds.end(),
+             bond);
+}

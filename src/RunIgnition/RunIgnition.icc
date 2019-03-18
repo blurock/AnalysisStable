@@ -1,0 +1,23 @@
+/*  FILE     RunIgnition.icc
+**  PACKAGE  RunIgnition
+**  AUTHOR   Edward S. Blurock
+**
+**  CONTENT
+**    Inline functions for the "RunIgnition" package.
+**
+**  REFERENCES
+**
+**  COPYRIGHT (C) 1997 Cantera Library
+*/
+ 
+#ifndef CanteraSRC_RUNIGNITION_ICC
+#define CanteraSRC_RUNIGNITION_ICC
+ 
+#pragma interface
+
+
+
+
+
+
+#endif
