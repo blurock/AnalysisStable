@@ -14,8 +14,8 @@
 
 #V Command variable definitions.
 
-CC=CompileC++
-CXX=CompileC++
+CC=$(ANALYSIS_BINARIES)/CompileC++
+CXX=$(ANALYSIS_BINARIES)/CompileC++
 
 ifeq "$(LTYPE)" "sequential"
   CC=CompileCC
